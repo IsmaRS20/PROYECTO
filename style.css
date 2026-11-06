@@ -3,7 +3,7 @@ html {
     width: 100%;
     margin: 0;
     padding: 0;
-    overflow-x: hidden; /* Se queda aquí para evitar scroll horizontal global */
+    overflow-x: hidden;
 }
 
 body {
@@ -11,11 +11,10 @@ body {
     margin: 0;
     padding: 0;
     font-family: system-ui, -apple-system, sans-serif;
-    /* Eliminado el overflow-x: hidden de aquí para que el sticky funcione */
 }
 
 /* Cabecera y Barra de Navegación */
-.cabecera-sitio {
+.site-header {
     width: 100%;
     margin: 0;
     padding: 0;
@@ -25,7 +24,7 @@ body {
     background-color: #f8f9fa;
 }
 
-.navegacion-sitio {
+.site-nav {
     height: 100%;
     padding-top: 1.5rem;
     padding-bottom: 1.5rem;
@@ -33,7 +32,7 @@ body {
     align-items: center;
 }
 
-.contenedor-navegacion {
+.nav-container {
     width: 100%;
     padding-left: 1rem;
     padding-right: 1rem;
@@ -43,18 +42,18 @@ body {
     box-sizing: border-box;
 }
 
-.marca-navegacion {
+.nav-brand {
     text-decoration: none;
     display: inline-block;
 }
 
-.imagen-marca {
+.brand-image {
     display: inline-block;
     vertical-align: text-top;
     height: auto;
 }
 
-.alternador-navegacion {
+.nav-toggler {
     background: none;
     border: 1px solid rgba(0, 0, 0, 0.1);
     padding: 0.25rem 0.75rem;
@@ -64,12 +63,12 @@ body {
     display: none;
 }
 
-.menu-navegacion {
+.nav-menu {
     display: flex;
     align-items: center;
 }
 
-.lista-navegacion {
+.nav-list {
     display: flex;
     list-style: none;
     margin: 0;
@@ -77,39 +76,39 @@ body {
     gap: 1.5rem;
 }
 
-.elemento-navegacion {
+.nav-item {
     list-style: none;
 }
 
-.enlace-navegacion {
+.nav-link {
     text-decoration: none;
     color: rgba(0, 0, 0, 0.55);
     transition: color 0.2s;
 }
 
-.enlace-navegacion:hover,
-.enlace-navegacion.activo {
+.nav-link:hover,
+.nav-link.active {
     color: rgba(0, 0, 0, 0.9);
 }
 
-.enlace-navegacion.activo {
+.nav-link.active {
     font-weight: 600;
 }
 
 /* Carrusel de imágenes de inicio */
-.carrusel-personalizado {
+.custom-carousel {
     position: relative;
     width: 100%;
 }
 
-.interior-carrusel {
+.carousel-inner {
     height: 800px;
     position: relative;
     width: 100%;
     overflow: hidden;
 }
 
-.elemento-carrusel {
+.carousel-item {
     height: 100%;
     width: 100%;
     position: absolute;
@@ -118,11 +117,11 @@ body {
     display: none;
 }
 
-.elemento-carrusel.activo {
+.carousel-item.active {
     display: block;
 }
 
-.elemento-carrusel img {
+.carousel-item img {
     width: 100%;
     height: 100%;
     object-fit: cover;
@@ -130,7 +129,7 @@ body {
     filter: brightness(0.5); 
 }
 
-.pie-carrusel {
+.carousel-caption {
     position: absolute;
     top: 50%;
     bottom: auto;
@@ -142,21 +141,21 @@ body {
     color: #ffffff;
 }
 
-.pie-carrusel h1 {
+.carousel-caption h1 {
     font-size: 3.5rem;
     font-weight: 700;
     margin-bottom: 1rem;
     text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.8);
 }
 
-.pie-carrusel p {
+.carousel-caption p {
     font-size: 1.25rem;
     text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.8);
 }
 
 /* Controles del carrusel */
-.control-carrusel-anterior,
-.control-carrusel-siguiente {
+.carousel-control-prev,
+.carousel-control-next {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
@@ -169,15 +168,15 @@ body {
     z-index: 15;
 }
 
-.control-carrusel-anterior {
+.carousel-control-prev {
     left: 15px;
 }
 
-.control-carrusel-siguiente {
+.carousel-control-next {
     right: 15px;
 }
 
-.oculto-visualmente {
+.hidden {
     position: absolute;
     width: 1px;
     height: 1px;
@@ -190,7 +189,7 @@ body {
 }
 
 /* Apariencia de la página principal */
-.tienda-nuevo {
+.store-new {
     margin-top: 50px;
     text-align: center;
     padding: 0 1rem;
