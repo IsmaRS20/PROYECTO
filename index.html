@@ -5,90 +5,88 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Nombre Tienda</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
     <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
-    <header class="w-100 m-0 p-0">
-        <nav class="navbar navbar-expand-lg bg-body-tertiary">
-            <div class="container-fluid px-3">
-                <a class="navbar-brand" href="#">
-                    <img src="/docs/5.3/assets/brand/bootstrap-logo.svg" alt="Logo" width="30" height="24"
-                        class="d-inline-block align-text-top">
-                    Nombre Tienda
-                </a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
+    <div class="envoltorio">
+        <header class="cabecera-sitio">
+            <nav class="navegacion-sitio">
+                <div class="contenedor-navegacion">
+                    <a class="marca-navegacion" href="#">
+                        <img src="./img/logo.svg" alt="Logo" width="200" height="40" class="imagen-marca">
+                    </a>
+                    <button class="alternador-navegacion" type="button" aria-label="Toggle navigation">
+                        <span class="icono-alternador">&#9776;</span>
+                    </button>
+                    <div class="menu-navegacion" id="menuNavegacion">
+                        <ul class="lista-navegacion">
+                            <li class="elemento-navegacion">
+                                <a class="enlace-navegacion activo" aria-current="page" href="#">Inicio</a>
+                            </li>
+                            <li class="elemento-navegacion">
+                                <a class="enlace-navegacion" href="#">Productos</a>
+                            </li>
+                            <li class="elemento-navegacion">
+                                <a class="enlace-navegacion" href="#">Merchandising</a>
+                            </li>
+                            <li class="elemento-navegacion">
+                                <a class="enlace-navegacion" href="#">Soporte</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+        </header>
+
+        <main>
+            <div id="carruselEjemplo" class="carrusel-personalizado">
+                <div class="interior-carrusel">
+
+                    <div class="elemento-carrusel activo">
+                        <img src="./img/carrusel_1.avif" alt="Guitarra 1">
+                        <div class="pie-carrusel">
+                            <h1>Texto Principal</h1>
+                            <p>Texto secundario</p>
+                        </div>
+                    </div>
+
+                    <div class="elemento-carrusel">
+                        <img src="./img/carrusel_2.avif" alt="Guitarra 2">
+                        <div class="pie-carrusel">
+                            <h1>Texto Principal</h1>
+                            <p>Texto secundario</p>
+                        </div>
+                    </div>
+
+                    <div class="elemento-carrusel">
+                        <img src="./img/carrusel_3.png" alt="Guitarra 3">
+                        <div class="pie-carrusel">
+                            <h1>Texto Principal</h1>
+                            <p>Texto secundario</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Controles -->
+                <button class="control-carrusel-anterior" type="button">
+                    <span class="icono-control-carrusel-anterior" aria-hidden="true">&#10094;</span>
+                    <span class="oculto-visualmente">Anterior</span>
                 </button>
-                <div class="collapse navbar-collapse" id="navbarNav">
-                    <ul class="navbar-nav">
-                        <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="#">Inicio</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Productos</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Merchandising</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Soporte</a>
-                        </li>
-                    </ul>
-                </div>
+                <button class="control-carrusel-siguiente" type="button">
+                    <span class="icono-control-carrusel-siguiente" aria-hidden="true">&#10095;</span>
+                    <span class="oculto-visualmente">Siguiente</span>
+                </button>
             </div>
-        </nav>
-    </header>
-    <main>
-        <div id="carouselExample" class="carousel slide" data-bs-ride="carousel">
-            <div class="carousel-inner">
-                
-                <div class="carousel-item active">
-                    <img src="./img/carrusel_1.avif" class="d-block w-100 h-100" alt="Guitarra 1">
-                    <div class="carousel-caption">
-                        <h1>Texto Principal</h1>
-                        <p>Texto secundario</p>
-                    </div>
-                </div>
+        </main>
 
-                <div class="carousel-item">
-                    <img src="./img/carrusel_2.avif" class="d-block w-100 h-100" alt="Guitarra 2">
-                    <div class="carousel-caption">
-                        <h1>Texto Principal</h1>
-                        <p>Texto secundario</p>
-                    </div>
-                </div>
-
-                <div class="carousel-item">
-                    <img src="./img/carrusel_3.png" class="d-block w-100 h-100" alt="Guitarra 3">
-                    <div class="carousel-caption">
-                        <h1>Texto Principal</h1>
-                        <p>Texto secundario</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Controles -->
-            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Previous</span>
-            </button>
-            <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Next</span>
-            </button>
+        <div class="tienda-nuevo">
+            <h2>Lo nuevo en nuestra tienda</h2>
+            <p>¿Buscas lo nuevo en instrumentos? Aquí tienes una selección de los nuevos instrumentos y equipamiento que ofrecemos para todo tipo de músicos.</p>
+            <div class="cuadricula-nuevos-articulos"></div>
         </div>
-    </main>
 
-    <div class="container mt-4">
-        <!-- Contenido aquí -->
     </div>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-        crossorigin="anonymous"></script>
 </body>
 
 </html>
