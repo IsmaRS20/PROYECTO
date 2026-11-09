@@ -1,3 +1,9 @@
+:root {
+    --color-main: rgb(35, 58, 37);
+    --color-secondary: rgb(133, 194, 128);
+    --color-accent: rgb(255, 226, 96);
+}
+
 /* Opciones generales de página */
 html {
     width: 100%;
@@ -21,7 +27,7 @@ body {
     position: sticky;
     top: 0;
     z-index: 1000;
-    background-color: #f8f9fa;
+    background-color: var(--color-main);
 }
 
 .site-nav {
@@ -82,7 +88,7 @@ body {
 
 .nav-link {
     text-decoration: none;
-    color: rgba(0, 0, 0, 0.55);
+    color: #ffff;
     transition: color 0.2s;
     display: block;
     padding: 1rem;
@@ -94,7 +100,7 @@ body {
 
 .nav-link:hover,
 .nav-link.active {
-    color: rgba(0, 0, 0, 0.9);
+    color: var(--color-accent);
 }
 
 .nav-link.active {
@@ -196,17 +202,52 @@ body {
 
 /* Apariencia de la página principal */
 
-.shop-btn a {
-    background-color: green;
-    padding: 1rem;
-    margin: 2rem;
-    border-radius: 50px;
-    text-decoration: none;
-    color: white;
+.shop-btn {
+  text-align: center;
+  padding: 2rem 5vw 0;
+}
+
+.shop-btn a{
+  display: inline-block;
+  border: 0;
+  cursor: pointer;
+  padding: .7rem 1.6rem;
+  border-radius: 999px;
+  background: var(--color-main);
+  color: #fff;
+  font-weight: 600;
+  text-decoration: none;
+  transition: background .2s, color .2s;
+  font-size: 1.25rem;
+}
+
+.shop-btn a:hover {
+  background: var(--color-secondary);
+  color: var(--ink);
 }
 
 .store-new {
     margin-top: 50px;
     text-align: center;
     padding: 0 1rem;
+}
+
+.cart-btn {
+  background: var(--amber);
+  color: var(--ink);
+  border: 0;
+  border-radius: 999px;
+  padding: .4rem 1rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.cart-btn span {
+  display: inline-block;
+  min-width: 1.4em;
+  text-align: center;
+  background: var(--ink);
+  color: #fff;
+  border-radius: 999px;
+  margin-left: .3rem;
 }
