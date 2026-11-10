@@ -14,25 +14,33 @@
             <nav class="site-nav">
                 <div class="nav-container">
                     <a class="nav-brand" href="index.html">
-                        <img src="./img/logo.svg" alt="Logo" width="200" height="40" class="brand-image">
+                        <img src="./img/Picanya Music.png" alt="Logo" class="brand-image">
                     </a>
-                    <button class="nav-toggler" id="navToggler" type="button" aria-controls="navMenu" aria-expanded="false" aria-label="Abrir menú">&#9776;</button>
                     <div class="nav-menu" id="navMenu">
                         <ul class="nav-list">
-                            <li class="nav-item"><a class="nav-link active" aria-current="page" href="index.html">Inicio</a></li>
-                            <li class="nav-item"><a class="nav-link" href="catalogo.html">Catálogo</a></li>
-                            <li class="nav-item"><a class="nav-link" href="servicios.html">Servicios</a></li>
-                            <li class="nav-item"><a class="nav-link" href="contacto.html">Contacto</a></li>
-                            <li class="cart-btn"><a class="cart" href="#">Carrito <span id="cart-count">0</span></a></li>
+                            <li class="nav-item">
+                                <a class="nav-link active" aria-current="page" href="index.html">Inicio</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="catalogo.html">Catálogo</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="servicios.html">Servicios</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="contacto.html">Contacto</a>
+                            </li>
+                            <li class="cart-btn">
+                                <a class="cart" href="#">Carrito <span id="cart-count">0</span></a>
+                            </li>
                         </ul>
                     </div>
                 </div>
             </nav>
         </header>
-
         <main>
             <section class="carousel">
-                <div id="carousel" class="custom-carousel">
+                <!-- <div id="carousel" class="custom-carousel">
                     <div class="carousel-inner">
                         <div class="carousel-item active">
                             <img src="./img/carrusel_1.avif" alt="Guitarra 1">
@@ -64,6 +72,15 @@
                         <span aria-hidden="true">&#10095;</span>
                         <span class="hidden">Siguiente</span>
                     </button>
+                </div> -->
+                <div class="scroll-track" id="scrollTrack">
+                    <div class="sticky-container">
+                        <div class="images-wrapper" id="imagesWrapper">
+                            <img src="./img/carrusel_1.avif" alt="Imagen 1">
+                            <img src="./img/carrusel_2.avif" alt="Imagen 2">
+                            <img src="./img/carrusel_3.png" alt="Imagen 3">
+                        </div>
+                    </div>
                 </div>
             </section>
 
@@ -86,6 +103,30 @@
         </footer>
     </div>
     <script src="script.js"></script>
+      <script>
+    const track = document.getElementById('scrollTrack');
+    const wrapper = document.getElementById('imagesWrapper');
+
+    window.addEventListener('scroll', () => {
+      // Obtener la posición actual del track respecto a la pantalla
+      const trackTop = track.getBoundingClientRect().top;
+      const trackHeight = track.offsetHeight;
+      const windowHeight = window.innerHeight;
+
+      // Calcular cuánto se ha desplazado el usuario dentro del track (de 0 a 1)
+      let progress = -trackTop / (trackHeight - windowHeight);
+      
+      // Limitar el progreso entre 0 y 1 para que no siga calculando fuera de rango
+      progress = Math.max(0, Math.min(1, progress));
+
+      // Calcular el máximo movimiento posible hacia la izquierda
+      // (Ancho total de las imágenes menos el ancho de la ventana del navegador)
+      const maxScroll = wrapper.scrollWidth - window.innerWidth;
+
+      // Aplicar la transformación hacia la izquierda basado en el progreso
+      wrapper.style.transform = `translateX(${-progress * maxScroll}px)`;
+    });
+  </script>
 </body>
 
 </html>
