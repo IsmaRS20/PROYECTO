@@ -39,6 +39,12 @@ window.addEventListener('scroll', updateProgress);
 window.addEventListener('resize', updateProgress);
 updateProgress();
 
+ 
+// =====================================================
+// 6. CARRITO (está en todas las páginas)
+// =====================================================
+ 
+// Metemos el panel del carrito en la página (así no hay que copiarlo en cada HTML)
 document.body.insertAdjacentHTML('beforeend', `
   <div class="overlay" id="overlay" onclick="cerrarCarrito()"></div>
   <aside class="cart-drawer" id="drawer" aria-label="Carrito" inert>
@@ -49,24 +55,22 @@ document.body.insertAdjacentHTML('beforeend', `
     <div class="cart-items" id="cart-items"></div>
     <p class="cart-total" id="cart-total"></p>
     <p class="cart-msg" id="cart-msg"></p>
-    <button type="button" class="btn-red" onclick="vaciarCarrito()">Vaciar</button>
-    <button type="button" class="btn-green" onclick="pagar()">Proc. pago</button>
-  </aside>`);
-
-
-const cartBtn = document.querySelector('.cart-btn');
+    </aside>`);
+ 
 const panel = document.getElementById('drawer');
 const fondo = document.getElementById('overlay');
 const mensaje = document.getElementById('cart-msg');
  
+// El carrito es una lista: [ { id: 3, cantidad: 2 }, { id: 7, cantidad: 1 } ]
+// Se guarda en localStorage para que no se pierda al cambiar de página
 let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
  
 function guardarCarrito() {
   localStorage.setItem('carrito', JSON.stringify(carrito));
 }
-
+ 
 function abrirCarrito() {
-  panel.inert = false;
+  panel.inert = false; // "inert" evita entrar con el tabulador cuando está cerrado
   panel.classList.add('open');
   fondo.classList.add('open');
 }
@@ -76,3 +80,53 @@ function cerrarCarrito() {
   fondo.classList.remove('open');
   panel.inert = true;
 }
+ 
+function calcularTotal() {
+  let total = 0;
+  for (let i = 0; i < carrito.length; i++) {
+    const p = buscarProducto(carrito[i].id);
+    total += p.precio * carrito[i].cantidad;
+  }
+  return total;
+}
+ 
+// Vuelve a dibujar el contenido del carrito y el número de arriba
+function dibujarCarrito() {
+  let html = '';
+  let unidades = 0;
+ 
+  for (let i = 0; i < carrito.length; i++) {
+    const p = buscarProducto(carrito[i].id);
+    const cantidad = carrito[i].cantidad;
+    unidades += cantidad;
+ 
+    html += `
+      <div class="cart-item">
+        <div class="thumb" ${estiloImagen(p.id)}></div>
+        <div>
+          <strong>${p.nombre}</strong>
+          <small>x${cantidad}</small>
+        </div>
+        <b>${p.precio * cantidad} €</b>
+        <button type="button" class="rm" aria-label="Quitar ${p.nombre}" onclick="quitarDelCarrito(${p.id})">&times;</button>
+      </div>`;
+  }
+ 
+  if (html === '') {
+    html = '<p>Tu carrito está vacío.</p>';
+    document.getElementById('cart-total').textContent = '';
+  } else {
+    document.getElementById('cart-total').textContent = 'Total: ' + calcularTotal() + ' €';
+  }
+
+  document.getElementById('cart-items').innerHTML = html;
+  document.getElementById('cart-count').textContent = unidades;
+}
+ 
+ 
+document.querySelector('.cart').onclick = function (evento) {
+  evento.preventDefault();
+  abrirCarrito();
+};
+ 
+dibujarCarrito();
