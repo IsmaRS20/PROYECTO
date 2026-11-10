@@ -35,7 +35,10 @@ body {
     position: sticky;
     top: 0;
     z-index: 1000;
-    background-color: var(--color-main);
+    background-image: url(./img/woodtexture.png);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
 }
 
 .nav-container {
