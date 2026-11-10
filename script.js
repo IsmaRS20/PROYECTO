@@ -23,3 +23,19 @@ const productos = [
   { id: 13, nombre: 'Pedal de distorsión', cat: 'mas', marca: 'Boss', precio: 89, nuevo: false },
   { id: 14, nombre: 'Amplificador 20 W', cat: 'mas', marca: 'Yamaha', precio: 159, nuevo: false }
 ];
+
+/* ===== Barra de progreso de scroll de toda la página ===== */
+const progressFill = document.getElementById('progressFill');
+
+function updateProgress() {
+    const max = document.documentElement.scrollHeight - window.innerHeight;
+    const progress = max > 0 ? window.scrollY / max : 0;
+    progressFill.style.width = (progress * 100) + '%';
+}
+
+window.addEventListener('scroll', updateProgress);
+window.addEventListener('resize', updateProgress);
+updateProgress();
+
+/* El carrusel infinito se hace solo con CSS (animación @keyframes),
+   no necesita JavaScript. */

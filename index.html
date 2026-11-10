@@ -4,11 +4,12 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Nombre Tienda</title>
+    <title>Picanya Music</title>
     <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
+
     <div class="wrapper">
         <header class="site-header">
             <nav class="site-nav">
@@ -37,50 +38,24 @@
                     </div>
                 </div>
             </nav>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
         </header>
         <main>
             <section class="carousel">
-                <!-- <div id="carousel" class="custom-carousel">
-                    <div class="carousel-inner">
-                        <div class="carousel-item active">
-                            <img src="./img/carrusel_1.avif" alt="Guitarra 1">
-                            <div class="carousel-caption">
-                                <h1>Texto Principal</h1>
-                                <p>Texto secundario</p>
-                            </div>
-                        </div>
-                        <div class="carousel-item">
-                            <img src="./img/carrusel_2.avif" alt="Guitarra 2">
-                            <div class="carousel-caption">
-                                <h1>Texto Principal</h1>
-                                <p>Texto secundario</p>
-                            </div>
-                        </div>
-                        <div class="carousel-item">
-                            <img src="./img/carrusel_3.png" alt="Guitarra 3">
-                            <div class="carousel-caption">
-                                <h1>Texto Principal</h1>
-                                <p>Texto secundario</p>
-                            </div>
-                        </div>
-                    </div>
-                    <button class="carousel-control-prev" type="button">
-                        <span aria-hidden="true">&#10094;</span>
-                        <span class="hidden">Anterior</span>
-                    </button>
-                    <button class="carousel-control-next" type="button">
-                        <span aria-hidden="true">&#10095;</span>
-                        <span class="hidden">Siguiente</span>
-                    </button>
-                </div> -->
-                <div class="scroll-track" id="scrollTrack">
-                    <div class="sticky-container">
-                        <div class="images-wrapper" id="imagesWrapper">
-                            <img src="./img/carrusel_1.avif" alt="Imagen 1">
-                            <img src="./img/carrusel_2.avif" alt="Imagen 2">
-                            <img src="./img/carrusel_3.png" alt="Imagen 3">
-                        </div>
-                    </div>
+                <div class="texto-carousel">
+                    <h1>Bienvenido a</h1>
+                    <img class="logo-h1" src="./img/Picanya Music.png" alt="Picanya Music">
+                </div>
+
+                <div class="carousel-track">
+                    <img src="./img/carrusel_1.avif" alt="Imagen 1">
+                    <img src="./img/carrusel_2.avif" alt="Imagen 2">
+                    <img src="./img/carrusel_3.png" alt="Imagen 3">
+                    <img src="./img/carrusel_1.avif" alt="" aria-hidden="true">
+                    <img src="./img/carrusel_2.avif" alt="" aria-hidden="true">
+                    <img src="./img/carrusel_3.png" alt="" aria-hidden="true">
                 </div>
             </section>
 
@@ -97,36 +72,13 @@
         </main>
 
         <footer class="site-footer">
-            <p><strong>Nombre Tienda</strong> · soporte@nombretienda.es · 960 000 000</p>
+            <p><strong>Picanya Music</strong> · soporte@picanyamusic.es · 960 000 000</p>
             <p>Instagram · YouTube · TikTok</p>
-            <p>© 2026 Nombre Tienda. Todos los derechos reservados.</p>
+            <p>© 2026 Picanya Music. Todos los derechos reservados.</p>
         </footer>
     </div>
+
     <script src="script.js"></script>
-      <script>
-    const track = document.getElementById('scrollTrack');
-    const wrapper = document.getElementById('imagesWrapper');
-
-    window.addEventListener('scroll', () => {
-      // Obtener la posición actual del track respecto a la pantalla
-      const trackTop = track.getBoundingClientRect().top;
-      const trackHeight = track.offsetHeight;
-      const windowHeight = window.innerHeight;
-
-      // Calcular cuánto se ha desplazado el usuario dentro del track (de 0 a 1)
-      let progress = -trackTop / (trackHeight - windowHeight);
-      
-      // Limitar el progreso entre 0 y 1 para que no siga calculando fuera de rango
-      progress = Math.max(0, Math.min(1, progress));
-
-      // Calcular el máximo movimiento posible hacia la izquierda
-      // (Ancho total de las imágenes menos el ancho de la ventana del navegador)
-      const maxScroll = wrapper.scrollWidth - window.innerWidth;
-
-      // Aplicar la transformación hacia la izquierda basado en el progreso
-      wrapper.style.transform = `translateX(${-progress * maxScroll}px)`;
-    });
-  </script>
 </body>
 
 </html>
