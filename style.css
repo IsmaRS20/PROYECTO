@@ -1,8 +1,8 @@
 /* ===== VARIABLES ===== */
 :root {
-    --color-main: rgb(35, 58, 37);
-    --color-secondary: rgb(133, 194, 128);
-    --color-accent: rgb(255, 226, 96);
+    --color-main: rgb(63, 47, 11);
+    --color-secondary: rgb(145, 99, 0);
+    --color-accent: rgb(255, 207, 103);
     --color-text: #111;
 }
 
@@ -235,7 +235,7 @@ body {
 }
 
 .shop-btn a:hover {
-    background: var(--color-secondary);
+    background: var(--color-accent);
     color: var(--color-text);
 }
 
