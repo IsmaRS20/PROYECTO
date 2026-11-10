@@ -24,7 +24,9 @@ const productos = [
   { id: 14, nombre: 'Amplificador 20 W', cat: 'mas', marca: 'Yamaha', precio: 159, nuevo: false }
 ];
 
-/* ===== Barra de progreso de scroll de toda la página ===== */
+
+// SCROLL INFINITO
+
 const progressFill = document.getElementById('progressFill');
 
 function updateProgress() {
@@ -37,5 +39,40 @@ window.addEventListener('scroll', updateProgress);
 window.addEventListener('resize', updateProgress);
 updateProgress();
 
-/* El carrusel infinito se hace solo con CSS (animación @keyframes),
-   no necesita JavaScript. */
+document.body.insertAdjacentHTML('beforeend', `
+  <div class="overlay" id="overlay" onclick="cerrarCarrito()"></div>
+  <aside class="cart-drawer" id="drawer" aria-label="Carrito" inert>
+    <div class="drawer-top">
+      <h2>Carrito</h2>
+      <button type="button" aria-label="Cerrar carrito" onclick="cerrarCarrito()">&times;</button>
+    </div>
+    <div class="cart-items" id="cart-items"></div>
+    <p class="cart-total" id="cart-total"></p>
+    <p class="cart-msg" id="cart-msg"></p>
+    <button type="button" class="btn-red" onclick="vaciarCarrito()">Vaciar</button>
+    <button type="button" class="btn-green" onclick="pagar()">Proc. pago</button>
+  </aside>`);
+
+
+const cartBtn = document.querySelector('.cart-btn');
+const panel = document.getElementById('drawer');
+const fondo = document.getElementById('overlay');
+const mensaje = document.getElementById('cart-msg');
+ 
+let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+ 
+function guardarCarrito() {
+  localStorage.setItem('carrito', JSON.stringify(carrito));
+}
+
+function abrirCarrito() {
+  panel.inert = false;
+  panel.classList.add('open');
+  fondo.classList.add('open');
+}
+ 
+function cerrarCarrito() {
+  panel.classList.remove('open');
+  fondo.classList.remove('open');
+  panel.inert = true;
+}
