@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Productos | Nombre Tienda</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="wrapper">
+        <header class="site-header">
+            <nav class="site-nav">
+                <div class="nav-container">
+                    <a class="nav-brand" href="index.html">
+                        <img src="./img/logo.svg" alt="Logo" width="200" height="40" class="brand-image">
+                    </a>
+                    <button class="nav-toggler" id="navToggler" type="button" aria-controls="navMenu" aria-expanded="false" aria-label="Abrir menú">&#9776;</button>
+                    <div class="nav-menu" id="navMenu">
+                        <ul class="nav-list">
+                            <li class="nav-item"><a class="nav-link" href="index.html">Inicio</a></li>
+                            <li class="nav-item"><a class="nav-link active" aria-current="page" href="catalogo.html">Catálogo</a></li>
+                            <li class="nav-item"><a class="nav-link" href="servicios.html">Servicios</a></li>
+                            <li class="nav-item"><a class="nav-link" href="contacto.html">Contacto</a></li>
+                            <li class="cart-btn"><a class="cart" href="#">Carrito <span id="cart-count">0</span></a></li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+        </header>
+
+        <main>
+            <nav class="subnav" id="subnav" aria-label="Categorías"></nav>
+            <div class="shop">
+                <aside class="filters">
+                    <input type="search" id="search-side" placeholder="Buscador" aria-label="Buscar productos">
+                    <h3>Precio máximo: <output id="price-out">1500 €</output></h3>
+                    <input type="range" id="price" min="0" max="1500" step="10" value="1500" aria-label="Precio máximo">
+                    <h3>Marca</h3>
+                    <div id="brands"></div>
+                </aside>
+                <div class="product-list" id="list"></div>
+            </div>
+        </main>
+
+        <footer class="site-footer">
+            <p><strong>Nombre Tienda</strong> · soporte@nombretienda.es · 960 000 000</p>
+            <p>Instagram · YouTube · TikTok</p>
+            <p>© 2026 Nombre Tienda. Todos los derechos reservados.</p>
+        </footer>
+    </div>
+    <script src="script.js"></script>
+</body>
+
+</html>
