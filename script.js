@@ -61,8 +61,6 @@ const panel = document.getElementById('drawer');
 const fondo = document.getElementById('overlay');
 const mensaje = document.getElementById('cart-msg');
  
-// El carrito es una lista: [ { id: 3, cantidad: 2 }, { id: 7, cantidad: 1 } ]
-// Se guarda en localStorage para que no se pierda al cambiar de página
 let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
  
 function guardarCarrito() {
@@ -70,8 +68,7 @@ function guardarCarrito() {
 }
  
 function abrirCarrito() {
-  panel.inert = false; // "inert" evita entrar con el tabulador cuando está cerrado
-  panel.classList.add('open');
+  panel.inert = false;
   fondo.classList.add('open');
 }
  
@@ -90,7 +87,6 @@ function calcularTotal() {
   return total;
 }
  
-// Vuelve a dibujar el contenido del carrito y el número de arriba
 function dibujarCarrito() {
   let html = '';
   let unidades = 0;
