@@ -69,6 +69,7 @@ function guardarCarrito() {
  
 function abrirCarrito() {
   panel.inert = false;
+  panel.classList.add('open');
   fondo.classList.add('open');
 }
  
