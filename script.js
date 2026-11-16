@@ -32,6 +32,10 @@ const productos = [
 const progressFill = document.getElementById('progressFill');
 
 function updateProgress() {
+  // Si una página no tiene la barra, no hacemos nada (así no se rompe el resto del script)
+  if (progressFill == null) {
+    return;
+  }
   const max = document.documentElement.scrollHeight - window.innerHeight;
   const progress = max > 0 ? window.scrollY / max : 0;
   progressFill.style.width = (progress * 100) + '%';
@@ -412,6 +416,114 @@ function descargarRecibo(compra, numero) {
 
 
 // =====================================================
+// CATÁLOGO (solo funciona en catalogo.html; en las demás páginas no hace nada)
+// =====================================================
+
+const contenedorCats = document.getElementById('cats');
+const zonaProductos = document.getElementById('zona-productos');
+const tituloResultados = document.getElementById('titulo-resultados');
+const gridProductos = document.getElementById('grid-productos');
+const formBusqueda = document.getElementById('search-form');
+const campoBusqueda = document.getElementById('search-main');
+
+// Quita mayúsculas y tildes para que "percusion" encuentre "Percusión"
+function limpiar(texto) {
+  return texto.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+}
+
+function mostrarCategorias() {
+  contenedorCats.innerHTML = '';
+
+  categorias.forEach(function (cat) {
+    const cuantos = productos.filter(function (p) {
+      return p.cat === cat.id;
+    }).length;
+
+    const tarjeta = document.createElement('button');
+    tarjeta.type = 'button';
+    tarjeta.className = 'cat-card';
+    tarjeta.innerHTML = '<strong>' + cat.nombre + '</strong><span>' + cuantos + ' productos</span>';
+    tarjeta.onclick = function () {
+      abrirCategoria(cat.id);
+    };
+    contenedorCats.appendChild(tarjeta);
+  });
+}
+
+function pintarProductos(lista) {
+  gridProductos.innerHTML = '';
+
+  if (lista.length == 0) {
+    gridProductos.innerHTML = '<p class="empty-msg">No hemos encontrado ningún producto.</p>';
+    return;
+  }
+
+  lista.forEach(function (p) {
+    const caja = document.createElement('div');
+    caja.className = 'product-card';
+    caja.innerHTML =
+      '<div class="thumb" ' + estiloImagen(p.id) + '></div>' +
+      (p.nuevo ? '<span class="badge-new">Nuevo</span>' : '') +
+      '<h3>' + p.nombre + '</h3>' +
+      '<small>' + p.marca + '</small>' +
+      '<p class="precio">' + p.precio + ' €</p>' +
+      '<button type="button" onclick="anadirAlCarrito(' + p.id + ')">Añadir</button>';
+    gridProductos.appendChild(caja);
+  });
+}
+
+function mostrarZonaProductos(titulo, lista) {
+  tituloResultados.textContent = titulo;
+  pintarProductos(lista);
+  contenedorCats.hidden = true;
+  zonaProductos.hidden = false;
+}
+
+function abrirCategoria(idCategoria) {
+  const cat = categorias.find(function (c) {
+    return c.id === idCategoria;
+  });
+  if (cat == undefined) {
+    return;
+  }
+
+  const lista = productos.filter(function (p) {
+    return p.cat === idCategoria;
+  });
+
+  mostrarZonaProductos(cat.nombre + ' (' + lista.length + ')', lista);
+}
+
+function volverACategorias() {
+  zonaProductos.hidden = true;
+  contenedorCats.hidden = false;
+  campoBusqueda.value = '';
+}
+
+function buscar(evento) {
+  evento.preventDefault();
+
+  const texto = limpiar(campoBusqueda.value.trim());
+  if (texto == '') {
+    volverACategorias();
+    return;
+  }
+
+  // Busca en nombre, marca y nombre de la categoría
+  const lista = productos.filter(function (p) {
+    const cat = categorias.find(function (c) {
+      return c.id === p.cat;
+    });
+    return limpiar(p.nombre).includes(texto) ||
+      limpiar(p.marca).includes(texto) ||
+      limpiar(cat.nombre).includes(texto);
+  });
+
+  mostrarZonaProductos('Resultados para "' + campoBusqueda.value.trim() + '" (' + lista.length + ')', lista);
+}
+
+
+// =====================================================
 // ARRANQUE
 // =====================================================
 
@@ -423,3 +535,14 @@ document.querySelector('.cart').onclick = function (evento) {
 mostrarNuevos();
 dibujarCarrito();
 leerHistorial();
+
+// Catálogo: solo si la página tiene el buscador y las categorías
+if (contenedorCats != null) {
+  formBusqueda.onsubmit = buscar;
+  mostrarCategorias();
+
+  // Permite enlazar desde otras páginas: catalogo.html#guitarras
+  if (location.hash != '') {
+    abrirCategoria(location.hash.slice(1));
+  }
+}

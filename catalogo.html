@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Catálogo | Nombre Tienda</title>
+    <title>Catálogo | Picanya Music</title>
     <link rel="stylesheet" href="style.css">
 </head>
 
@@ -27,6 +27,10 @@
                     </div>
                 </div>
             </nav>
+            <!-- Esta barra faltaba: script.js la necesita en todas las páginas -->
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
         </header>
 
         <main>
@@ -36,7 +40,18 @@
                     <input type="search" id="search-main" placeholder="Busca en toda la tienda" aria-label="Buscar en toda la tienda">
                     <button type="submit">Buscar</button>
                 </form>
+
+                <!-- Vista 1: categorías -->
                 <div class="cat-grid" id="cats"></div>
+
+                <!-- Vista 2: productos de una categoría o resultados de búsqueda -->
+                <div id="zona-productos" hidden>
+                    <div class="results-top">
+                        <button type="button" class="back-btn" onclick="volverACategorias()">← Todas las categorías</button>
+                        <h2 id="titulo-resultados"></h2>
+                    </div>
+                    <div class="product-grid" id="grid-productos"></div>
+                </div>
             </section>
 
             <section class="page">
@@ -47,11 +62,12 @@
         </main>
 
         <footer class="site-footer">
-            <p><strong>Nombre Tienda</strong> · soporte@nombretienda.es · 960 000 000</p>
+            <p><strong>Picanya Music</strong> · soporte@picanyamusic.es · 960 000 000</p>
             <p>Instagram · YouTube · TikTok</p>
-            <p>© 2026 Nombre Tienda. Todos los derechos reservados.</p>
+            <p>© 2026 Picanya Music. Todos los derechos reservados.</p>
         </footer>
     </div>
+
     <script src="script.js"></script>
 </body>
 

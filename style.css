@@ -117,13 +117,12 @@ body {
 }
 
 .cart-btn a {
-    color: inherit;
-    text-decoration: none;
     display: block;
     padding: 1rem;
     background: var(--color-main);
     border-radius: 50px;
     color: var(--color-accent);
+    text-decoration: none;
     cursor: pointer;
     transition: all .2s ease;
 }
@@ -634,6 +633,167 @@ body {
     border: 1px solid var(--color-main);
     border-radius: 4px;
     cursor: pointer;
+}
+
+/* ===== CATÁLOGO ===== */
+
+/* Sin esto, display:grid/flex ganaría al atributo hidden */
+[hidden] {
+    display: none !important;
+}
+
+.page {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2.5rem 5vw;
+}
+
+.page h1,
+.page h2 {
+    margin-bottom: 1rem;
+    color: var(--color-main);
+}
+
+.page p {
+    margin-bottom: 1rem;
+    line-height: 1.6;
+}
+
+/* Buscador */
+.catalog-search {
+    display: flex;
+    gap: .5rem;
+    max-width: 560px;
+    margin-bottom: 2rem;
+}
+
+.catalog-search input {
+    flex: 1;
+    padding: .7rem 1.1rem;
+    border: 2px solid var(--color-main);
+    border-radius: 50px;
+    font-size: 1rem;
+}
+
+.catalog-search input:focus {
+    outline: 3px solid var(--color-accent);
+}
+
+.catalog-search button {
+    padding: .7rem 1.4rem;
+    background: var(--color-main);
+    border: 0;
+    border-radius: 50px;
+    color: #fff;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background .2s, color .2s;
+}
+
+.catalog-search button:hover {
+    background: var(--color-accent);
+    color: var(--color-text);
+}
+
+/* Tarjetas de categoría */
+.cat-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1.5rem;
+}
+
+.cat-card {
+    display: flex;
+    flex-direction: column;
+    gap: .3rem;
+    padding: 2.2rem 1rem;
+    background: #fff;
+    border: 2px solid var(--color-main);
+    border-radius: 8px;
+    color: var(--color-text);
+    text-align: center;
+    cursor: pointer;
+    transition: background .2s, transform .2s;
+}
+
+.cat-card strong {
+    font-size: 1.3rem;
+    color: var(--color-main);
+}
+
+.cat-card span {
+    color: #566370;
+}
+
+.cat-card:hover {
+    background: var(--color-accent);
+    transform: translateY(-3px);
+}
+
+/* Productos de una categoría / resultados */
+.results-top {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.results-top h2 {
+    margin: 0;
+}
+
+.back-btn {
+    padding: .5rem 1.1rem;
+    background: none;
+    border: 2px solid var(--color-main);
+    border-radius: 50px;
+    color: var(--color-main);
+    font-weight: 600;
+    cursor: pointer;
+    transition: background .2s, color .2s;
+}
+
+.back-btn:hover {
+    background: var(--color-main);
+    color: #fff;
+}
+
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1.5rem;
+}
+
+.badge-new {
+    align-self: center;
+    padding: .1rem .7rem;
+    background: var(--color-accent);
+    border-radius: 50px;
+    font-size: .75rem;
+    font-weight: 700;
+}
+
+.empty-msg {
+    grid-column: 1 / -1;
+    color: #566370;
+}
+
+/* Botón-enlace (sección de servicios) */
+.link-btn {
+    display: inline-block;
+    padding: .7rem 1.6rem;
+    background: var(--color-main);
+    border-radius: 50px;
+    color: #fff;
+    font-weight: 600;
+    text-decoration: none;
+    transition: background .2s, color .2s;
+}
+
+.link-btn:hover {
+    background: var(--color-accent);
+    color: var(--color-text);
 }
 
 /* ===== RESPONSIVE (siempre al final para que gane a lo anterior) ===== */
