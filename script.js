@@ -21,7 +21,14 @@ const productos = [
   { id: 11, nombre: 'Cuerdas acústicas', cat: 'accesorios', marca: 'Ernie Ball', precio: 9, nuevo: false },
   { id: 12, nombre: 'Afinador de pinza', cat: 'accesorios', marca: 'Boss', precio: 19, nuevo: false },
   { id: 13, nombre: 'Pedal de distorsión', cat: 'mas', marca: 'Boss', precio: 89, nuevo: false },
-  { id: 14, nombre: 'Amplificador 20 W', cat: 'mas', marca: 'Yamaha', precio: 159, nuevo: false }
+  { id: 14, nombre: 'Amplificador 20 W', cat: 'mas', marca: 'Yamaha', precio: 159, nuevo: false },
+  { id: 15, nombre: 'Alesis Nitro Max', cat: 'percusion', marca: 'Alesis', precio: 379, nuevo: false },
+  { id: 16, nombre: 'Cahaya Electronic', cat: 'percusion', marca: 'Cahaya', precio: 239, nuevo: false },
+  { id: 17, nombre: 'dpd_cm7', cat: 'percusion', marca: 'Yamaha', precio: 001, nuevo: false },
+  { id: 18, nombre: 'rmx_802bk', cat: 'percusion', marca: 'Yamaha', precio: 001, nuevo: false },
+  { id: 19, nombre: 'tama_ljk48s', cat: 'percusion', marca: 'Yamaha', precio: 001, nuevo: false },
+  { id: 20, nombre: 'vevor_acoustic', cat: 'percusion', marca: 'Yamaha', precio: 001, nuevo: false },
+  { id: 21, nombre: 'xdrum_dd530', cat: 'percusion', marca: 'Yamaha', precio: 001, nuevo: false }
 ];
 
 
