@@ -1,17 +1,16 @@
+// Los id de las categorías coinciden con las carpetas de img/
 const categorias = [
   { id: 'guitarras', nombre: 'Guitarras' },
   { id: 'bajos', nombre: 'Bajos' },
-  { id: 'ukeleles', nombre: 'Ukeleles' },
-  { id: 'percusion', nombre: 'Percusión' },
-  { id: 'accesorios', nombre: 'Accesorios' },
-  { id: 'mas', nombre: 'Más cosas' }
+  { id: 'baterias', nombre: 'Baterías' },
+  { id: 'cabinas', nombre: 'Cabinas' },
+  { id: 'accesorios', nombre: 'Accesorios' }
 ];
 
 const productos = [
-  { id: 1, nombre: 'Les Paul Custom Widow', cat: 'guitarras', marca: 'Epiphone', precio: 849, nuevo: false, img: './img/guitarras/epiphone/epiphone_lespaul.webp' },
-  { id: 2, nombre: 'Les Paul Traditional Pro', cat: 'guitarras', marca: 'Epiphone', precio: 449, nuevo: false },
-  { id: 3, nombre: 'Les Paul Traditional Pro', cat: 'guitarras', marca: 'Epiphone', precio: 1249, nuevo: false },
-  { id: 4, nombre: 'GRG121DX WNF', cat: 'guitarras', marca: 'Ibanez', precio: 229, nuevo: false },
+  { id: 1, nombre: 'Epiphone Les Paul', cat: 'guitarras', marca: 'Epiphone', precio: 449, nuevo: true, imagen: 'guitarras/epiphone/epiphone_lespaul.webp' },
+  { id: 2, nombre: 'Epiphone Les Paul Tribute', cat: 'guitarras', marca: 'Epiphone', precio: 499, nuevo: false, imagen: 'guitarras/epiphone/epiphone_lespaul_tribute.webp' },
+  { id: 3, nombre: 'Epiphone Les Paul Pro', cat: 'guitarras', marca: 'Epiphone', precio: 599, nuevo: true, imagen: 'guitarras/epiphone/epiphone_lespaul_pro.webp' }
 ];
 
 
@@ -46,9 +45,13 @@ function buscarProducto(id) {
   });
 }
 
-// Imagen del producto: cambia la ruta por la que uses en tu carpeta img
+// Imagen del producto: usa la ruta de la propiedad imagen (dentro de img/)
 function estiloImagen(id) {
-  return 'style="background-image:url(\'./img/producto_' + id + '.png\')"';
+  const p = buscarProducto(id);
+  if (p == undefined || p.imagen == undefined) {
+    return '';
+  }
+  return 'style="background-image:url(\'./img/' + p.imagen + '\')"';
 }
 
 
