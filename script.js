@@ -8,9 +8,25 @@ const categorias = [
 ];
 
 const productos = [
-  { id: 1, nombre: 'Epiphone Les Paul', cat: 'guitarras', marca: 'Epiphone', precio: 449, nuevo: true, imagen: 'guitarras/epiphone/epiphone_lespaul.webp' },
-  { id: 2, nombre: 'Epiphone Les Paul Tribute', cat: 'guitarras', marca: 'Epiphone', precio: 499, nuevo: false, imagen: 'guitarras/epiphone/epiphone_lespaul_tribute.webp' },
-  { id: 3, nombre: 'Epiphone Les Paul Pro', cat: 'guitarras', marca: 'Epiphone', precio: 599, nuevo: true, imagen: 'guitarras/epiphone/epiphone_lespaul_pro.webp' }
+  // GUITARRAS
+  { id: 1, nombre: 'Les Paul', cat: 'guitarras', marca: 'Epiphone', precio: 379, nuevo: false, imagen: 'guitarras/epiphone/epiphone_lespaul.webp' },
+  { id: 2, nombre: 'Les Paul Tribute', cat: 'guitarras', marca: 'Epiphone', precio: 499, nuevo: false, imagen: 'guitarras/epiphone/epiphone_lespaul_tribute.webp' },
+  { id: 3, nombre: 'Les Paul Pro', cat: 'guitarras', marca: 'Epiphone', precio: 819, nuevo: false, imagen: 'guitarras/epiphone/epiphone_lespaul_pro.webp' },
+  { id: 4, nombre: 'GRG121DX WNF', cat: 'guitarras', marca: 'Ibanez', precio: 219, nuevo: false, imagen: 'guitarras/ibanez/ibanez_grg121dx.webp' },
+  { id: 5, nombre: 'GRG140 WH', cat: 'guitarras', marca: 'Ibanez', precio: 239, nuevo: false, imagen: 'guitarras/ibanez/ibanez_grg140.webp' },
+  { id: 6, nombre: 'GIO GRG170 DX', cat: 'guitarras', marca: 'Ibanez', precio: 289, nuevo: false, imagen: 'guitarras/ibanez/ibanez_grg170dx.jpg' },
+  { id: 7, nombre: 'GIO GRG70 QA', cat: 'guitarras', marca: 'Ibanez', precio: 229, nuevo: false, imagen: 'guitarras/ibanez/ibanez_grx70qa.webp' },
+  { id: 8, nombre: 'RG5121RET Prestige', cat: 'guitarras', marca: 'Ibanez', precio: 2779, nuevo: true, imagen: 'guitarras/ibanez/ibanez_prestige_rg5121ret.webp' },
+  { id: 9, nombre: 'RG450DBX WH', cat: 'guitarras', marca: 'Ibanez', precio: 499, nuevo: false, imagen: 'guitarras/ibanez/ibanez_rg450dbx.webp' },
+  { id: 10, nombre: 'RGMS8 BK Multiscale', cat: 'guitarras', marca: 'Ibanez', precio: 599, nuevo: false, imagen: 'guitarras/ibanez/ibanez_rgms8.jpg' },
+  { id: 11, nombre: 'SA260FM-BRG', cat: 'guitarras', marca: 'Ibanez', precio: 389, nuevo: false, imagen: 'guitarras/ibanez/ibanez_sa260fm.webp' },
+  { id: 12, nombre: 'PX-SOLAR170C Parallaxe 7', cat: 'guitarras', marca: 'Solar', precio: 569, nuevo: true, imagen: 'guitarras/solar/solar_pxsolar170c.jpg' },
+  { id: 13, nombre: 'Stratocaster', cat: 'guitarras', marca: 'Squier', precio: 109, nuevo: false, imagen: 'guitarras/squier/squier_stratocaster.webp' },
+  { id: 14, nombre: 'Telecaster', cat: 'guitarras', marca: 'Squier', precio: 559, nuevo: false, imagen: 'guitarras/squier/squier_telecaster.webp' },
+  { id: 15, nombre: 'Telecaster Thinline', cat: 'guitarras', marca: 'Squier', precio: 2549, nuevo: false, imagen: 'guitarras/squier/squier_telecaster_thinline.webp' },
+
+  // BAJOS
+  { id: 16, nombre: 'GSR200 BK', cat: 'bajos', marca: 'Ibanez', precio: 249, nuevo: true, imagen: 'bajos/ibanez/ibanez_gsr200.jpg' },
 ];
 
 
