@@ -2,9 +2,9 @@
 const categorias = [
   { id: 'guitarras', nombre: 'Guitarras' },
   { id: 'bajos', nombre: 'Bajos' },
-  { id: 'baterias', nombre: 'Baterías' },
+  { id: 'percusion', nombre: 'Percusión' },
   { id: 'cabinas', nombre: 'Cabinas' },
-  { id: 'accesorios', nombre: 'Accesorios' }
+  { id: 'equipamiento', nombre: 'Equipamiento' }
 ];
 
 const productos = [
@@ -17,7 +17,7 @@ const productos = [
   { id: 6, nombre: 'GIO GRG170 DX', cat: 'guitarras', marca: 'Ibanez', precio: 289, nuevo: false, imagen: 'guitarras/ibanez/ibanez_grg170dx.jpg' },
   { id: 7, nombre: 'GIO GRG70 QA', cat: 'guitarras', marca: 'Ibanez', precio: 229, nuevo: false, imagen: 'guitarras/ibanez/ibanez_grx70qa.webp' },
   { id: 8, nombre: 'RG5121RET Prestige', cat: 'guitarras', marca: 'Ibanez', precio: 2779, nuevo: true, imagen: 'guitarras/ibanez/ibanez_prestige_rg5121ret.webp' },
-  { id: 9, nombre: 'RG450DBX WH', cat: 'guitarras', marca: 'Ibanez', precio: 499, nuevo: false, imagen: 'guitarras/ibanez/ibanez_rg450dbx.webp' },
+  { id: 9, nombre: 'RG450DBX WH', cat: 'guitarras', marca: 'Ibanez', precio: 499, nuevo: true, imagen: 'guitarras/ibanez/ibanez_rg450dbx.webp' },
   { id: 10, nombre: 'RGMS8 BK Multiscale', cat: 'guitarras', marca: 'Ibanez', precio: 599, nuevo: false, imagen: 'guitarras/ibanez/ibanez_rgms8.jpg' },
   { id: 11, nombre: 'SA260FM-BRG', cat: 'guitarras', marca: 'Ibanez', precio: 389, nuevo: false, imagen: 'guitarras/ibanez/ibanez_sa260fm.webp' },
   { id: 12, nombre: 'PX-SOLAR170C Parallaxe 7', cat: 'guitarras', marca: 'Solar', precio: 569, nuevo: true, imagen: 'guitarras/solar/solar_pxsolar170c.jpg' },
@@ -26,7 +26,40 @@ const productos = [
   { id: 15, nombre: 'Telecaster Thinline', cat: 'guitarras', marca: 'Squier', precio: 2549, nuevo: false, imagen: 'guitarras/squier/squier_telecaster_thinline.webp' },
 
   // BAJOS
-  { id: 16, nombre: 'GSR200 BK', cat: 'bajos', marca: 'Ibanez', precio: 249, nuevo: true, imagen: 'bajos/ibanez/ibanez_gsr200.jpg' },
+  { id: 16, nombre: 'GSR200 BK', cat: 'bajos', marca: 'Ibanez', precio: 249, nuevo: false, imagen: 'bajos/ibanez/ibanez_gsr200.jpg' },
+  { id: 17, nombre: 'SR300EDX BZM', cat: 'bajos', marca: 'Ibanez', precio: 369, nuevo: false, imagen: 'bajos/ibanez/ibanez_sr300edx.jpg' },
+  { id: 18, nombre: 'CBX IV', cat: 'bajos', marca: 'Jackson', precio: 699, nuevo: false, imagen: 'bajos/jackson/jackson_cbxiv.jpg' },
+  { id: 19, nombre: 'Spectra JS2', cat: 'bajos', marca: 'Jackson', precio: 229, nuevo: false, imagen: 'bajos/jackson/jackson_spectrajs2.jpg' },
+
+  // PERCUSIÓN
+  { id: 20, nombre: 'DPD CM7', cat: 'percusion', marca: 'DW Drums', precio: 1499, nuevo: false, imagen: 'baterias/dpd_cm7.jpg' },
+  { id: 21, nombre: 'Nitro Max Kit', cat: 'percusion', marca: 'Alesis', precio: 379, nuevo: false, imagen: 'baterias/alesis_nitromax.jpg' },
+  { id: 22, nombre: 'Electronic Kit', cat: 'percusion', marca: 'Cahaya', precio: 299, nuevo: false, imagen: 'baterias/cahaya_electronic.jpg' },
+  { id: 23, nombre: 'RM-802 BK', cat: 'percusion', marca: 'RMX Percussion', precio: 429, nuevo: false, imagen: 'baterias/rmx_802bk.webp' },
+  { id: 24, nombre: 'LJK48S', cat: 'percusion', marca: 'Tama', precio: 409, nuevo: false, imagen: 'baterias/tama_ljk48s.jpg' },
+  { id: 25, nombre: 'VEVOR Acoustic', cat: 'percusion', marca: 'Vevor', precio: 419, nuevo: false, imagen: 'baterias/vevor_acoustic.jpg' },
+  { id: 26, nombre: 'DD-530', cat: 'percusion', marca: 'XDrum', precio: 529, nuevo: false, imagen: 'baterias/xdrum_dd530.avif' },
+
+  // CABINAS / AMPLIFICADORES
+  { id: 27, nombre: 'FLY 3', cat: 'cabinas', marca: 'Blackstar', precio: 529, nuevo: false, imagen: 'cabinas/blackstar_fly3.jpg' },
+  { id: 28, nombre: 'Rumble 15', cat: 'cabinas', marca: 'Fender', precio: 109, nuevo: false, imagen: 'cabinas/fender_rumble15.jpg' },
+  { id: 29, nombre: 'Rumble 30', cat: 'cabinas', marca: 'Fender', precio: 159, nuevo: false, imagen: 'cabinas/fender_rumble30.jpg' },
+  { id: 30, nombre: 'Amp 15W', cat: 'cabinas', marca: 'Gear4music', precio: 59, nuevo: false, imagen: 'cabinas/gear4music.jpg' },
+  { id: 31, nombre: 'MG101GFX', cat: 'cabinas', marca: 'Marshall', precio: 274, nuevo: false, imagen: 'cabinas/marshall_mg101gfx.jpg' },
+  { id: 32, nombre: 'Crush Bas 50 Purple', cat: 'cabinas', marca: 'Orange', precio: 279, nuevo: false, imagen: 'cabinas/orange_crushbass.jpg' },
+  { id: 33, nombre: 'T30H Combo', cat: 'cabinas', marca: 'Orange', precio: 559, nuevo: false, imagen: 'cabinas/orange_t30h.jpg' },
+
+  // EQUIPAMIENTO
+  { id: 34, nombre: 'M-Track Solo', cat: 'equipamiento', marca: 'M-Audio', precio: 49, nuevo: false, imagen: 'equipamiento/mtrack_solo.jpg' },
+  { id: 35, nombre: 'M-Track Duo', cat: 'equipamiento', marca: 'M-Audio', precio: 69, nuevo: false, imagen: 'equipamiento/mtrack_duo.webp' },
+  { id: 36, nombre: 'Scarlett 2i2', cat: 'equipamiento', marca: 'Focusrite', precio: 124, nuevo: false, imagen: 'equipamiento/focusrite_scarlett2i2.webp' },
+  { id: 37, nombre: 'Jack 6.35mm', cat: 'equipamiento', marca: 'Anyplus', precio: 10, nuevo: false, imagen: 'equipamiento/anyplus_jack_6_35.jpg' },
+  { id: 38, nombre: 'Jack 6.35mm', cat: 'equipamiento', marca: 'OTraki', precio: 12, nuevo: false, imagen: 'equipamiento/otraki_jack_6_35.jpg' },
+  { id: 39, nombre: 'Blue Light Picks', cat: 'equipamiento', marca: 'Dunlop Gels', precio: 7, nuevo: false, imagen: 'equipamiento/dunlop_bluelight_pick.jpg' },
+  { id: 40, nombre: 'Red Heavy Picks', cat: 'equipamiento', marca: 'Dunlop Gels', precio: 7, nuevo: false, imagen: 'equipamiento/dunlop_heavyred_pick.jpg' },
+  { id: 41, nombre: 'Emerald Medium Picks', cat: 'equipamiento', marca: 'Fender', precio: 9, nuevo: false, imagen: 'equipamiento/fender_medium_pick.webp' },
+  { id: 42, nombre: 'Black Medium Picks', cat: 'equipamiento', marca: 'Fender', precio: 9, nuevo: false, imagen: 'equipamiento/fender_blackmedium_pick.webp' },
+  { id: 43, nombre: 'Regular Slinky 8', cat: 'equipamiento', marca: 'Ernieball', precio: 12, nuevo: false, imagen: 'equipamiento/ernieball_regularslinky_8.webp' },
 ];
 
 
