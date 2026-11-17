@@ -10,7 +10,7 @@ const categorias = [
 
 const productos = [
 
-  // TOTAL ITEM COUNT: 53
+  // TOTAL ITEM COUNT: 54
 
   // GUITARRAS
   { id: 1, nombre: 'Les Paul', cat: 'guitarras', marca: 'Epiphone', precio: 379.95, nuevo: false, oferta: false, imagen: 'guitarras/epiphone/epiphone_lespaul.webp' },
@@ -24,7 +24,7 @@ const productos = [
   { id: 9, nombre: 'RG450DBX WH', cat: 'guitarras', marca: 'Ibanez', precio: 499.95, nuevo: false, imagen: 'guitarras/ibanez/ibanez_rg450dbx.webp' },
   { id: 10, nombre: 'RGMS8 BK Multiscale', cat: 'guitarras', marca: 'Ibanez', precio: 599.95, nuevo: false, oferta: false, imagen: 'guitarras/ibanez/ibanez_rgms8.jpg' },
   { id: 11, nombre: 'SA260FM-BRG', cat: 'guitarras', marca: 'Ibanez', precio: 389.95, nuevo: false, oferta: false, imagen: 'guitarras/ibanez/ibanez_sa260fm.webp' },
-  { id: 12, nombre: 'PX-SOLAR170C Parallaxe 7', cat: 'guitarras', marca: 'Solar', precio: 569.95, nuevo: false, imagen: 'guitarras/solar/solar_pxsolar170c.jpg' },
+  { id: 12, nombre: 'PX-SOLAR170C Parallaxe 7', cat: 'guitarras', marca: 'Solar', precio: 569.95, nuevo: true, oferta: false, imagen: 'guitarras/solar/solar_pxsolar170c.jpg' },
   { id: 13, nombre: 'Stratocaster', cat: 'guitarras', marca: 'Squier', precio: 109.95, nuevo: false, oferta: false, imagen: 'guitarras/squier/squier_stratocaster.webp' },
   { id: 14, nombre: 'Telecaster', cat: 'guitarras', marca: 'Squier', precio: 559.95, nuevo: false, oferta: false, imagen: 'guitarras/squier/squier_telecaster.webp' },
   { id: 15, nombre: 'Telecaster Thinline', cat: 'guitarras', marca: 'Squier', precio: 2549.95, nuevo: false, oferta: false, imagen: 'guitarras/squier/squier_telecaster_thinline.webp' },
@@ -34,12 +34,13 @@ const productos = [
   { id: 17, nombre: 'SR300EDX BZM', cat: 'bajos', marca: 'Ibanez', precio: 369.95, nuevo: false, oferta: false, imagen: 'bajos/ibanez/ibanez_sr300edx.jpg' },
   { id: 18, nombre: 'CBX IV', cat: 'bajos', marca: 'Jackson', precio: 699.95, nuevo: false, oferta: false, imagen: 'bajos/jackson/jackson_cbxiv.jpg' },
   { id: 19, nombre: 'Spectra JS2', cat: 'bajos', marca: 'Jackson', precio: 229.95, nuevo: false, oferta: false, imagen: 'bajos/jackson/jackson_spectrajs2.jpg' },
+  { id: 54, nombre: 'V7 4 TSB Left-Handed', cat: 'bajos', marca: 'Sire Marcus Miller', precio: 809.95, nuevo: true, oferta: false, imagen: 'bajos/marcusmiller/marcusmiller_V7-4.jpg' },
 
   // PERCUSIÓN
   { id: 20, nombre: 'DPD CM7', cat: 'percusion', marca: 'DW Drums', precio: 1499.95, nuevo: false, oferta: false, imagen: 'baterias/dpd_cm7.jpg' },
   { id: 21, nombre: 'Nitro Max Kit', cat: 'percusion', marca: 'Alesis', precio: 379.95, nuevo: false, oferta: false, imagen: 'baterias/alesis_nitromax.jpg' },
   { id: 22, nombre: 'Electronic Kit', cat: 'percusion', marca: 'Cahaya', precio: 299.95, nuevo: false, oferta: false, imagen: 'baterias/cahaya_electronic.jpg' },
-  { id: 23, nombre: 'RM-802 BK', cat: 'percusion', marca: 'RMX Percussion', precio: 429.95, nuevo: false, oferta: false, imagen: 'baterias/rmx_802bk.webp' },
+  { id: 23, nombre: 'RM-802 BK', cat: 'percusion', marca: 'RMX Percussion', precio: 429.95, nuevo: true, oferta: false, imagen: 'baterias/rmx_802bk.webp' },
   { id: 24, nombre: 'LJK48S', cat: 'percusion', marca: 'Tama', precio: 409.95, nuevo: false, oferta: false, imagen: 'baterias/tama_ljk48s.jpg' },
   { id: 25, nombre: 'VEVOR Acoustic', cat: 'percusion', marca: 'Vevor', precio: 419.95, nuevo: false, oferta: false, imagen: 'baterias/vevor_acoustic.jpg' },
   { id: 26, nombre: 'DD-530', cat: 'percusion', marca: 'XDrum', precio: 529.95, nuevo: false, oferta: false, imagen: 'baterias/xdrum_dd530.avif' },
@@ -50,7 +51,7 @@ const productos = [
   { id: 29, nombre: 'Rumble 30', cat: 'cabinas', marca: 'Fender', precio: 159.95, nuevo: false, oferta: false, imagen: 'cabinas/fender_rumble30.jpg' },
   { id: 30, nombre: 'Amp 15W', cat: 'cabinas', marca: 'Gear4music', precio: 59.95, nuevo: false, oferta: false, imagen: 'cabinas/gear4music.jpg' },
   { id: 31, nombre: 'MG101GFX', cat: 'cabinas', marca: 'Marshall', precio: 274.95, nuevo: false, oferta: false, imagen: 'cabinas/marshall_mg101gfx.jpg' },
-  { id: 32, nombre: 'Crush Bas 50 Purple', cat: 'cabinas', marca: 'Orange', precio: 279.95, nuevo: false, oferta: false, imagen: 'cabinas/orange_crushbass.jpg' },
+  { id: 32, nombre: 'Crush Bas 50 Purple', cat: 'cabinas', marca: 'Orange', precio: 279.95, nuevo: true, oferta: false, imagen: 'cabinas/orange_crushbass.jpg' },
   { id: 33, nombre: 'T30H Combo', cat: 'cabinas', marca: 'Orange', precio: 559.95, nuevo: false, oferta: false, imagen: 'cabinas/orange_t30h.jpg' },
 
   // PEDALES
@@ -59,7 +60,7 @@ const productos = [
   { id: 49, nombre: 'SD-1 Overdrive', cat: 'pedales', marca: 'Boss', precio: 79.95, nuevo: false, oferta: false, imagen: 'pedales/boss_sd1_overdrive.jpg' },
   { id: 50, nombre: 'RAT 2 Distortion', cat: 'pedales', marca: 'Proco', precio: 89.95, nuevo: false, oferta: false, imagen: 'pedales/proco_rat2_dist.jpg' },
   { id: 51, nombre: 'The Prophet Digital Delay', cat: 'pedales', marca: 'TC Electronic', precio: 39.95, nuevo: false, oferta: false, imagen: 'pedales/theprophet_delay.jpg' },
-  { id: 52, nombre: 'Slö Multi Texture Delay', cat: 'pedales', marca: 'Walrus Audio', precio: 109.95, nuevo: false, oferta: false, imagen: 'pedales/walrus_slo_reverb.jpg' },
+  { id: 52, nombre: 'Slö Multi Texture Delay', cat: 'pedales', marca: 'Walrus Audio', precio: 109.95, nuevo: true, oferta: false, imagen: 'pedales/walrus_slo_reverb.jpg' },
   { id: 53, nombre: 'Big Muff PI Fuzz', cat: 'pedales', marca: 'Electro-Harmonix', precio: 89.95, nuevo: false, oferta: false, imagen: 'pedales/electro_harmonix_bigmuff_fuzz.jpg' },
 
   // EQUIPAMIENTO
