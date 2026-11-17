@@ -13,7 +13,7 @@ const productos = [
   // TOTAL ITEM COUNT: 54
 
   // GUITARRAS
-  { id: 1, nombre: 'Les Paul', cat: 'guitarras', marca: 'Epiphone', precio: 379.95, nuevo: false, oferta: false, imagen: 'guitarras/epiphone/epiphone_lespaul.webp' },
+  { id: 1, nombre: 'Les Paul', cat: 'guitarras', marca: 'Epiphone', precio: 379.95, nuevo: false, oferta: true, imagen: 'guitarras/epiphone/epiphone_lespaul.webp' },
   { id: 2, nombre: 'Les Paul Tribute', cat: 'guitarras', marca: 'Epiphone', precio: 499.95, nuevo: false, oferta: false, imagen: 'guitarras/epiphone/epiphone_lespaul_tribute.webp' },
   { id: 3, nombre: 'Les Paul Pro', cat: 'guitarras', marca: 'Epiphone', precio: 819.95, nuevo: false, oferta: false, imagen: 'guitarras/epiphone/epiphone_lespaul_pro.webp' },
   { id: 4, nombre: 'GRG121DX WNF', cat: 'guitarras', marca: 'Ibanez', precio: 219.95, nuevo: false, oferta: false, imagen: 'guitarras/ibanez/ibanez_grg121dx.webp' },
@@ -38,7 +38,7 @@ const productos = [
 
   // PERCUSIÓN
   { id: 20, nombre: 'DPD CM7', cat: 'percusion', marca: 'DW Drums', precio: 1499.95, nuevo: false, oferta: false, imagen: 'baterias/dpd_cm7.jpg' },
-  { id: 21, nombre: 'Nitro Max Kit', cat: 'percusion', marca: 'Alesis', precio: 379.95, nuevo: false, oferta: false, imagen: 'baterias/alesis_nitromax.jpg' },
+  { id: 21, nombre: 'Nitro Max Kit', cat: 'percusion', marca: 'Alesis', precio: 379.95, nuevo: false, oferta: true, imagen: 'baterias/alesis_nitromax.jpg' },
   { id: 22, nombre: 'Electronic Kit', cat: 'percusion', marca: 'Cahaya', precio: 299.95, nuevo: false, oferta: false, imagen: 'baterias/cahaya_electronic.jpg' },
   { id: 23, nombre: 'RM-802 BK', cat: 'percusion', marca: 'RMX Percussion', precio: 429.95, nuevo: true, oferta: false, imagen: 'baterias/rmx_802bk.webp' },
   { id: 24, nombre: 'LJK48S', cat: 'percusion', marca: 'Tama', precio: 409.95, nuevo: false, oferta: false, imagen: 'baterias/tama_ljk48s.jpg' },
@@ -48,7 +48,7 @@ const productos = [
   // CABINAS / AMPLIFICADORES
   { id: 27, nombre: 'FLY 3', cat: 'cabinas', marca: 'Blackstar', precio: 529.95, nuevo: false, oferta: false, imagen: 'cabinas/blackstar_fly3.jpg' },
   { id: 28, nombre: 'Rumble 15', cat: 'cabinas', marca: 'Fender', precio: 109.95, nuevo: false, oferta: false, imagen: 'cabinas/fender_rumble15.jpg' },
-  { id: 29, nombre: 'Rumble 30', cat: 'cabinas', marca: 'Fender', precio: 159.95, nuevo: false, oferta: false, imagen: 'cabinas/fender_rumble30.jpg' },
+  { id: 29, nombre: 'Rumble 30', cat: 'cabinas', marca: 'Fender', precio: 159.95, nuevo: false, oferta: true, imagen: 'cabinas/fender_rumble30.jpg' },
   { id: 30, nombre: 'Amp 15W', cat: 'cabinas', marca: 'Gear4music', precio: 59.95, nuevo: false, oferta: false, imagen: 'cabinas/gear4music.jpg' },
   { id: 31, nombre: 'MG101GFX', cat: 'cabinas', marca: 'Marshall', precio: 274.95, nuevo: false, oferta: false, imagen: 'cabinas/marshall_mg101gfx.jpg' },
   { id: 32, nombre: 'Crush Bas 50 Purple', cat: 'cabinas', marca: 'Orange', precio: 279.95, nuevo: true, oferta: false, imagen: 'cabinas/orange_crushbass.jpg' },
@@ -58,15 +58,15 @@ const productos = [
   { id: 47, nombre: 'Speedy Trigger Noise Gate', cat: 'pedales', marca: 'Artec', precio: 34.95, nuevo: false, oferta: false, imagen: 'pedales/artec_noisegate.jpg' },
   { id: 48, nombre: 'DS-1 Distortion', cat: 'pedales', marca: 'Boss', precio: 79.95, nuevo: false, oferta: false, imagen: 'pedales/boss_ds1_dist.jpg' },
   { id: 49, nombre: 'SD-1 Overdrive', cat: 'pedales', marca: 'Boss', precio: 79.95, nuevo: false, oferta: false, imagen: 'pedales/boss_sd1_overdrive.jpg' },
-  { id: 50, nombre: 'RAT 2 Distortion', cat: 'pedales', marca: 'Proco', precio: 89.95, nuevo: false, oferta: false, imagen: 'pedales/proco_rat2_dist.jpg' },
+  { id: 50, nombre: 'RAT 2 Distortion', cat: 'pedales', marca: 'Proco', precio: 89.95, nuevo: false, oferta: true, imagen: 'pedales/proco_rat2_dist.jpg' },
   { id: 51, nombre: 'The Prophet Digital Delay', cat: 'pedales', marca: 'TC Electronic', precio: 39.95, nuevo: false, oferta: false, imagen: 'pedales/theprophet_delay.jpg' },
   { id: 52, nombre: 'Slö Multi Texture Delay', cat: 'pedales', marca: 'Walrus Audio', precio: 109.95, nuevo: true, oferta: false, imagen: 'pedales/walrus_slo_reverb.jpg' },
   { id: 53, nombre: 'Big Muff PI Fuzz', cat: 'pedales', marca: 'Electro-Harmonix', precio: 89.95, nuevo: false, oferta: false, imagen: 'pedales/electro_harmonix_bigmuff_fuzz.jpg' },
 
   // EQUIPAMIENTO
-  { id: 34, nombre: 'M-Track Solo', cat: 'equipamiento', marca: 'M-Audio', precio: 49.95, nuevo: false, oferta: false, imagen: 'equipamiento/mtrack_solo.jpg' },
+  { id: 34, nombre: 'M-Track Solo', cat: 'equipamiento', marca: 'M-Audio', precio: 49.95, nuevo: false, oferta: true, imagen: 'equipamiento/mtrack_solo.jpg' },
   { id: 35, nombre: 'M-Track Duo', cat: 'equipamiento', marca: 'M-Audio', precio: 69.95, nuevo: false, oferta: false, imagen: 'equipamiento/mtrack_duo.webp' },
-  { id: 36, nombre: 'Scarlett 2i2', cat: 'equipamiento', marca: 'Focusrite', precio: 124.95, nuevo: false, oferta: false, imagen: 'equipamiento/focusrite_scarlett2i2.webp' },
+  { id: 36, nombre: 'Scarlett 2i2', cat: 'equipamiento', marca: 'Focusrite', precio: 124.95, nuevo: true, oferta: false, imagen: 'equipamiento/focusrite_scarlett2i2.webp' },
   { id: 37, nombre: 'Jack 6.35mm', cat: 'equipamiento', marca: 'Anyplus', precio: 10.95, nuevo: false, oferta: false, imagen: 'equipamiento/anyplus_jack_6_35.jpg' },
   { id: 38, nombre: 'Jack 6.35mm', cat: 'equipamiento', marca: 'OTraki', precio: 12.95, nuevo: false, oferta: false, imagen: 'equipamiento/otraki_jack_6_35.jpg' },
   { id: 39, nombre: 'Blue Light Picks', cat: 'equipamiento', marca: 'Dunlop Gels', precio: 7.95, nuevo: false, oferta: false, imagen: 'equipamiento/dunlop_bluelight_pick.jpg' },
@@ -116,6 +116,53 @@ function formatearPrecio(numero) {
   return Number(numero).toFixed(2).replace('.', ',');
 }
 
+// Pone primero los productos nuevos o en oferta; el resto mantiene su orden original
+function destacadosPrimero(lista) {
+  return lista.slice().sort(function (a, b) {
+    const destacadoA = (a.nuevo || a.oferta) ? 1 : 0;
+    const destacadoB = (b.nuevo || b.oferta) ? 1 : 0;
+    return destacadoB - destacadoA;
+  });
+}
+
+// Porcentaje de descuento por categoría (solo se aplica si el producto tiene oferta: true)
+const descuentos = {
+  guitarras: 15,
+  bajos: 10,
+  percusion: 20,
+  cabinas: 10,
+  pedales: 25,
+  equipamiento: 30
+};
+
+// Porcentaje de descuento que le toca a un producto (0 si no está en oferta)
+function porcentajeDescuento(p) {
+  if (!p.oferta) {
+    return 0;
+  }
+  return descuentos[p.cat] || 0;
+}
+
+// Precio real que se paga: con descuento si está en oferta, redondeado a 2 decimales
+function precioFinal(p) {
+  const porcentaje = porcentajeDescuento(p);
+  if (porcentaje == 0) {
+    return p.precio;
+  }
+  return Math.round(p.precio * (100 - porcentaje)) / 100;
+}
+
+// HTML del precio: si hay oferta, precio original tachado + precio con descuento
+function htmlPrecio(p) {
+  if (porcentajeDescuento(p) == 0) {
+    return '<p class="precio">' + formatearPrecio(p.precio) + ' €</p>';
+  }
+  return '<p class="precio">' +
+    '<span class="precio-original">' + formatearPrecio(p.precio) + ' €</span> ' +
+    '<span class="precio-oferta">' + formatearPrecio(precioFinal(p)) + ' €</span>' +
+    '</p>';
+}
+
 // Imagen del producto: usa la ruta de la propiedad imagen (dentro de img/)
 function estiloImagen(id) {
   const p = buscarProducto(id);
@@ -144,7 +191,7 @@ function mostrarNuevos() {
         '<div class="thumb" ' + estiloImagen(p.id) + '></div>' +
         '<h3>' + p.nombre + '</h3>' +
         '<small>' + p.marca + '</small>' +
-        '<p class="precio">' + formatearPrecio(p.precio) + ' €</p>' +
+        htmlPrecio(p) +
         '<button type="button" onclick="anadirAlCarrito(' + p.id + ')">Añadir</button>';
       contenedor.appendChild(caja);
     }
@@ -212,7 +259,7 @@ function calcularTotal() {
   let total = 0;
   for (let i = 0; i < carrito.length; i++) {
     const p = buscarProducto(carrito[i].id);
-    total += p.precio * carrito[i].cantidad;
+    total += precioFinal(p) * carrito[i].cantidad;
   }
   // Redondeamos a 2 decimales para evitar errores de coma flotante
   return Math.round(total * 100) / 100;
@@ -295,7 +342,7 @@ function dibujarCarrito() {
           <small>x${cantidad}</small>
           <button type="button" class="plus" aria-label="Añadir otro ${p.nombre}" onclick="aumentarCarrito(${p.id})">+</button>
         </div>
-        <b>${formatearPrecio(p.precio * cantidad)} €</b>
+        <b>${formatearPrecio(precioFinal(p) * cantidad)} €</b>
         <button type="button" class="rm" aria-label="Quitar ${p.nombre}" onclick="quitarDelCarrito(${p.id})">&times;</button>
       </div>`;
   }
@@ -335,7 +382,7 @@ async function checkOut() {
     const p = buscarProducto(carrito[i].id);
     lineas.push({
       nombre: p.nombre,
-      precio: p.precio,
+      precio: precioFinal(p),
       cantidad: carrito[i].cantidad
     });
   }
@@ -528,10 +575,11 @@ function pintarProductos(lista) {
     caja.className = 'product-card';
     caja.innerHTML =
       '<div class="thumb" ' + estiloImagen(p.id) + '></div>' +
-      (p.nuevo ? '<span class="badge-new">Nuevo</span>' : '') +
+      (p.nuevo ? '<span class="badge-new"><i class="fa-solid fa-star"></i> Nuevo</span>' : '') +
+      (porcentajeDescuento(p) > 0 ? '<span class="badge-oferta"><i class="fa-solid fa-tag"></i> -' + porcentajeDescuento(p) + '%</span>' : '') +
       '<h3>' + p.nombre + '</h3>' +
       '<small>' + p.marca + '</small>' +
-      '<p class="precio">' + formatearPrecio(p.precio) + ' €</p>' +
+      htmlPrecio(p) +
       '<button type="button" onclick="anadirAlCarrito(' + p.id + ')">Añadir</button>';
     gridProductos.appendChild(caja);
   });
@@ -552,9 +600,10 @@ function abrirCategoria(idCategoria) {
     return;
   }
 
-  const lista = productos.filter(function (p) {
+  // Los productos nuevos o en oferta salen los primeros
+  const lista = destacadosPrimero(productos.filter(function (p) {
     return p.cat === idCategoria;
-  });
+  }));
 
   mostrarZonaProductos(cat.nombre + ' (' + lista.length + ')', lista);
 }
@@ -584,7 +633,7 @@ function buscar(evento) {
       limpiar(cat.nombre).includes(texto);
   });
 
-  mostrarZonaProductos('Resultados para "' + campoBusqueda.value.trim() + '" (' + lista.length + ')', lista);
+  mostrarZonaProductos('Resultados para "' + campoBusqueda.value.trim() + '" (' + lista.length + ')', destacadosPrimero(lista));
 }
 
 
