@@ -660,3 +660,43 @@ if (contenedorCats != null) {
     abrirCategoria(location.hash.slice(1));
   }
 }
+
+// =====================================================
+// MODO DÍA Y NOCHE
+// =====================================================
+
+function aplicarTema(oscuro) {
+  document.body.classList.toggle('dark-mode', oscuro);
+  const btn = document.getElementById('theme-toggle');
+  if (btn) {
+    btn.innerHTML = oscuro
+      ? '<i class="fa-solid fa-sun"></i>'
+      : '<i class="fa-solid fa-moon"></i>';
+    btn.setAttribute('aria-label', oscuro ? 'Activar modo día' : 'Activar modo noche');
+    btn.title = oscuro ? 'Modo día' : 'Modo noche';
+  }
+}
+
+function inicializarTema() {
+  const navList = document.querySelector('.nav-list');
+  if (navList) {
+    const li = document.createElement('li');
+    li.className = 'theme-btn';
+    li.innerHTML = '<button type="button" id="theme-toggle" class="theme-toggle" aria-label="Cambiar tema"></button>';
+    navList.appendChild(li);
+
+    document.getElementById('theme-toggle').onclick = function () {
+      const esOscuro = !document.body.classList.contains('dark-mode');
+      localStorage.setItem('temaOscuro', esOscuro);
+      aplicarTema(esOscuro);
+    };
+  }
+
+  const guardado = localStorage.getItem('temaOscuro');
+  const prefiereOscuro = window.matchMedia('(prefers-color-scheme: dark)').matches;
+  const activarOscuro = guardado !== null ? guardado === 'true' : prefiereOscuro;
+
+  aplicarTema(activarOscuro);
+}
+
+inicializarTema();
