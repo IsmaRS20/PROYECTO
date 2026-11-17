@@ -35,10 +35,8 @@ body {
 
 /* Miniatura reutilizable (tarjetas de producto y carrito) */
 .thumb {
-    background-color: #ddd;
     background-size: cover;
     background-position: center;
-    border-radius: 6px;
 }
 
 /* ===== CABECERA Y NAVEGACIÓN ===== */
