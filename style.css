@@ -17,13 +17,13 @@
 
 /* ===== MODO NOCHE ===== */
 body.dark-mode {
-    --color-bg: #121212;
-    --color-surface: #1e1e1e;
-    --color-surface-alt: #181818;
-    --color-text: #f0f0f0;
-    --color-text-muted: #a0aab5;
-    --color-border: rgb(20, 15, 0);
-    --color-heading: rgb(255, 207, 103);
+    --color-bg: #222222;
+    --color-surface: #363636;
+    --color-surface-alt: #3f3f3f;
+    --color-text: #e4e4e4;
+    --color-text-muted: #b9b9b9;
+    --color-border: rgb(76, 74, 68);
+    --color-heading: rgb(255, 233, 185);
 }
 
 html,
@@ -335,13 +335,21 @@ body {
 .product-card small,
 .cat-card span,
 .cart-item small,
-.precio-original,
 .empty-msg {
     color: var(--color-text-muted);
+    font-size: 1rem;
+}
+
+.precio-original {
+    font-size: 1rem;
+    font-weight: 300;
+    text-decoration: line-through;
+    color: gray;
 }
 
 .product-card .precio {
-    font-weight: 800;
+    font-weight: 600;
+    font-size: 1.25rem;
     color: var(--color-text);
 }
 
@@ -826,7 +834,7 @@ body {
 
 .precio-oferta {
     color: var(--color-red);
-    font-weight: 800;
+    font-weight: 700;
 }
 
 .badge-oferta {
