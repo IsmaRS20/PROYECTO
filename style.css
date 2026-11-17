@@ -283,6 +283,8 @@ body {
 
 /* ===== TARJETAS DE PRODUCTO ===== */
 .product-card {
+    position: relative;
+    /* <-- añadir */
     display: flex;
     flex-direction: column;
     gap: .4rem;
@@ -295,7 +297,7 @@ body {
 
 .product-card .thumb {
     width: 100%;
-    height: 160px;
+    height: 200px;
 }
 
 .product-card small {
@@ -766,12 +768,45 @@ body {
 }
 
 .badge-new {
-    align-self: center;
-    padding: .1rem .7rem;
+    position: absolute;
+    top: -1px;
+    /* centra el badge sobre la línea del borde (2px) */
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1;
+    padding: .3rem .7rem;
     background: var(--color-accent);
     border-radius: 50px;
-    font-size: .75rem;
+    font-size: 1rem;
     font-weight: 700;
+    white-space: nowrap;
+}
+
+.precio-original {
+    color: #566370;
+    font-weight: 400;
+    text-decoration: line-through;
+}
+
+.precio-oferta {
+    color: var(--color-red);
+    font-weight: 800;
+}
+
+/* Badge de oferta, en la esquina superior derecha sobre el borde */
+.badge-oferta {
+    position: absolute;
+    top: -1px;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1;
+    padding: .3rem .7rem;
+    background: var(--color-red);
+    border-radius: 50px;
+    color: #fff;
+    font-size: 1rem;
+    font-weight: 700;
+    white-space: nowrap;
 }
 
 .empty-msg {
