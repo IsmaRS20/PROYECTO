@@ -13,6 +13,29 @@
     --color-heading: rgb(49, 36, 1);
     --color-red: #c0392b;
     --color-green: #17a51e;
+    /* Relieve suave: tarjetas (sombra en capas + brillo arriba) */
+    --relieve-card: 
+        0 1px 2px rgba(49, 36, 1, .10),
+        0 4px 8px rgba(49, 36, 1, .10),
+        0 12px 24px rgba(49, 36, 1, .10),
+        inset 0 1px 0 rgba(255, 255, 255, .6);
+    --relieve-card-hover: 
+        0 2px 4px rgba(49, 36, 1, .12),
+        0 8px 16px rgba(49, 36, 1, .14),
+        0 20px 36px rgba(49, 36, 1, .14),
+        inset 0 1px 0 rgba(255, 255, 255, .6);
+    /* Relieve suave: botones (luz arriba, sombra abajo, hundido al pulsar) */
+    --relieve-btn: 
+        0 3px 6px rgba(49, 36, 1, .25),
+        inset 0 1px 0 rgba(255, 255, 255, .25),
+        inset 0 -2px 0 rgba(0, 0, 0, .15);
+    --relieve-btn-hover: 
+        0 6px 12px rgba(49, 36, 1, .30),
+        inset 0 1px 0 rgba(255, 255, 255, .30),
+        inset 0 -2px 0 rgba(0, 0, 0, .12);
+    --relieve-btn-pulsado: inset 0 3px 6px rgba(0, 0, 0, .35);
+    --trans-btn: transform .2s ease, box-shadow .2s ease, background .2s, color .2s;
+    --trans-card: transform .25s ease, box-shadow .25s ease, background .2s, border-color .2s, color .2s;
 }
 
 /* ===== MODO NOCHE ===== */
@@ -26,6 +49,24 @@ body.dark-mode {
     --color-heading: rgb(255, 233, 185);
     --color-green: #68d16d;
     --color-red: #ff6150;
+    --relieve-card: 
+        0 1px 2px rgba(0, 0, 0, .35),
+        0 4px 8px rgba(0, 0, 0, .30),
+        0 12px 24px rgba(0, 0, 0, .30),
+        inset 0 1px 0 rgba(255, 255, 255, .06);
+    --relieve-card-hover: 
+        0 2px 4px rgba(0, 0, 0, .40),
+        0 8px 16px rgba(0, 0, 0, .38),
+        0 20px 36px rgba(0, 0, 0, .35),
+        inset 0 1px 0 rgba(255, 255, 255, .08);
+    --relieve-btn: 
+        0 3px 6px rgba(0, 0, 0, .45),
+        inset 0 1px 0 rgba(255, 255, 255, .15),
+        inset 0 -2px 0 rgba(0, 0, 0, .25);
+    --relieve-btn-hover: 
+        0 6px 12px rgba(0, 0, 0, .50),
+        inset 0 1px 0 rgba(255, 255, 255, .20),
+        inset 0 -2px 0 rgba(0, 0, 0, .20);
 }
 
 html,
@@ -108,6 +149,18 @@ body.home .site-header {
     color: #fff;
     font-size: 1.25rem;
     cursor: pointer;
+    box-shadow: var(--relieve-btn);
+    transition: var(--trans-btn);
+}
+
+.nav-toggler:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--relieve-btn-hover);
+}
+
+.nav-toggler:active {
+    transform: translateY(0);
+    box-shadow: var(--relieve-btn-pulsado);
 }
 
 .nav-menu {
@@ -130,12 +183,19 @@ body.home .site-header {
     color: #fff;
     font-size: 1.1rem;
     text-decoration: none;
-    transition: color .2s;
+    transition: color .2s, box-shadow .2s, transform .2s;
+    border-radius: 50px;
 }
 
 .nav-link:hover,
 .nav-link.active {
     color: var(--color-accent);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, .15), 0 3px 8px rgba(0, 0, 0, .35);
+}
+
+.nav-link:active {
+    transform: translateY(1px);
+    box-shadow: inset 0 2px 5px rgba(0, 0, 0, .4);
 }
 
 .nav-link.active {
@@ -160,11 +220,19 @@ body.home .site-header {
     font-size: 1.1rem;
     cursor: pointer;
     transition: all .2s ease;
+    box-shadow: var(--relieve-btn);
 }
 
 .theme-toggle:hover {
     background-color: var(--color-accent);
     color: #111;
+    transform: translateY(-2px);
+    box-shadow: var(--relieve-btn-hover);
+}
+
+.theme-toggle:active {
+    transform: translateY(0);
+    box-shadow: var(--relieve-btn-pulsado);
 }
 
 .cart-btn {
@@ -181,11 +249,19 @@ body.home .site-header {
     text-decoration: none;
     cursor: pointer;
     transition: all .2s ease;
+    box-shadow: var(--relieve-btn);
 }
 
 .cart-btn a:hover {
     background-color: var(--color-accent);
     color: #111;
+    transform: translateY(-2px);
+    box-shadow: var(--relieve-btn-hover);
+}
+
+.cart-btn a:active {
+    transform: translateY(0);
+    box-shadow: var(--relieve-btn-pulsado);
 }
 
 .cart-btn span {
@@ -306,12 +382,20 @@ body.home .site-header {
     font-size: 1.25rem;
     font-weight: 600;
     text-decoration: none;
-    transition: background .2s, color .2s;
+    transition: var(--trans-btn);
+    box-shadow: var(--relieve-btn);
 }
 
 .shop-btn a:hover {
     background: var(--color-accent);
     color: #111;
+    transform: translateY(-2px);
+    box-shadow: var(--relieve-btn-hover);
+}
+
+.shop-btn a:active {
+    transform: translateY(0);
+    box-shadow: var(--relieve-btn-pulsado);
 }
 
 .store-new {
@@ -338,18 +422,20 @@ body.home .site-header {
     border: 2px solid var(--color-border);
     border-radius: 8px;
     text-align: center;
+    box-shadow: var(--relieve-card);
+    transition: var(--trans-card);
 }
 
 /* Color de estado del producto: amarillo si es nuevo y rojo si está en oferta
    (si es nuevo y oferta a la vez, gana el rojo) */
 .product-card.es-nuevo {
     --tinte: var(--color-accent);
-    box-shadow: 0 0 10px var(--color-accent);
+    box-shadow: var(--relieve-card), 0 0 10px var(--color-accent);
 }
 
 .product-card.en-oferta {
     --tinte: var(--color-green);
-    box-shadow: 0 0 10px var(--color-green);
+    box-shadow: var(--relieve-card), 0 0 10px var(--color-green);
 }
 
 /* Borde del color de estado y fondo en degradado: del color de fondo hacia el color del borde.
@@ -362,9 +448,30 @@ body.home .site-header {
             color-mix(in srgb, var(--tinte) 40%, var(--color-surface)) 100%);
 }
 
+/* Elevación al pasar el ratón (las de nuevo/oferta conservan su resplandor) */
+.product-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--relieve-card-hover);
+}
+
+.product-card.es-nuevo:hover {
+    box-shadow: var(--relieve-card-hover), 0 0 14px var(--color-accent);
+}
+
+.product-card.en-oferta:hover {
+    box-shadow: var(--relieve-card-hover), 0 0 14px var(--color-green);
+}
+
 .product-card .thumb {
     width: 100%;
     height: 200px;
+    border-radius: 6px;
+    box-shadow: inset 0 2px 6px rgba(0, 0, 0, .25), 0 1px 0 rgba(255, 255, 255, .5);
+    transition: transform .25s ease;
+}
+
+.product-card:hover .thumb {
+    transform: scale(1.03);
 }
 
 .product-card small,
@@ -397,12 +504,20 @@ body.home .site-header {
     color: #fff;
     font-weight: 600;
     cursor: pointer;
-    transition: background .2s, color .2s;
+    transition: var(--trans-btn);
+    box-shadow: var(--relieve-btn);
 }
 
 .product-card button:hover {
     background: var(--color-accent);
     color: #111;
+    transform: translateY(-2px);
+    box-shadow: var(--relieve-btn-hover);
+}
+
+.product-card button:active {
+    transform: translateY(0);
+    box-shadow: var(--relieve-btn-pulsado);
 }
 
 /* ===== SECCIÓN NUESTRA HISTORIA ===== */
@@ -479,7 +594,7 @@ body.home .site-header {
     background: var(--color-surface);
     border-left: 4px solid var(--color-secondary);
     border-radius: 0 8px 8px 0;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+    box-shadow: var(--relieve-card);
 }
 
 .feature-card h3 {
@@ -503,7 +618,7 @@ body.home .site-header {
     border-radius: 12px;
     font-size: 1.2rem;
     line-height: 1.6;
-    box-shadow: 0 4px 20px rgba(49, 36, 1, 0.15);
+    box-shadow: 0 8px 24px rgba(49, 36, 1, .25), inset 0 1px 0 rgba(255, 255, 255, .12);
 }
 
 .about-footer-text strong {
@@ -596,6 +711,7 @@ body.home .site-header {
     border: 2px solid var(--color-border);
     border-radius: 8px;
     background: var(--color-surface);
+    box-shadow: var(--relieve-card);
 }
 
 .cart-item .thumb {
@@ -621,6 +737,18 @@ body.home .site-header {
     font-weight: 800;
     cursor: pointer;
     color: #111;
+    box-shadow: var(--relieve-btn);
+    transition: var(--trans-btn);
+}
+
+.cart-item .plus:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--relieve-btn-hover);
+}
+
+.cart-item .plus:active {
+    transform: translateY(0);
+    box-shadow: var(--relieve-btn-pulsado);
 }
 
 .cart-item .rm {
@@ -659,7 +787,8 @@ body.home .site-header {
     font-weight: 800;
     text-transform: uppercase;
     cursor: pointer;
-    transition: background .2s, color .2s;
+    transition: var(--trans-btn);
+    box-shadow: var(--relieve-btn);
 }
 
 .btn-red {
@@ -675,11 +804,21 @@ body.home .site-header {
 .btn-red:hover {
     background: var(--color-red);
     color: #fff;
+    transform: translateY(-2px);
+    box-shadow: var(--relieve-btn-hover);
 }
 
 .btn-green:hover {
     background: var(--color-green);
     color: #fff;
+    transform: translateY(-2px);
+    box-shadow: var(--relieve-btn-hover);
+}
+
+.btn-red:active,
+.btn-green:active {
+    transform: translateY(0);
+    box-shadow: var(--relieve-btn-pulsado);
 }
 
 /* ===== HISTORIAL DE COMPRAS ===== */
@@ -786,7 +925,8 @@ body.home .site-header {
     color: var(--color-text);
     text-align: center;
     cursor: pointer;
-    transition: background .2s, transform .2s;
+    transition: var(--trans-card);
+    box-shadow: var(--relieve-card);
 }
 
 .cat-card strong {
@@ -798,6 +938,7 @@ body.home .site-header {
     background: var(--color-accent);
     color: #111;
     transform: translateY(-3px);
+    box-shadow: var(--relieve-card-hover);
 }
 
 .cat-card:hover strong,
@@ -825,12 +966,20 @@ body.home .site-header {
     color: var(--color-heading);
     font-weight: 600;
     cursor: pointer;
-    transition: background .2s, color .2s;
+    transition: var(--trans-btn);
+    box-shadow: var(--relieve-btn);
 }
 
 .back-btn:hover {
     background: var(--color-accent);
     color: #111;
+    transform: translateY(-2px);
+    box-shadow: var(--relieve-btn-hover);
+}
+
+.back-btn:active {
+    transform: translateY(0);
+    box-shadow: var(--relieve-btn-pulsado);
 }
 
 .product-grid {
@@ -852,6 +1001,7 @@ body.home .site-header {
     font-weight: 700;
     white-space: nowrap;
     color: #111;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, .3), inset 0 1px 0 rgba(255, 255, 255, .4);
 }
 
 .precio-oferta {
@@ -872,6 +1022,7 @@ body.home .site-header {
     font-size: 1rem;
     font-weight: 700;
     white-space: nowrap;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, .3), inset 0 1px 0 rgba(255, 255, 255, .4);
 }
 
 .link-btn {
@@ -882,12 +1033,20 @@ body.home .site-header {
     color: #fff;
     font-weight: 600;
     text-decoration: none;
-    transition: background .2s, color .2s;
+    transition: var(--trans-btn);
+    box-shadow: var(--relieve-btn);
 }
 
 .link-btn:hover {
     background: var(--color-accent);
     color: #111;
+    transform: translateY(-2px);
+    box-shadow: var(--relieve-btn-hover);
+}
+
+.link-btn:active {
+    transform: translateY(0);
+    box-shadow: var(--relieve-btn-pulsado);
 }
 
 /* ===== SERVICIOS ===== */
@@ -905,12 +1064,20 @@ body.home .site-header {
     color: var(--color-heading);
     font-weight: 600;
     text-decoration: none;
-    transition: background .2s, color .2s;
+    transition: var(--trans-btn);
+    box-shadow: var(--relieve-btn);
 }
 
 .service-nav a:hover {
     background: var(--color-accent);
     color: #111;
+    transform: translateY(-2px);
+    box-shadow: var(--relieve-btn-hover);
+}
+
+.service-nav a:active {
+    transform: translateY(0);
+    box-shadow: var(--relieve-btn-pulsado);
 }
 
 .service-group {
@@ -943,12 +1110,14 @@ body.home .site-header {
     background: var(--color-surface);
     border: 2px solid var(--color-border);
     border-radius: 8px;
-    transition: transform .2s, border-color .2s;
+    transition: var(--trans-card);
+    box-shadow: var(--relieve-card);
 }
 
 .service-card:hover {
     transform: translateY(-3px);
     border-color: var(--color-accent);
+    box-shadow: var(--relieve-card-hover);
 }
 
 .service-icon {
@@ -960,6 +1129,7 @@ body.home .site-header {
     border-radius: 50%;
     color: var(--color-accent);
     font-size: 1.3rem;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, .3), inset 0 1px 0 rgba(255, 255, 255, .3);
 }
 
 .service-card h3 {
@@ -1005,6 +1175,7 @@ body.home .site-header {
     background: var(--color-surface-alt);
     border-left: 4px solid var(--color-secondary);
     border-radius: 0 8px 8px 0;
+    box-shadow: var(--relieve-card);
 }
 
 .step-num {
@@ -1016,6 +1187,7 @@ body.home .site-header {
     border-radius: 50%;
     color: #111;
     font-weight: 800;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, .3), inset 0 1px 0 rgba(255, 255, 255, .3);
 }
 
 .process-step h3 {
@@ -1034,6 +1206,7 @@ body.home .site-header {
     background: var(--color-main);
     border-radius: 12px;
     text-align: center;
+    box-shadow: 0 8px 24px rgba(49, 36, 1, .25), inset 0 1px 0 rgba(255, 255, 255, .12);
 }
 
 .page .service-cta h2 {
@@ -1109,5 +1282,21 @@ body.home .site-header {
 @media (prefers-reduced-motion: reduce) {
     .carousel-track {
         animation: none;
+    }
+
+    .product-card:hover,
+    .cat-card:hover,
+    .service-card:hover,
+    .product-card:hover .thumb,
+    .product-card button:hover,
+    .shop-btn a:hover,
+    .link-btn:hover,
+    .cart-btn a:hover,
+    .theme-toggle:hover,
+    .back-btn:hover,
+    .service-nav a:hover,
+    .btn-red:hover,
+    .btn-green:hover {
+        transform: none;
     }
 }
