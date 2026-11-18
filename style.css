@@ -12,7 +12,8 @@
     --color-border: rgb(49, 36, 1);
     --color-heading: rgb(49, 36, 1);
     --color-red: #c0392b;
-    --color-green: #17a51e;
+    --color-green: #23aa2a;
+    --color-sale: #128117;
     /* Relieve suave: tarjetas (sombra en capas + brillo arriba) */
     --relieve-card: 
         0 1px 2px rgba(49, 36, 1, .10),
@@ -48,6 +49,7 @@ body.dark-mode {
     --color-border: rgb(76, 74, 68);
     --color-heading: rgb(255, 233, 185);
     --color-green: #68d16d;
+    --color-sale: #03c90d;
     --color-red: #ff6150;
     --relieve-card: 
         0 1px 2px rgba(0, 0, 0, .35),
@@ -243,9 +245,9 @@ body.home .site-header {
 .cart-btn a {
     display: block;
     padding: 1rem;
-    background: var(--color-main);
+    background: var(--color-accent);
     border-radius: 50px;
-    color: var(--color-accent);
+    color: #111;
     text-decoration: none;
     cursor: pointer;
     transition: all .2s ease;
@@ -253,9 +255,8 @@ body.home .site-header {
 }
 
 .cart-btn a:hover {
-    background-color: var(--color-accent);
+    background-color: #fff;
     color: #111;
-    transform: translateY(-2px);
     box-shadow: var(--relieve-btn-hover);
 }
 
@@ -448,12 +449,6 @@ body.home .site-header {
             color-mix(in srgb, var(--tinte) 40%, var(--color-surface)) 100%);
 }
 
-/* Elevación al pasar el ratón (las de nuevo/oferta conservan su resplandor) */
-.product-card:hover {
-    transform: translateY(-4px);
-    box-shadow: var(--relieve-card-hover);
-}
-
 .product-card.es-nuevo:hover {
     box-shadow: var(--relieve-card-hover), 0 0 14px var(--color-accent);
 }
@@ -465,13 +460,6 @@ body.home .site-header {
 .product-card .thumb {
     width: 100%;
     height: 200px;
-    border-radius: 6px;
-    box-shadow: inset 0 2px 6px rgba(0, 0, 0, .25), 0 1px 0 rgba(255, 255, 255, .5);
-    transition: transform .25s ease;
-}
-
-.product-card:hover .thumb {
-    transform: scale(1.03);
 }
 
 .product-card small,
@@ -1005,7 +993,7 @@ body.home .site-header {
 }
 
 .precio-oferta {
-    color: var(--color-green);
+    color: var(--color-sale);
     font-weight: 700;
 }
 
@@ -1016,9 +1004,9 @@ body.home .site-header {
     transform: translate(-50%, -50%);
     z-index: 1;
     padding: .3rem .7rem;
-    background: var(--color-green);
+    background: var(--color-sale);
     border-radius: 50px;
-    color: #111;
+    color: #fff;
     font-size: 1rem;
     font-weight: 700;
     white-space: nowrap;
@@ -1058,20 +1046,21 @@ body.home .site-header {
 }
 
 .service-nav a {
-    padding: .5rem 1.1rem;
-    border: 2px solid var(--color-border);
+    display: block;
+    padding: 1rem;
+    background: var(--color-accent);
     border-radius: 50px;
-    color: var(--color-heading);
-    font-weight: 600;
+    color: #111;
     text-decoration: none;
-    transition: var(--trans-btn);
+    cursor: pointer;
+    transition: all .2s ease;
     box-shadow: var(--relieve-btn);
+    
 }
 
 .service-nav a:hover {
-    background: var(--color-accent);
+    background: #fff;
     color: #111;
-    transform: translateY(-2px);
     box-shadow: var(--relieve-btn-hover);
 }
 
