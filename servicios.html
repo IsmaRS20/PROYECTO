@@ -4,9 +4,9 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Servicios | Nombre Tienda</title>
+    <title>Servicios | Picanya Music</title>
     <link rel="stylesheet" href="style.css">
-        <script src="https://kit.fontawesome.com/27879825a4.js" crossorigin="anonymous"></script>
+    <script src="https://kit.fontawesome.com/27879825a4.js" crossorigin="anonymous"></script>
 </head>
 
 <body>
@@ -33,15 +33,231 @@
         <main>
             <section class="page">
                 <h1>Servicios de reparación y mantenimiento</h1>
-                <p>En nuestro taller dejamos tu instrumento a punto. Trabajamos con guitarras, bajos,
-                    ukeleles y percusión.</p>
-                <ul class="service-list">
-                    <li><strong>Cambio de cuerdas</strong><br>Y puesta a punto de la afinación.</li>
-                    <li><strong>Ajuste de puente y cejuela</strong><br>Para una acción cómoda y sin trastes que zumban.</li>
-                    <li><strong>Revisión eléctrica</strong><br>Potenciómetros, jacks y pastillas.</li>
-                    <li><strong>Reparación de golpes y grietas</strong><br>Trabajo de lutier.</li>
-                </ul>
-                <a class="link-btn" href="contacto.html">Pide presupuesto</a>
+                <p>En nuestro taller dejamos tu instrumento a punto, tanto si ha sufrido un golpe como si
+                    simplemente necesita un buen ajuste. Trabajamos con guitarras, bajos, ukeleles y percusión,
+                    y nos encargamos de la parte física y de la parte electrónica.</p>
+
+                <!-- Acceso rápido a cada grupo de servicios -->
+                <nav class="service-nav" aria-label="Tipos de servicio">
+                    <a href="#reparacion"><i class="fa-solid fa-hammer"></i> Reparación de daños</a>
+                    <a href="#ajustes"><i class="fa-solid fa-sliders"></i> Ajustes y puesta a punto</a>
+                    <a href="#electronica"><i class="fa-solid fa-bolt"></i> Electrónica</a>
+                    <a href="#percusion"><i class="fa-solid fa-drum"></i> Percusión</a>
+                </nav>
+
+                <!-- ===== REPARACIÓN DE DAÑOS ===== -->
+                <section class="service-group" id="reparacion">
+                    <h2>Reparación de daños</h2>
+                    <p class="service-group-desc">Golpes, caídas, el paso del tiempo o un mal transporte. Devolvemos al instrumento su
+                        aspecto y su resistencia con trabajo de lutier.</p>
+
+                    <div class="service-grid">
+                        <article class="service-card">
+                            <span class="service-icon"><i class="fa-solid fa-hammer"></i></span>
+                            <h3>Golpes y grietas</h3>
+                            <p>Reparamos fisuras, astillados y marcas en la madera para que el daño no vaya a más y
+                                el instrumento recupere su sonido.</p>
+                            <ul>
+                                <li>Cierre y refuerzo de grietas</li>
+                                <li>Relleno de golpes y astillados</li>
+                                <li>Retoque del acabado</li>
+                            </ul>
+                        </article>
+
+                        <article class="service-card">
+                            <span class="service-icon"><i class="fa-solid fa-guitar"></i></span>
+                            <h3>Mástil y clavijero</h3>
+                            <p>Una rotura en el clavijero o un mástil dañado tienen arreglo. Evaluamos cada caso y
+                                reparamos con la estructura bien asentada.</p>
+                            <ul>
+                                <li>Reencolado de roturas de clavijero</li>
+                                <li>Refuerzo del mástil</li>
+                                <li>Sustitución de clavijas</li>
+                            </ul>
+                        </article>
+
+                        <article class="service-card">
+                            <span class="service-icon"><i class="fa-solid fa-screwdriver-wrench"></i></span>
+                            <h3>Piezas despegadas</h3>
+                            <p>Puentes, tapas o aros que se han soltado por la humedad o el uso se vuelven a pegar
+                                y a asentar correctamente.</p>
+                            <ul>
+                                <li>Reencolado de puentes y tapas</li>
+                                <li>Revisión de uniones</li>
+                                <li>Comprobación final de estabilidad</li>
+                            </ul>
+                        </article>
+                    </div>
+                </section>
+
+                <!-- ===== AJUSTES Y PUESTA A PUNTO ===== -->
+                <section class="service-group" id="ajustes">
+                    <h2>Ajustes y puesta a punto</h2>
+                    <p class="service-group-desc">Que tu instrumento sea cómodo de tocar, suene limpio y mantenga la
+                        afinación. Es el servicio que más recomendamos para empezar.</p>
+
+                    <div class="service-grid">
+                        <article class="service-card">
+                            <span class="service-icon"><i class="fa-solid fa-sliders"></i></span>
+                            <h3>Puesta a punto completa</h3>
+                            <p>Un ajuste integral (setup) a tu gusto: altura de cuerdas, curvatura del mástil y
+                                entonación, dejando el instrumento listo para tocar.</p>
+                            <ul>
+                                <li>Ajuste del alma del mástil</li>
+                                <li>Altura de cuerdas (acción)</li>
+                                <li>Entonación y afinación</li>
+                            </ul>
+                        </article>
+
+                        <article class="service-card">
+                            <span class="service-icon"><i class="fa-solid fa-music"></i></span>
+                            <h3>Cambio de cuerdas</h3>
+                            <p>Montamos cuerdas nuevas del calibre que prefieras y dejamos la afinación estable
+                                desde el primer momento.</p>
+                            <ul>
+                                <li>Cambio y estirado de cuerdas</li>
+                                <li>Limpieza del diapasón</li>
+                                <li>Afinación final</li>
+                            </ul>
+                        </article>
+
+                        <article class="service-card">
+                            <span class="service-icon"><i class="fa-solid fa-ruler-combined"></i></span>
+                            <h3>Puente y cejuela</h3>
+                            <p>Ajustamos o corregimos estas piezas clave para una acción cómoda, sin trastes que
+                                zumban y con una afinación precisa.</p>
+                            <ul>
+                                <li>Ajuste de la altura del puente</li>
+                                <li>Rebaje y ajuste de cejuela</li>
+                                <li>Ajuste de puentes con tremolo</li>
+                            </ul>
+                        </article>
+
+                        <article class="service-card">
+                            <span class="service-icon"><i class="fa-solid fa-gauge-high"></i></span>
+                            <h3>Nivelado de trastes</h3>
+                            <p>Si notas zumbidos o notas que se apagan, nivelamos y pulimos los trastes para que
+                                todas las notas suenen limpias.</p>
+                            <ul>
+                                <li>Nivelado y coronado de trastes</li>
+                                <li>Pulido</li>
+                                <li>Revisión de zumbidos</li>
+                            </ul>
+                        </article>
+                    </div>
+                </section>
+
+                <!-- ===== ELECTRÓNICA ===== -->
+                <section class="service-group" id="electronica">
+                    <h2>Electrónica</h2>
+                    <p class="service-group-desc">Si se corta el sonido, aparece ruido o notas un volumen irregular, el problema suele estar en
+                        el circuito. Lo revisamos y lo dejamos funcionando.</p>
+
+                    <div class="service-grid">
+                        <article class="service-card">
+                            <span class="service-icon"><i class="fa-solid fa-plug"></i></span>
+                            <h3>Revisión eléctrica</h3>
+                            <p>Diagnosticamos el circuito de tu instrumento y sustituimos lo que esté fallando.</p>
+                            <ul>
+                                <li>Potenciómetros y selector</li>
+                                <li>Jack de salida</li>
+                                <li>Comprobación del cableado</li>
+                            </ul>
+                        </article>
+
+                        <article class="service-card">
+                            <span class="service-icon"><i class="fa-solid fa-bolt"></i></span>
+                            <h3>Pastillas</h3>
+                            <p>Instalamos pastillas nuevas o ajustamos las que tienes para sacar más claridad y
+                                potencia.</p>
+                            <ul>
+                                <li>Cambio de pastillas</li>
+                                <li>Ajuste de altura</li>
+                                <li>Soldaduras y cableado</li>
+                            </ul>
+                        </article>
+
+                        <article class="service-card">
+                            <span class="service-icon"><i class="fa-solid fa-wave-square"></i></span>
+                            <h3>Ruidos y zumbidos</h3>
+                            <p>Localizamos el origen de los ruidos, crujidos o zumbidos no deseados y los
+                                eliminamos.</p>
+                            <ul>
+                                <li>Revisión de masas y apantallado</li>
+                                <li>Eliminación de interferencias</li>
+                                <li>Pruebas con amplificador</li>
+                            </ul>
+                        </article>
+                    </div>
+                </section>
+
+                <!-- ===== PERCUSIÓN ===== -->
+                <section class="service-group" id="percusion">
+                    <h2>Percusión</h2>
+                    <p class="service-group-desc">Ajustes para que tu batería suene afinada y todos los herrajes funcionen sin
+                        problemas.</p>
+
+                    <div class="service-grid">
+                        <article class="service-card">
+                            <span class="service-icon"><i class="fa-solid fa-drum"></i></span>
+                            <h3>Parches y afinación</h3>
+                            <p>Cambiamos los parches desgastados y afinamos cada tom, caja y bombo para lograr el
+                                sonido que buscas.</p>
+                            <ul>
+                                <li>Cambio de parches</li>
+                                <li>Afinación de toda la batería</li>
+                                <li>Control de resonancias</li>
+                            </ul>
+                        </article>
+
+                        <article class="service-card">
+                            <span class="service-icon"><i class="fa-solid fa-screwdriver-wrench"></i></span>
+                            <h3>Herrajes y pedales</h3>
+                            <p>Revisamos, engrasamos y ajustamos soportes, pedales y demás herrajes para que
+                                respondan con precisión.</p>
+                            <ul>
+                                <li>Ajuste de pedal de bombo y hi-hat</li>
+                                <li>Revisión de soportes y atriles</li>
+                                <li>Sustitución de piezas desgastadas</li>
+                            </ul>
+                        </article>
+                    </div>
+                </section>
+
+                <!-- ===== CÓMO TRABAJAMOS ===== -->
+                <section class="service-group" id="proceso">
+                    <h2>Cómo trabajamos</h2>
+
+                    <ol class="process-grid">
+                        <li class="process-step">
+                            <span class="step-num">1</span>
+                            <h3>Nos lo traes</h3>
+                            <p>Pásate por la tienda con tu instrumento y cuéntanos qué le pasa o qué quieres mejorar.</p>
+                        </li>
+                        <li class="process-step">
+                            <span class="step-num">2</span>
+                            <h3>Revisión y presupuesto</h3>
+                            <p>Lo revisamos y te explicamos qué necesita y cuánto costaría antes de empezar.</p>
+                        </li>
+                        <li class="process-step">
+                            <span class="step-num">3</span>
+                            <h3>Lo reparamos y ajustamos</h3>
+                            <p>Nuestro taller se encarga del trabajo con el cuidado que merece tu instrumento.</p>
+                        </li>
+                        <li class="process-step">
+                            <span class="step-num">4</span>
+                            <h3>Listo para tocar</h3>
+                            <p>Lo probamos contigo y te lo entregamos a punto para volver a subir al escenario.</p>
+                        </li>
+                    </ol>
+                </section>
+
+                <!-- ===== LLAMADA A LA ACCIÓN ===== -->
+                <section class="service-cta">
+                    <h2>¿No sabes qué necesita tu instrumento?</h2>
+                    <p>Cuéntanos qué le pasa y te orientamos. Pide tu presupuesto y lo vemos juntos.</p>
+                    <a class="link-btn" href="contacto.html">Pide presupuesto</a>
+                </section>
             </section>
         </main>
 
