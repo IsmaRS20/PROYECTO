@@ -573,6 +573,15 @@ function pintarProductos(lista) {
   lista.forEach(function (p) {
     const caja = document.createElement('div');
     caja.className = 'product-card';
+
+    // Borde amarillo si es nuevo y rojo si está en oferta (si son ambas, gana el rojo)
+    if (p.nuevo) {
+      caja.classList.add('es-nuevo');
+    }
+    if (porcentajeDescuento(p) > 0) {
+      caja.classList.add('en-oferta');
+    }
+
     caja.innerHTML =
       '<div class="thumb" ' + estiloImagen(p.id) + '></div>' +
       (p.nuevo ? '<span class="badge-new"><i class="fa-solid fa-star"></i> Nuevo</span>' : '') +
@@ -652,6 +661,9 @@ leerHistorial();
 
 // Catálogo: solo si la página tiene el buscador y las categorías
 if (contenedorCats != null) {
+  // La búsqueda se actualiza en cada letra que se escribe o se borra.
+  // El submit (pulsar Enter) sigue controlado para que la página no se recargue.
+  campoBusqueda.addEventListener('input', buscar);
   formBusqueda.onsubmit = buscar;
   mostrarCategorias();
 

@@ -8,11 +8,11 @@
     --color-text-muted: #566370;
     --color-bg: #ffffff;
     --color-surface: #ffffff;
-    --color-surface-alt: #fbfbfb;
+    --color-surface-alt: #ebebeb;
     --color-border: rgb(49, 36, 1);
     --color-heading: rgb(49, 36, 1);
     --color-red: #c0392b;
-    --color-green: #2e7d32;
+    --color-green: #17a51e;
 }
 
 /* ===== MODO NOCHE ===== */
@@ -24,6 +24,8 @@ body.dark-mode {
     --color-text-muted: #b9b9b9;
     --color-border: rgb(76, 74, 68);
     --color-heading: rgb(255, 233, 185);
+    --color-green: #79ff80;
+    --color-red: #ff6150;
 }
 
 html,
@@ -42,6 +44,13 @@ body {
     padding: 0;
     box-sizing: border-box;
     font-family: system-ui, -apple-system, sans-serif;
+}
+
+body.home .site-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
 }
 
 .hidden {
@@ -217,6 +226,7 @@ body {
 /* ===== CARRUSEL INFINITO ===== */
 .carousel {
     position: relative;
+    height: 800px;
     overflow: hidden;
     background-color: #1a1a1a;
 }
@@ -224,6 +234,8 @@ body {
 .carousel-track {
     display: flex;
     width: max-content;
+    height: calc(100% + 4rem);
+    margin-top: -2rem;
     animation: scroll-infinito 25s linear infinite;
     filter: blur(.5rem);
     will-change: transform;
@@ -232,8 +244,8 @@ body {
 
 .carousel-track img {
     flex-shrink: 0;
-    width: 600px;
-    height: 650px;
+    width: 800px;
+    height: 100%;
     object-fit: cover;
     filter: brightness(.55);
     user-select: none;
@@ -243,6 +255,7 @@ body {
     from {
         transform: translateX(0);
     }
+
     to {
         transform: translateX(-50%);
     }
@@ -327,6 +340,28 @@ body {
     text-align: center;
 }
 
+/* Color de estado del producto: amarillo si es nuevo y rojo si está en oferta
+   (si es nuevo y oferta a la vez, gana el rojo) */
+.product-card.es-nuevo {
+    --tinte: var(--color-accent);
+    box-shadow: 0 0 10px var(--color-accent);
+}
+
+.product-card.en-oferta {
+    --tinte: var(--color-green);
+    box-shadow: 0 0 10px var(--color-green);
+}
+
+/* Borde del color de estado y fondo en degradado: del color de fondo hacia el color del borde.
+   Cambia el 40% para que el degradado sea más suave (menos %) o más intenso (más %). */
+.product-card.es-nuevo,
+.product-card.en-oferta {
+    border-color: var(--tinte);
+    background: linear-gradient(to bottom,
+            var(--color-surface) 0%,
+            color-mix(in srgb, var(--tinte) 40%, var(--color-surface)) 100%);
+}
+
 .product-card .thumb {
     width: 100%;
     height: 200px;
@@ -344,7 +379,7 @@ body {
     font-size: 1rem;
     font-weight: 300;
     text-decoration: line-through;
-    color: gray;
+    color: var(--color-text);
 }
 
 .product-card .precio {
@@ -713,7 +748,7 @@ body {
 .catalog-search {
     display: flex;
     gap: .5rem;
-    max-width: 560px;
+    max-width: 100%;
     margin-bottom: 2rem;
 }
 
@@ -722,29 +757,16 @@ body {
     padding: .7rem 1.1rem;
     background: var(--color-surface);
     color: var(--color-text);
-    border: 2px solid var(--color-border);
-    border-radius: 50px;
+    border: none;
+    border-bottom: 2px solid var(--color-text-muted);
     font-size: 1rem;
+    transition: all .2s ease;
+    background-color: var(--color-surface-alt);
 }
 
 .catalog-search input:focus {
-    outline: 3px solid var(--color-accent);
-}
-
-.catalog-search button {
-    padding: .7rem 1.4rem;
-    background: var(--color-main);
-    border: 0;
-    border-radius: 50px;
-    color: #fff;
-    font-weight: 600;
-    cursor: pointer;
-    transition: background .2s, color .2s;
-}
-
-.catalog-search button:hover {
-    background: var(--color-accent);
-    color: #111;
+        border-bottom: 2px solid var(--color-accent);
+        outline: none;
 }
 
 .cat-grid {
@@ -833,7 +855,7 @@ body {
 }
 
 .precio-oferta {
-    color: var(--color-red);
+    color: var(--color-green);
     font-weight: 700;
 }
 
@@ -844,9 +866,9 @@ body {
     transform: translate(-50%, -50%);
     z-index: 1;
     padding: .3rem .7rem;
-    background: var(--color-red);
+    background: var(--color-green);
     border-radius: 50px;
-    color: #fff;
+    color: #111;
     font-size: 1rem;
     font-weight: 700;
     white-space: nowrap;
@@ -873,38 +895,48 @@ body {
         flex-direction: column;
         padding: .5rem 1rem;
     }
+
     .nav-list {
         flex-wrap: wrap;
         justify-content: center;
         gap: .5rem;
         margin: 0;
     }
+
     .brand-image {
         width: 220px;
     }
+
     .carousel-track img {
         width: 260px;
         height: 300px;
     }
+
     .text-carousel h1 {
         font-size: 2rem;
     }
+
     .logo-h1 {
         width: 250px;
     }
+
     .about-section {
         padding: 3rem 1rem;
     }
+
     .about-header h2 {
         font-size: 2rem;
     }
+
     .about-grid {
         grid-template-columns: 1fr;
         gap: 2rem;
     }
+
     .about-text p.lead {
         font-size: 1.15rem;
     }
+
     .about-footer-text {
         font-size: 1.05rem;
         margin-top: 2.5rem;
