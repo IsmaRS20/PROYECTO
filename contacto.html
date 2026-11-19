@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Contacto | Nombre Tienda</title>
+    <title>Contacto | Picanya Music</title>
     <link rel="stylesheet" href="style.css">
     <script src="https://kit.fontawesome.com/27879825a4.js" crossorigin="anonymous"></script>
 </head>
@@ -36,15 +36,81 @@
         </header>
 
         <main>
+            <!-- ===== DATOS DE CONTACTO ===== -->
             <section class="page">
                 <h1>Contacto</h1>
                 <p>¿Dudas con un pedido o con el montaje de un instrumento? Escríbenos y te respondemos en 24 horas.</p>
-                <ul class="service-list">
-                    <li><strong>Correo</strong><br>soporte@nombretienda.es</li>
-                    <li><strong>Teléfono</strong><br>960 000 000</li>
-                    <li><strong>Horario</strong><br>Lunes a sábado, de 10:00 a 20:00</li>
+                <ul class="contact-info">
+                    <li><i class="fa-solid fa-envelope"></i> <strong>Correo</strong><br>soporte@picanyamusic.es</li>
+                    <li><i class="fa-solid fa-phone"></i> <strong>Teléfono</strong><br>960 000 000</li>
+                    <li><i class="fa-solid fa-clock"></i> <strong>Horario</strong><br>Lunes a sábado, de 10:00 a 20:00</li>
                 </ul>
-                <a class="link-btn" href="mailto:soporte@nombretienda.es">Escribir a soporte</a>
+                <a class="link-btn" href="mailto:soporte@picanyamusic.es">Escribir a soporte</a>
+            </section>
+
+            <!-- ===== CALENDARIO DE CITAS ===== -->
+            <section class="page">
+                <h2>Reserva tu cita</h2>
+                <p>Elige un día y una hora para pasarte por la tienda o el taller: presupuestos de reparación,
+                    probar un instrumento o recoger un pedido. Las citas duran una hora.</p>
+
+                <div class="booking" id="calendario">
+
+                    <!-- Calendario -->
+                    <div class="cal">
+                        <div class="cal-header">
+                            <button type="button" class="cal-nav" id="cal-prev" aria-label="Mes anterior">
+                                <i class="fa-solid fa-chevron-left"></i>
+                            </button>
+                            <h3 id="cal-titulo" aria-live="polite"></h3>
+                            <button type="button" class="cal-nav" id="cal-next" aria-label="Mes siguiente">
+                                <i class="fa-solid fa-chevron-right"></i>
+                            </button>
+                        </div>
+
+                        <div class="cal-semana" aria-hidden="true">
+                            <span>L</span><span>M</span><span>X</span><span>J</span><span>V</span><span>S</span><span>D</span>
+                        </div>
+                        <div class="cal-dias" id="cal-dias"></div>
+
+                        <p class="cal-leyenda">Domingos cerrados. Los días con un punto verde ya tienen una cita tuya.</p>
+                    </div>
+
+                    <!-- Horas, formulario y mensajes -->
+                    <div class="booking-side">
+                        <h3 id="horas-titulo">Elige un día en el calendario</h3>
+                        <div class="horas" id="horas"></div>
+
+                        <form class="cita-form" id="form-cita" hidden>
+                            <p class="cita-resumen" id="cita-resumen"></p>
+
+                            <label>Nombre
+                                <input type="text" id="cita-nombre" required autocomplete="name">
+                            </label>
+
+                            <label>Teléfono
+                                <input type="tel" id="cita-telefono" required pattern="[0-9 +]{9,15}"
+                                    title="Escribe un teléfono válido, por ejemplo 600 000 000" autocomplete="tel">
+                            </label>
+
+                            <label>Motivo
+                                <select id="cita-motivo">
+                                    <option>Presupuesto de reparación o ajuste</option>
+                                    <option>Probar un instrumento</option>
+                                    <option>Recoger un pedido</option>
+                                    <option>Otra consulta</option>
+                                </select>
+                            </label>
+
+                            <button type="submit" class="link-btn">Confirmar cita</button>
+                        </form>
+
+                        <p class="cal-msg" id="cita-msg" role="status"></p>
+                    </div>
+                </div>
+
+                <h3 class="mis-citas-titulo">Mis citas</h3>
+                <ul class="mis-citas" id="lista-citas"></ul>
             </section>
         </main>
 
@@ -54,7 +120,7 @@
             <p>© 2026 Picanya Music. Todos los derechos reservados.</p>
         </footer>
     </div>
-    
+
     <script src="script.js"></script>
 </body>
 

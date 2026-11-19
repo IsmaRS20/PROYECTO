@@ -1344,3 +1344,357 @@ body.home .site-header {
         transform: none;
     }
 }
+
+/* ===== CONTACTO ===== */
+.contact-info {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1.5rem;
+    margin: 1.5rem 0;
+    list-style: none;
+}
+
+.contact-info li {
+    padding: 1.2rem;
+    background: var(--color-surface);
+    border-left: 4px solid var(--color-secondary);
+    border-radius: 0 8px 8px 0;
+    line-height: 1.6;
+    box-shadow: var(--relieve-card);
+}
+
+.contact-info strong {
+    color: var(--color-heading);
+}
+
+.contact-info i {
+    margin-right: .3rem;
+    color: var(--color-secondary);
+}
+
+/* ===== CALENDARIO DE CITAS ===== */
+.booking {
+    display: grid;
+    grid-template-columns: minmax(280px, 1.1fr) 1fr;
+    gap: 2rem;
+    align-items: start;
+    margin-top: 1.5rem;
+}
+
+.cal {
+    padding: 1.2rem;
+    background: var(--color-surface);
+    border: 2px solid var(--color-border);
+    border-radius: 8px;
+    box-shadow: var(--relieve-card);
+}
+
+.cal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.cal-header h3 {
+    color: var(--color-heading);
+    font-size: 1.3rem;
+}
+
+.cal-nav {
+    display: grid;
+    place-items: center;
+    width: 40px;
+    height: 40px;
+    background: var(--color-main);
+    border: 0;
+    border-radius: 50%;
+    color: var(--color-accent);
+    cursor: pointer;
+    transition: var(--trans-btn);
+    box-shadow: var(--relieve-btn);
+}
+
+.cal-nav:hover:not(:disabled) {
+    background: var(--color-accent);
+    color: #111;
+    transform: translateY(-2px);
+    box-shadow: var(--relieve-btn-hover);
+}
+
+.cal-nav:active:not(:disabled) {
+    transform: translateY(0);
+    box-shadow: var(--relieve-btn-pulsado);
+}
+
+.cal-nav:disabled {
+    opacity: .35;
+    cursor: not-allowed;
+    box-shadow: none;
+}
+
+.cal-semana,
+.cal-dias {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: .4rem;
+}
+
+.cal-semana span {
+    padding-bottom: .3rem;
+    text-align: center;
+    font-size: .9rem;
+    font-weight: 700;
+    color: var(--color-text-muted);
+}
+
+.cal-dia {
+    position: relative;
+    display: grid;
+    place-items: center;
+    aspect-ratio: 1;
+    background: var(--color-surface-alt);
+    border: 2px solid transparent;
+    border-radius: 8px;
+    color: var(--color-text);
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--trans-btn);
+}
+
+.cal-dia:hover:not(:disabled) {
+    background: var(--color-accent);
+    color: #111;
+    transform: translateY(-2px);
+    box-shadow: var(--relieve-btn);
+}
+
+.cal-dia:disabled {
+    opacity: .3;
+    cursor: not-allowed;
+}
+
+.cal-dia.hoy {
+    border-color: var(--color-secondary);
+}
+
+.cal-dia.elegido {
+    background: var(--color-main);
+    border-color: var(--color-accent);
+    color: var(--color-accent);
+    box-shadow: var(--relieve-btn);
+}
+
+/* Punto verde en los días que ya tienen una cita tuya */
+.cal-dia.con-cita::after {
+    content: '';
+    position: absolute;
+    bottom: 5px;
+    width: 6px;
+    height: 6px;
+    background: var(--color-green);
+    border-radius: 50%;
+}
+
+.page .cal-leyenda {
+    margin: 1rem 0 0;
+    font-size: .9rem;
+    color: var(--color-text-muted);
+}
+
+/* Horas */
+.booking-side h3 {
+    margin-bottom: 1rem;
+    color: var(--color-heading);
+}
+
+.horas {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
+    gap: .6rem;
+    margin-bottom: 1.2rem;
+}
+
+.hora-btn {
+    padding: .6rem;
+    background: var(--color-surface);
+    border: 2px solid var(--color-border);
+    border-radius: 50px;
+    color: var(--color-text);
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--trans-btn);
+    box-shadow: var(--relieve-btn);
+}
+
+.hora-btn:hover:not(:disabled) {
+    background: var(--color-accent);
+    color: #111;
+    transform: translateY(-2px);
+    box-shadow: var(--relieve-btn-hover);
+}
+
+.hora-btn.elegida {
+    background: var(--color-main);
+    border-color: var(--color-accent);
+    color: var(--color-accent);
+}
+
+.hora-btn:disabled {
+    opacity: .35;
+    text-decoration: line-through;
+    cursor: not-allowed;
+    box-shadow: none;
+}
+
+/* Formulario de la cita */
+.cita-form {
+    display: flex;
+    flex-direction: column;
+    gap: .9rem;
+    padding: 1.2rem;
+    background: var(--color-surface);
+    border: 2px solid var(--color-border);
+    border-radius: 8px;
+    box-shadow: var(--relieve-card);
+}
+
+.page .cita-resumen {
+    margin: 0;
+    font-weight: 700;
+    color: var(--color-heading);
+}
+
+.cita-form label {
+    display: flex;
+    flex-direction: column;
+    gap: .3rem;
+    font-weight: 600;
+    color: var(--color-heading);
+}
+
+.cita-form input,
+.cita-form select {
+    padding: .7rem 1.1rem;
+    background: var(--color-surface-alt);
+    border: none;
+    border-bottom: 2px solid var(--color-text-muted);
+    color: var(--color-text);
+    font-size: 1rem;
+    font-weight: 400;
+}
+
+.cita-form input:focus,
+.cita-form select:focus {
+    border-bottom-color: var(--color-accent);
+    outline: none;
+}
+
+/* El .link-btn también se usa en <button> */
+button.link-btn {
+    border: 0;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+.page .cal-msg {
+    min-height: 1.4em;
+    margin: .8rem 0 0;
+    font-weight: 600;
+    color: var(--color-green);
+}
+
+.page .cal-msg.error {
+    color: var(--color-red);
+}
+
+/* Mis citas */
+.mis-citas-titulo {
+    margin: 2.5rem 0 1rem;
+    color: var(--color-heading);
+    font-size: 1.4rem;
+}
+
+.mis-citas {
+    display: flex;
+    flex-direction: column;
+    gap: .8rem;
+    list-style: none;
+}
+
+.cita-item {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: .8rem;
+    padding: 1rem;
+    background: var(--color-surface);
+    border-left: 4px solid var(--color-green);
+    border-radius: 0 8px 8px 0;
+    box-shadow: var(--relieve-card);
+}
+
+.cita-item strong {
+    color: var(--color-heading);
+}
+
+.cita-item small {
+    display: block;
+    color: var(--color-text-muted);
+    font-size: 1rem;
+}
+
+.cita-item .acciones {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .5rem;
+}
+
+.cita-item button {
+    padding: .4rem .9rem;
+    background: var(--color-surface-alt);
+    border: 2px solid var(--color-border);
+    border-radius: 50px;
+    color: var(--color-text);
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--trans-btn);
+    box-shadow: var(--relieve-btn);
+}
+
+.cita-item button:hover {
+    background: var(--color-accent);
+    color: #111;
+    transform: translateY(-2px);
+    box-shadow: var(--relieve-btn-hover);
+}
+
+.cita-item button.cancelar {
+    border-color: var(--color-red);
+    color: var(--color-red);
+}
+
+.cita-item button.cancelar:hover {
+    background: var(--color-red);
+    color: #fff;
+}
+
+@media (max-width: 768px) {
+    .booking {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .cal-nav:hover,
+    .cal-dia:hover,
+    .hora-btn:hover,
+    .cita-item button:hover {
+        transform: none;
+    }
+}
+
+.grid-new-items .badge-new {
+  display: none;
+}

@@ -1,10 +1,32 @@
+// =====================================================
+// PICANYA MUSIC - script.js
+//
+// Orden del archivo:
+//   1. Datos (categorías y productos)
+//   2. Elementos de la página
+//   3. Funciones de ayuda
+//   4. Barra de progreso
+//   5. Modo día y noche
+//   6. Carrito
+//   7. Historial de compras
+//   8. Página de inicio
+//   9. Catálogo
+//  10. Calendario de citas
+//  11. Arranque (al final, cuando todo está definido)
+// =====================================================
+
+
+// =====================================================
+// 1. DATOS
+// =====================================================
+
 // Los id de las categorías coinciden con las carpetas de img/
 const categorias = [
   { id: 'guitarras', nombre: 'Guitarras' },
   { id: 'bajos', nombre: 'Bajos' },
   { id: 'percusion', nombre: 'Percusión' },
   { id: 'cabinas', nombre: 'Cabinas' },
-  { id: 'pedales', nombre: 'Pedales'},
+  { id: 'pedales', nombre: 'Pedales' },
   { id: 'equipamiento', nombre: 'Equipamiento' }
 ];
 
@@ -76,54 +98,8 @@ const productos = [
   { id: 43, nombre: 'Regular Slinky 10 - 46', cat: 'equipamiento', marca: 'Ernieball', precio: 6.95, nuevo: false, oferta: false, imagen: 'equipamiento/ernieball_regular_slinky.webp' },
   { id: 44, nombre: 'Power Slinky 11 - 48', cat: 'equipamiento', marca: 'Ernieball', precio: 7.95, nuevo: false, oferta: false, imagen: 'equipamiento/ernieball_powerslinky.webp' },
   { id: 45, nombre: 'Heavy Bottom 10 - 62', cat: 'equipamiento', marca: 'Ernieball', precio: 9.95, nuevo: false, oferta: false, imagen: 'equipamiento/ernieball_heavybottom_7.webp' },
-  { id: 46, nombre: 'Regular Slinky 10 - 74', cat: 'equipamiento', marca: 'Ernieball', precio: 11.95, nuevo: false, oferta: false, imagen: 'equipamiento/ernieball_regularslinky_8.webp' },
+  { id: 46, nombre: 'Regular Slinky 10 - 74', cat: 'equipamiento', marca: 'Ernieball', precio: 11.95, nuevo: false, oferta: false, imagen: 'equipamiento/ernieball_regularslinky_8.webp' }
 ];
-
-
-// =====================================================
-// BARRA DE PROGRESO
-// =====================================================
-
-const progressFill = document.getElementById('progressFill');
-
-function updateProgress() {
-  // Si una página no tiene la barra, no hacemos nada (así no se rompe el resto del script)
-  if (progressFill == null) {
-    return;
-  }
-  const max = document.documentElement.scrollHeight - window.innerHeight;
-  const progress = max > 0 ? window.scrollY / max : 0;
-  progressFill.style.width = (progress * 100) + '%';
-}
-
-window.addEventListener('scroll', updateProgress);
-window.addEventListener('resize', updateProgress);
-updateProgress();
-
-
-// =====================================================
-// FUNCIONES DE AYUDA
-// =====================================================
-
-function buscarProducto(id) {
-  return productos.find(function (p) {
-    return p.id === id;
-  });
-}
-
-// Formatea un número a 2 decimales (con coma, estilo español): 1139.85 -> "1139,85"
-function formatearPrecio(numero) {
-  return Number(numero).toFixed(2).replace('.', ',');
-}
-
-// Pone primero los productos nuevos o en oferta; el resto mantiene su orden original
-function destacadosPrimero(lista) {
-  return lista.slice().sort(function (a, b) {
-    const destacadoA = (a.nuevo || a.oferta) ? 1 : 0;
-    const destacadoB = (b.nuevo || b.oferta) ? 1 : 0;
-    return destacadoB - destacadoA;
-  });
-}
 
 // Porcentaje de descuento por categoría (solo se aplica si el producto tiene oferta: true)
 const descuentos = {
@@ -134,6 +110,85 @@ const descuentos = {
   pedales: 25,
   equipamiento: 30
 };
+
+
+// =====================================================
+// 2. ELEMENTOS DE LA PÁGINA
+// (los que no existen en una página valen null, por eso en el arranque se comprueba)
+// =====================================================
+
+// Se mete el panel del carrito en la página (así no hay que copiarlo en cada HTML)
+document.body.insertAdjacentHTML('beforeend', `
+  <div class="overlay" id="overlay" onclick="cerrarCarrito()"></div>
+  <aside class="cart-drawer" id="drawer" aria-label="Carrito" inert>
+    <div class="drawer-top">
+      <h2>Carrito</h2>
+      <button type="button" aria-label="Cerrar carrito" onclick="cerrarCarrito()">&times;</button>
+    </div>
+    <div class="cart-items" id="cart-items"></div>
+    <p class="cart-total" id="cart-total"></p>
+    <p class="cart-msg" id="cart-msg"></p>
+    <button type="button" class="btn-green" onclick="checkOut()">Finalizar compra</button>
+    <button type="button" class="btn-red" onclick="vaciarCarrito()">Vaciar carrito</button>
+    <button type="button" class="history-toggle" id="history-toggle" onclick="historialCompra()">▶ Historial de compras</button>
+    <ul class="history-list" id="history-list" hidden></ul>
+  </aside>`);
+
+// En todas las páginas
+const progressFill = document.getElementById('progressFill');
+const botonCarrito = document.querySelector('.cart');
+const contadorCarrito = document.getElementById('cart-count');
+const panel = document.getElementById('drawer');
+const fondo = document.getElementById('overlay');
+const itemsCarrito = document.getElementById('cart-items');
+const totalCarrito = document.getElementById('cart-total');
+const mensaje = document.getElementById('cart-msg');
+const desplegable = document.getElementById('history-toggle');
+const listaPrevias = document.getElementById('history-list');
+
+// Solo en index.html
+const gridNuevos = document.querySelector('.grid-new-items');
+
+// Solo en catalogo.html
+const contenedorCats = document.getElementById('cats');
+const zonaProductos = document.getElementById('zona-productos');
+const tituloResultados = document.getElementById('titulo-resultados');
+const gridProductos = document.getElementById('grid-productos');
+const formBusqueda = document.getElementById('search-form');
+const campoBusqueda = document.getElementById('search-main');
+
+// Solo en contacto.html
+const calDias = document.getElementById('cal-dias');
+const calTitulo = document.getElementById('cal-titulo');
+const calPrev = document.getElementById('cal-prev');
+const calNext = document.getElementById('cal-next');
+const horasTitulo = document.getElementById('horas-titulo');
+const zonaHoras = document.getElementById('horas');
+const formCita = document.getElementById('form-cita');
+const resumenCita = document.getElementById('cita-resumen');
+const mensajeCita = document.getElementById('cita-msg');
+const listaCitas = document.getElementById('lista-citas');
+
+
+// =====================================================
+// 3. FUNCIONES DE AYUDA
+// =====================================================
+
+function buscarProducto(id) {
+  return productos.find(function (p) {
+    return p.id === id;
+  });
+}
+
+// Formatea un número a 2 decimales con coma (estilo español): 1139.85 -> "1139,85"
+function formatearPrecio(numero) {
+  return Number(numero).toFixed(2).replace('.', ',');
+}
+
+// Quita mayúsculas y tildes para que "percusion" encuentre "Percusión"
+function limpiar(texto) {
+  return texto.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+}
 
 // Porcentaje de descuento que le toca a un producto (0 si no está en oferta)
 function porcentajeDescuento(p) {
@@ -164,72 +219,128 @@ function htmlPrecio(p) {
 }
 
 // Imagen del producto: usa la ruta de la propiedad imagen (dentro de img/)
-function estiloImagen(id) {
-  const p = buscarProducto(id);
-  if (p == undefined || p.imagen == undefined) {
+function estiloImagen(p) {
+  if (p.imagen == undefined) {
     return '';
   }
   return 'style="background-image:url(\'./img/' + p.imagen + '\')"';
 }
 
+// Pone primero los productos nuevos o en oferta; el resto mantiene su orden original
+function destacadosPrimero(lista) {
+  return lista.slice().sort(function (a, b) {
+    const destacadoA = (a.nuevo || a.oferta) ? 1 : 0;
+    const destacadoB = (b.nuevo || b.oferta) ? 1 : 0;
+    return destacadoB - destacadoA;
+  });
+}
 
-// =====================================================
-// PRODUCTOS NUEVOS (solo se pintan si existe el contenedor, o sea, en index)
-// =====================================================
+// Crea la tarjeta de un producto (la usan el inicio y el catálogo)
+function crearTarjeta(p) {
+  const descuento = porcentajeDescuento(p);
+  const caja = document.createElement('div');
+  caja.className = 'product-card';
 
-function mostrarNuevos() {
-  const contenedor = document.querySelector('.grid-new-items');
-  if (contenedor == null) {
+  // El borde cambia de color: amarillo si es nuevo y verde si está en oferta (si son ambas, gana el verde)
+  if (p.nuevo) {
+    caja.classList.add('es-nuevo');
+  }
+  if (descuento > 0) {
+    caja.classList.add('en-oferta');
+  }
+
+  caja.innerHTML =
+    '<div class="thumb" ' + estiloImagen(p) + '></div>' +
+    (p.nuevo ? '<span class="badge-new"><i class="fa-solid fa-star"></i> Nuevo</span>' : '') +
+    (descuento > 0 ? '<span class="badge-oferta"><i class="fa-solid fa-tag"></i> -' + descuento + '%</span>' : '') +
+    '<h3>' + p.nombre + '</h3>' +
+    '<small>' + p.marca + '</small>' +
+    htmlPrecio(p) +
+    '<button type="button" onclick="anadirAlCarrito(' + p.id + ')">Añadir</button>';
+  return caja;
+}
+
+// Pinta una lista de productos dentro de un contenedor
+function pintarProductos(lista, contenedor) {
+  contenedor.innerHTML = '';
+
+  if (lista.length == 0) {
+    contenedor.innerHTML = '<p class="empty-msg">No hemos encontrado ningún producto.</p>';
     return;
   }
 
-  productos.forEach(function (p) {
-    if (p.nuevo) {
-      const caja = document.createElement('div');
-      caja.className = 'product-card';
-      caja.innerHTML =
-        '<div class="thumb" ' + estiloImagen(p.id) + '></div>' +
-        '<h3>' + p.nombre + '</h3>' +
-        '<small>' + p.marca + '</small>' +
-        htmlPrecio(p) +
-        '<button type="button" onclick="anadirAlCarrito(' + p.id + ')">Añadir</button>';
-      contenedor.appendChild(caja);
-    }
+  lista.forEach(function (p) {
+    contenedor.appendChild(crearTarjeta(p));
   });
+}
+
+// Descarga un texto como archivo (lo usan los recibos y las citas)
+function descargarArchivo(texto, tipo, nombre) {
+  const archivo = new Blob([texto], { type: tipo });
+  const enlace = document.createElement('a');
+  enlace.href = URL.createObjectURL(archivo);
+  enlace.download = nombre;
+  enlace.click();
+  URL.revokeObjectURL(enlace.href);
 }
 
 
 // =====================================================
-// CARRITO (está en todas las páginas)
+// 4. BARRA DE PROGRESO
 // =====================================================
 
-// Metemos el panel del carrito en la página (así no hay que copiarlo en cada HTML)
-document.body.insertAdjacentHTML('beforeend', `
-  <div class="overlay" id="overlay" onclick="cerrarCarrito()"></div>
-  <aside class="cart-drawer" id="drawer" aria-label="Carrito" inert>
-    <div class="drawer-top">
-      <h2>Carrito</h2>
-      <button type="button" aria-label="Cerrar carrito" onclick="cerrarCarrito()">&times;</button>
-    </div>
-    <div class="cart-items" id="cart-items"></div>
-    <p class="cart-total" id="cart-total"></p>
-    <p class="cart-msg" id="cart-msg"></p>
-    <button type="button" class="btn-green" onclick="checkOut()">Finalizar compra</button>
-    <button type="button" class="btn-red" onclick="vaciarCarrito()">Vaciar carrito</button>
-    <button type="button" class="history-toggle" id="history-toggle" onclick="historialCompra()">▶ Historial de compras</button>
-    <ul class="history-list" id="history-list" hidden></ul>
-  </aside>`);
+function updateProgress() {
+  const max = document.documentElement.scrollHeight - window.innerHeight;
+  const progress = max > 0 ? window.scrollY / max : 0;
+  progressFill.style.width = (progress * 100) + '%';
+}
 
-const panel = document.getElementById('drawer');
-const fondo = document.getElementById('overlay');
-const mensaje = document.getElementById('cart-msg');
-const desplegable = document.getElementById('history-toggle');
-const listaPrevias = document.getElementById('history-list');
 
-// Tanto el carrito como el historial de compras se guardan en el navegador (localStorage)
+// =====================================================
+// 5. MODO DÍA Y NOCHE
+// =====================================================
+
+function aplicarTema(oscuro) {
+  document.body.classList.toggle('dark-mode', oscuro);
+  const btn = document.getElementById('theme-toggle');
+  if (btn) {
+    btn.innerHTML = oscuro
+      ? '<i class="fa-solid fa-sun"></i>'
+      : '<i class="fa-solid fa-moon"></i>';
+    btn.setAttribute('aria-label', oscuro ? 'Activar modo día' : 'Activar modo noche');
+    btn.title = oscuro ? 'Modo día' : 'Modo noche';
+  }
+}
+
+function inicializarTema() {
+  // Se crea el botón dentro del menú (así no hay que copiarlo en cada HTML)
+  const navList = document.querySelector('.nav-list');
+  if (navList) {
+    const li = document.createElement('li');
+    li.className = 'theme-btn';
+    li.innerHTML = '<button type="button" id="theme-toggle" class="theme-toggle" aria-label="Cambiar tema"></button>';
+    navList.appendChild(li);
+
+    document.getElementById('theme-toggle').onclick = function () {
+      const esOscuro = !document.body.classList.contains('dark-mode');
+      localStorage.setItem('temaOscuro', esOscuro);
+      aplicarTema(esOscuro);
+    };
+  }
+
+  // Si el usuario ya eligió tema se usa ese; si no, el del sistema
+  const guardado = localStorage.getItem('temaOscuro');
+  const prefiereOscuro = window.matchMedia('(prefers-color-scheme: dark)').matches;
+  aplicarTema(guardado !== null ? guardado === 'true' : prefiereOscuro);
+}
+
+
+// =====================================================
+// 6. CARRITO (está en todas las páginas)
+// El carrito se guarda en el navegador (localStorage): [{ id, cantidad }]
+// =====================================================
+
 let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
-let historial = JSON.parse(localStorage.getItem('historial')) || [];
-let desplegado = false;
 
 function guardarCarrito() {
   localStorage.setItem('carrito', JSON.stringify(carrito));
@@ -247,30 +358,37 @@ function cerrarCarrito() {
   panel.inert = true;
 }
 
+function buscarEnCarrito(idProducto) {
+  return carrito.find(function (linea) {
+    return linea.id === idProducto;
+  });
+}
+
 function calcularTotal() {
   let total = 0;
-  for (let i = 0; i < carrito.length; i++) {
-    const p = buscarProducto(carrito[i].id);
-    total += precioFinal(p) * carrito[i].cantidad;
-  }
+  carrito.forEach(function (linea) {
+    total += precioFinal(buscarProducto(linea.id)) * linea.cantidad;
+  });
   // Redondeamos a 2 decimales para evitar errores de coma flotante
   return Math.round(total * 100) / 100;
 }
 
-function anadirAlCarrito(idProducto) {
-  const existente = carrito.find(function (item) {
-    return item.id === idProducto;
-  });
+// Muestra un mensaje, guarda y repinta: lo usan todas las funciones que cambian el carrito
+function actualizarCarrito(texto) {
+  mensaje.textContent = texto;
+  guardarCarrito();
+  dibujarCarrito();
+}
 
-  if (existente) {
-    existente.cantidad++;
+function anadirAlCarrito(idProducto) {
+  const linea = buscarEnCarrito(idProducto);
+
+  if (linea) {
+    linea.cantidad++;
   } else {
     carrito.push({ id: idProducto, cantidad: 1 });
   }
-
-  mensaje.textContent = 'Producto añadido.';
-  guardarCarrito();
-  dibujarCarrito();
+  actualizarCarrito('Producto añadido.');
 
   // Animación del contador del botón del carrito
   const boton = document.querySelector('.cart-btn');
@@ -280,80 +398,72 @@ function anadirAlCarrito(idProducto) {
 }
 
 function aumentarCarrito(idProducto) {
-  for (let i = 0; i < carrito.length; i++) {
-    if (carrito[i].id === idProducto) {
-      carrito[i].cantidad++;
-    }
-  }
-  mensaje.textContent = 'Producto añadido.';
-  guardarCarrito();
-  dibujarCarrito();
+  buscarEnCarrito(idProducto).cantidad++;
+  actualizarCarrito('Producto añadido.');
 }
 
 function quitarDelCarrito(idProducto) {
-  for (let i = 0; i < carrito.length; i++) {
-    if (carrito[i].id === idProducto) {
-      if (carrito[i].cantidad > 1) {
-        carrito[i].cantidad--;
-      } else {
-        carrito.splice(i, 1);
-      }
-      break;
-    }
+  const linea = buscarEnCarrito(idProducto);
+
+  if (linea.cantidad > 1) {
+    linea.cantidad--;
+  } else {
+    carrito.splice(carrito.indexOf(linea), 1);
   }
-  mensaje.textContent = 'Producto quitado.';
-  guardarCarrito();
-  dibujarCarrito();
+  actualizarCarrito('Producto quitado.');
 }
 
 function vaciarCarrito() {
-  if (carrito.length != 0) {
-    carrito = [];
-    guardarCarrito();
-    mensaje.textContent = 'Carrito vaciado.';
-    dibujarCarrito();
-  } else {
+  if (carrito.length == 0) {
     mensaje.textContent = 'El carrito ya está vacío.';
+    return;
   }
+  carrito = [];
+  actualizarCarrito('Carrito vaciado.');
 }
 
 function dibujarCarrito() {
   let html = '';
   let unidades = 0;
 
-  for (let i = 0; i < carrito.length; i++) {
-    const p = buscarProducto(carrito[i].id);
-    const cantidad = carrito[i].cantidad;
-    unidades += cantidad;
+  carrito.forEach(function (linea) {
+    const p = buscarProducto(linea.id);
+    unidades += linea.cantidad;
 
     html += `
       <div class="cart-item">
-        <div class="thumb" ${estiloImagen(p.id)}></div>
+        <div class="thumb" ${estiloImagen(p)}></div>
         <div>
           <strong>${p.nombre}</strong>
-          <small>x${cantidad}</small>
+          <small>x${linea.cantidad}</small>
           <button type="button" class="plus" aria-label="Añadir otro ${p.nombre}" onclick="aumentarCarrito(${p.id})">+</button>
         </div>
-        <b>${formatearPrecio(precioFinal(p) * cantidad)} €</b>
+        <b>${formatearPrecio(precioFinal(p) * linea.cantidad)} €</b>
         <button type="button" class="rm" aria-label="Quitar ${p.nombre}" onclick="quitarDelCarrito(${p.id})">&times;</button>
       </div>`;
-  }
+  });
 
   if (html === '') {
     html = '<p>Tu carrito está vacío.</p>';
-    document.getElementById('cart-total').textContent = '';
+    totalCarrito.textContent = '';
   } else {
-    document.getElementById('cart-total').textContent = 'Total: ' + formatearPrecio(calcularTotal()) + ' €';
+    totalCarrito.textContent = 'Total: ' + formatearPrecio(calcularTotal()) + ' €';
   }
 
-  document.getElementById('cart-items').innerHTML = html;
-  document.getElementById('cart-count').textContent = unidades;
+  itemsCarrito.innerHTML = html;
+  contadorCarrito.textContent = unidades;
 }
 
 
 // =====================================================
-// CHECKOUT E HISTORIAL (guardado en local)
+// 7. HISTORIAL DE COMPRAS (también en localStorage)
 // =====================================================
+
+let historial = JSON.parse(localStorage.getItem('historial')) || [];
+
+function guardarHistorial() {
+  localStorage.setItem('historial', JSON.stringify(historial));
+}
 
 function checkOut() {
   if (carrito.length == 0) {
@@ -361,72 +471,45 @@ function checkOut() {
     return;
   }
 
-  // Guardamos nombre y precio (no solo el id) para que el recibo sea siempre igual
+  // Se guarda nombre y precio (no solo el id) para que el recibo sea siempre igual
   const lineas = [];
-  for (let i = 0; i < carrito.length; i++) {
-    const p = buscarProducto(carrito[i].id);
-    lineas.push({
-      nombre: p.nombre,
-      precio: precioFinal(p),
-      cantidad: carrito[i].cantidad
-    });
-  }
+  carrito.forEach(function (linea) {
+    const p = buscarProducto(linea.id);
+    lineas.push({ nombre: p.nombre, precio: precioFinal(p), cantidad: linea.cantidad });
+  });
 
-  const compra = {
+  historial.push({
     fecha: new Date().toLocaleString(),
     productos: lineas,
     total: calcularTotal()
-  };
-
-  guardarCompra(compra);
+  });
+  guardarHistorial();
 
   carrito = [];
-  guardarCarrito();
-  dibujarCarrito();
-  mostrarHistorial();
-  mensaje.textContent = 'Compra realizada con éxito.';
-}
-
-function guardarCompra(compra) {
-  historial.push(compra);
-  localStorage.setItem('historial', JSON.stringify(historial));
-}
-
-function leerHistorial() {
-  historial = JSON.parse(localStorage.getItem('historial')) || [];
+  actualizarCarrito('Compra realizada con éxito.');
   mostrarHistorial();
 }
 
 function mostrarHistorial() {
   listaPrevias.innerHTML = '';
 
-  for (let i = 0; i < historial.length; i++) {
-    const compra = historial[i];
+  historial.forEach(function (compra, indice) {
     const textoCabecera = compra.fecha + ' - total ' + formatearPrecio(compra.total) + ' €';
 
-    const recibo = document.createElement('li');
-
-    const cabecera = document.createElement('p');
-    cabecera.textContent = '▶ ' + textoCabecera;
-
+    // Productos de la compra (ocultos hasta pulsar la cabecera)
     const detalle = document.createElement('ul');
     detalle.hidden = true;
-
-    for (let j = 0; j < compra.productos.length; j++) {
-      const producto = compra.productos[j];
+    compra.productos.forEach(function (producto) {
       const lineaProducto = document.createElement('li');
       lineaProducto.textContent = producto.nombre + ' x' + producto.cantidad + ' - ' + formatearPrecio(producto.precio * producto.cantidad) + ' €';
       detalle.appendChild(lineaProducto);
-    }
+    });
 
+    const cabecera = document.createElement('p');
+    cabecera.textContent = '▶ ' + textoCabecera;
     cabecera.onclick = function () {
-      if (detalle.hidden == true) {
-        detalle.hidden = false;
-        cabecera.textContent = '▼ ' + textoCabecera;
-      } else {
-        detalle.hidden = true;
-        cabecera.textContent = '▶ ' + textoCabecera;
-      }
+      detalle.hidden = !detalle.hidden;
+      cabecera.textContent = (detalle.hidden ? '▶ ' : '▼ ') + textoCabecera;
     };
 
     const botonDescargar = document.createElement('button');
@@ -434,7 +517,7 @@ function mostrarHistorial() {
     botonDescargar.textContent = '⬇';
     botonDescargar.title = 'Descargar recibo';
     botonDescargar.onclick = function () {
-      descargarRecibo(compra, i + 1);
+      descargarRecibo(compra, indice + 1);
     };
 
     const fila = document.createElement('div');
@@ -442,59 +525,47 @@ function mostrarHistorial() {
     fila.appendChild(cabecera);
     fila.appendChild(botonDescargar);
 
+    const recibo = document.createElement('li');
     recibo.appendChild(fila);
     recibo.appendChild(detalle);
     listaPrevias.appendChild(recibo);
-  }
+  });
 }
 
+// Muestra u oculta la lista del historial
 function historialCompra() {
-  if (desplegado == false) {
-    desplegado = true;
-    desplegable.textContent = '▼ Historial de compras';
-    listaPrevias.hidden = false;
-  } else {
-    desplegado = false;
-    desplegable.textContent = '▶ Historial de compras';
-    listaPrevias.hidden = true;
-  }
+  listaPrevias.hidden = !listaPrevias.hidden;
+  desplegable.textContent = (listaPrevias.hidden ? '▶' : '▼') + ' Historial de compras';
 }
 
 function descargarRecibo(compra, numero) {
   let texto = 'RECIBO - Picanya Music\n';
-  texto = texto + 'Fecha: ' + compra.fecha + '\n\n';
+  texto += 'Fecha: ' + compra.fecha + '\n\n';
 
-  for (let i = 0; i < compra.productos.length; i++) {
-    const producto = compra.productos[i];
-    texto = texto + producto.nombre + ' x' + producto.cantidad + ' - ' + formatearPrecio(producto.precio * producto.cantidad) + ' €\n';
-  }
+  compra.productos.forEach(function (producto) {
+    texto += producto.nombre + ' x' + producto.cantidad + ' - ' + formatearPrecio(producto.precio * producto.cantidad) + ' €\n';
+  });
 
-  texto = texto + '\nTOTAL: ' + formatearPrecio(compra.total) + ' €\n';
-
-  const archivo = new Blob([texto], { type: 'text/plain' });
-  const enlace = document.createElement('a');
-  enlace.href = URL.createObjectURL(archivo);
-  enlace.download = 'recibo-' + numero + '.txt';
-  enlace.click();
-  URL.revokeObjectURL(enlace.href);
+  texto += '\nTOTAL: ' + formatearPrecio(compra.total) + ' €\n';
+  descargarArchivo(texto, 'text/plain', 'recibo-' + numero + '.txt');
 }
 
 
 // =====================================================
-// CATÁLOGO (solo funciona en catalogo.html; en las demás páginas no hace nada)
+// 8. PÁGINA DE INICIO (solo index.html)
 // =====================================================
 
-const contenedorCats = document.getElementById('cats');
-const zonaProductos = document.getElementById('zona-productos');
-const tituloResultados = document.getElementById('titulo-resultados');
-const gridProductos = document.getElementById('grid-productos');
-const formBusqueda = document.getElementById('search-form');
-const campoBusqueda = document.getElementById('search-main');
-
-// Quita mayúsculas y tildes para que "percusion" encuentre "Percusión"
-function limpiar(texto) {
-  return texto.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+function mostrarNuevos() {
+  const nuevos = productos.filter(function (p) {
+    return p.nuevo;
+  });
+  pintarProductos(nuevos, gridNuevos);
 }
+
+
+// =====================================================
+// 9. CATÁLOGO (solo catalogo.html)
+// =====================================================
 
 function mostrarCategorias() {
   contenedorCats.innerHTML = '';
@@ -515,41 +586,9 @@ function mostrarCategorias() {
   });
 }
 
-function pintarProductos(lista) {
-  gridProductos.innerHTML = '';
-
-  if (lista.length == 0) {
-    gridProductos.innerHTML = '<p class="empty-msg">No hemos encontrado ningún producto.</p>';
-    return;
-  }
-
-  lista.forEach(function (p) {
-    const caja = document.createElement('div');
-    caja.className = 'product-card';
-
-    // Borde amarillo si es nuevo y rojo si está en oferta (si son ambas, gana el rojo)
-    if (p.nuevo) {
-      caja.classList.add('es-nuevo');
-    }
-    if (porcentajeDescuento(p) > 0) {
-      caja.classList.add('en-oferta');
-    }
-
-    caja.innerHTML =
-      '<div class="thumb" ' + estiloImagen(p.id) + '></div>' +
-      (p.nuevo ? '<span class="badge-new"><i class="fa-solid fa-star"></i> Nuevo</span>' : '') +
-      (porcentajeDescuento(p) > 0 ? '<span class="badge-oferta"><i class="fa-solid fa-tag"></i> -' + porcentajeDescuento(p) + '%</span>' : '') +
-      '<h3>' + p.nombre + '</h3>' +
-      '<small>' + p.marca + '</small>' +
-      htmlPrecio(p) +
-      '<button type="button" onclick="anadirAlCarrito(' + p.id + ')">Añadir</button>';
-    gridProductos.appendChild(caja);
-  });
-}
-
 function mostrarZonaProductos(titulo, lista) {
   tituloResultados.textContent = titulo;
-  pintarProductos(lista);
+  pintarProductos(lista, gridProductos);
   contenedorCats.hidden = true;
   zonaProductos.hidden = false;
 }
@@ -600,19 +639,347 @@ function buscar(evento) {
 
 
 // =====================================================
-// ARRANQUE
+// 10. CALENDARIO DE CITAS (solo contacto.html)
+// Las citas se guardan en el navegador (localStorage), igual que el carrito
 // =====================================================
 
-document.querySelector('.cart').onclick = function (evento) {
+const MESES = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
+const DIAS_SEMANA = ['domingo', 'lunes', 'martes', 'miércoles', 'jueves', 'viernes', 'sábado'];
+
+// Horario: lunes a sábado de 10:00 a 20:00, citas de una hora (la última empieza a las 19:00)
+const HORAS_CITA = ['10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00', '17:00', '18:00', '19:00'];
+
+let citas = JSON.parse(localStorage.getItem('citas')) || [];
+let mesVisible = new Date();
+mesVisible.setDate(1);
+let diaElegido = null;   // fecha elegida en formato 'AAAA-MM-DD'
+let horaElegida = null;  // por ejemplo '11:00'
+
+function guardarCitas() {
+  localStorage.setItem('citas', JSON.stringify(citas));
+}
+
+// --------- Ayudas con fechas ---------
+
+function dosDigitos(n) {
+  return n < 10 ? '0' + n : '' + n;
+}
+
+// Date -> '2026-11-19'
+function claveFecha(fecha) {
+  return fecha.getFullYear() + '-' + dosDigitos(fecha.getMonth() + 1) + '-' + dosDigitos(fecha.getDate());
+}
+
+// '2026-11-19' -> Date
+function fechaDeClave(clave) {
+  const partes = clave.split('-');
+  return new Date(Number(partes[0]), Number(partes[1]) - 1, Number(partes[2]));
+}
+
+// '2026-11-19' -> 'jueves 19 de noviembre'
+function textoFecha(clave) {
+  const f = fechaDeClave(clave);
+  return DIAS_SEMANA[f.getDay()] + ' ' + f.getDate() + ' de ' + MESES[f.getMonth()].toLowerCase();
+}
+
+function tieneCita(clave) {
+  return citas.some(function (c) {
+    return c.fecha === clave;
+  });
+}
+
+// Una hora está ocupada si ya la has reservado tú o si la damos por ocupada
+// (esto último es inventado, para que la tienda parezca real: ocupa más o menos 1 de cada 5 horas)
+function horaOcupada(clave, hora) {
+  const reservada = citas.some(function (c) {
+    return c.fecha === clave && c.hora === hora;
+  });
+  const simulada = (fechaDeClave(clave).getDate() * 3 + HORAS_CITA.indexOf(hora)) % 5 == 0;
+  return reservada || simulada;
+}
+
+// Si el día elegido es hoy, las horas que ya han empezado no se pueden reservar
+function horaPasada(clave, hora) {
+  const ahora = new Date();
+  if (clave !== claveFecha(ahora)) {
+    return false;
+  }
+  return Number(hora.split(':')[0]) <= ahora.getHours();
+}
+
+// --------- Calendario ---------
+
+function dibujarCalendario() {
+  const anio = mesVisible.getFullYear();
+  const mes = mesVisible.getMonth();
+  calTitulo.textContent = MESES[mes] + ' ' + anio;
+
+  const hoy = new Date();
+  hoy.setHours(0, 0, 0, 0);
+
+  // Se puede reservar hasta el final del segundo mes siguiente
+  const limite = new Date(hoy.getFullYear(), hoy.getMonth() + 3, 0);
+
+  const diasMes = new Date(anio, mes + 1, 0).getDate();
+  // La semana empieza en lunes: getDay() da 0 para domingo, así que lo movemos al final
+  const huecos = (new Date(anio, mes, 1).getDay() + 6) % 7;
+
+  let html = '';
+  for (let i = 0; i < huecos; i++) {
+    html += '<span class="cal-vacio"></span>';
+  }
+
+  for (let d = 1; d <= diasMes; d++) {
+    const fecha = new Date(anio, mes, d);
+    const clave = claveFecha(fecha);
+    const bloqueado = fecha < hoy || fecha > limite || fecha.getDay() == 0;
+
+    let clases = 'cal-dia';
+    if (fecha.getTime() == hoy.getTime()) {
+      clases += ' hoy';
+    }
+    if (clave == diaElegido) {
+      clases += ' elegido';
+    }
+    if (tieneCita(clave)) {
+      clases += ' con-cita';
+    }
+
+    html += '<button type="button" class="' + clases + '"' +
+      (bloqueado ? ' disabled' : '') +
+      ' aria-label="' + textoFecha(clave) + '"' +
+      ' onclick="elegirDia(\'' + clave + '\')">' + d + '</button>';
+  }
+
+  calDias.innerHTML = html;
+
+  // Meses de diferencia entre el mes que se ve y el mes actual
+  const diferencia = (anio - hoy.getFullYear()) * 12 + mes - hoy.getMonth();
+  calPrev.disabled = diferencia <= 0;
+  calNext.disabled = diferencia >= 2;
+}
+
+function elegirDia(clave) {
+  diaElegido = clave;
+  horaElegida = null;
+  formCita.hidden = true;
+  mostrarMensajeCita('', false);
+  dibujarCalendario();
+  dibujarHoras();
+}
+
+// --------- Horas ---------
+
+function dibujarHoras() {
+  zonaHoras.innerHTML = '';
+
+  if (diaElegido == null) {
+    horasTitulo.textContent = 'Elige un día en el calendario';
+    return;
+  }
+
+  horasTitulo.textContent = 'Horas para el ' + textoFecha(diaElegido);
+
+  HORAS_CITA.forEach(function (hora) {
+    const boton = document.createElement('button');
+    boton.type = 'button';
+    boton.className = 'hora-btn';
+    boton.textContent = hora;
+
+    if (horaOcupada(diaElegido, hora) || horaPasada(diaElegido, hora)) {
+      boton.disabled = true;
+      boton.title = 'No disponible';
+    }
+    if (hora == horaElegida) {
+      boton.classList.add('elegida');
+    }
+
+    boton.onclick = function () {
+      elegirHora(hora);
+    };
+    zonaHoras.appendChild(boton);
+  });
+}
+
+function elegirHora(hora) {
+  horaElegida = hora;
+  mostrarMensajeCita('', false);
+  resumenCita.textContent = 'Tu cita: ' + textoFecha(diaElegido) + ' a las ' + hora;
+  formCita.hidden = false;
+  dibujarHoras();
+}
+
+// --------- Reservar, ver y cancelar citas ---------
+
+function mostrarMensajeCita(texto, esError) {
+  mensajeCita.textContent = texto;
+  mensajeCita.classList.toggle('error', esError);
+}
+
+function confirmarCita(evento) {
+  // Evita que la página se recargue al enviar el formulario
+  evento.preventDefault();
+
+  if (diaElegido == null || horaElegida == null) {
+    mostrarMensajeCita('Elige un día y una hora.', true);
+    return;
+  }
+
+  // Por si la hora se ha ocupado o ha pasado mientras rellenabas el formulario
+  if (horaOcupada(diaElegido, horaElegida) || horaPasada(diaElegido, horaElegida)) {
+    horaElegida = null;
+    formCita.hidden = true;
+    dibujarHoras();
+    mostrarMensajeCita('Esa hora ya no está disponible. Elige otra.', true);
+    return;
+  }
+
+  const cita = {
+    id: Date.now(),
+    fecha: diaElegido,
+    hora: horaElegida,
+    nombre: document.getElementById('cita-nombre').value.trim(),
+    telefono: document.getElementById('cita-telefono').value.trim(),
+    motivo: document.getElementById('cita-motivo').value
+  };
+
+  citas.push(cita);
+  guardarCitas();
+
+  const texto = 'Cita reservada para el ' + textoFecha(cita.fecha) + ' a las ' + cita.hora + '.';
+
+  formCita.reset();
+  formCita.hidden = true;
+  diaElegido = null;
+  horaElegida = null;
+
+  dibujarCalendario();
+  dibujarHoras();
+  mostrarCitas();
+  mostrarMensajeCita(texto, false);
+}
+
+function mostrarCitas() {
+  listaCitas.innerHTML = '';
+
+  // Solo las citas de hoy en adelante, ordenadas por fecha y hora
+  const hoy = claveFecha(new Date());
+  const proximas = citas.filter(function (c) {
+    return c.fecha >= hoy;
+  }).sort(function (a, b) {
+    return (a.fecha + a.hora).localeCompare(b.fecha + b.hora);
+  });
+
+  if (proximas.length == 0) {
+    listaCitas.innerHTML = '<li class="empty-msg">Todavía no tienes citas reservadas.</li>';
+    return;
+  }
+
+  proximas.forEach(function (c) {
+    const titulo = document.createElement('strong');
+    titulo.textContent = textoFecha(c.fecha) + ' · ' + c.hora;
+
+    const detalle = document.createElement('small');
+    detalle.textContent = c.motivo + ' — ' + c.nombre;
+
+    const info = document.createElement('div');
+    info.appendChild(titulo);
+    info.appendChild(detalle);
+
+    const botonCalendario = document.createElement('button');
+    botonCalendario.type = 'button';
+    botonCalendario.innerHTML = '<i class="fa-solid fa-calendar-plus"></i> Añadir a mi calendario';
+    botonCalendario.onclick = function () {
+      descargarCita(c);
+    };
+
+    const botonCancelar = document.createElement('button');
+    botonCancelar.type = 'button';
+    botonCancelar.className = 'cancelar';
+    botonCancelar.textContent = 'Cancelar';
+    botonCancelar.onclick = function () {
+      cancelarCita(c.id);
+    };
+
+    const acciones = document.createElement('div');
+    acciones.className = 'acciones';
+    acciones.appendChild(botonCalendario);
+    acciones.appendChild(botonCancelar);
+
+    const fila = document.createElement('li');
+    fila.className = 'cita-item';
+    fila.appendChild(info);
+    fila.appendChild(acciones);
+    listaCitas.appendChild(fila);
+  });
+}
+
+function cancelarCita(idCita) {
+  citas = citas.filter(function (c) {
+    return c.id !== idCita;
+  });
+  guardarCitas();
+
+  // La hora vuelve a quedar libre, así que repintamos todo
+  dibujarCalendario();
+  dibujarHoras();
+  mostrarCitas();
+  mostrarMensajeCita('Cita cancelada.', false);
+}
+
+// Descarga un archivo .ics que se puede abrir con Google Calendar, Outlook, el móvil...
+function descargarCita(cita) {
+  const dia = cita.fecha.replace(/-/g, '');
+  const inicio = dia + 'T' + cita.hora.replace(':', '') + '00';
+  const horaFin = dosDigitos(Number(cita.hora.split(':')[0]) + 1);
+  const fin = dia + 'T' + horaFin + '0000';
+  const ahora = new Date().toISOString().replace(/[-:]/g, '').split('.')[0] + 'Z';
+
+  const lineas = [
+    'BEGIN:VCALENDAR',
+    'VERSION:2.0',
+    'PRODID:-//Picanya Music//Citas//ES',
+    'BEGIN:VEVENT',
+    'UID:' + cita.id + '@picanyamusic.es',
+    'DTSTAMP:' + ahora,
+    'DTSTART:' + inicio,
+    'DTEND:' + fin,
+    'SUMMARY:Cita en Picanya Music',
+    'DESCRIPTION:' + cita.motivo,
+    'LOCATION:Picanya Music',
+    'END:VEVENT',
+    'END:VCALENDAR'
+  ];
+
+  descargarArchivo(lineas.join('\r\n'), 'text/calendar;charset=utf-8', 'cita-picanya-music.ics');
+}
+
+
+// =====================================================
+// 11. ARRANQUE
+// =====================================================
+
+// En todas las páginas
+inicializarTema();
+botonCarrito.onclick = function (evento) {
   evento.preventDefault();
   abrirCarrito();
 };
-
-mostrarNuevos();
 dibujarCarrito();
-leerHistorial();
+mostrarHistorial();
 
-// Catálogo: solo si la página tiene el buscador y las categorías
+if (progressFill != null) {
+  window.addEventListener('scroll', updateProgress);
+  window.addEventListener('resize', updateProgress);
+  updateProgress();
+}
+
+// Solo en index.html
+if (gridNuevos != null) {
+  mostrarNuevos();
+}
+
+// Solo en catalogo.html
 if (contenedorCats != null) {
   // La búsqueda se actualiza en cada letra que se escribe o se borra.
   // El submit (pulsar Enter) sigue controlado para que la página no se recargue.
@@ -626,42 +993,19 @@ if (contenedorCats != null) {
   }
 }
 
-// =====================================================
-// MODO DÍA Y NOCHE
-// =====================================================
+// Solo en contacto.html
+if (calDias != null) {
+  calPrev.onclick = function () {
+    mesVisible.setMonth(mesVisible.getMonth() - 1);
+    dibujarCalendario();
+  };
+  calNext.onclick = function () {
+    mesVisible.setMonth(mesVisible.getMonth() + 1);
+    dibujarCalendario();
+  };
+  formCita.onsubmit = confirmarCita;
 
-function aplicarTema(oscuro) {
-  document.body.classList.toggle('dark-mode', oscuro);
-  const btn = document.getElementById('theme-toggle');
-  if (btn) {
-    btn.innerHTML = oscuro
-      ? '<i class="fa-solid fa-sun"></i>'
-      : '<i class="fa-solid fa-moon"></i>';
-    btn.setAttribute('aria-label', oscuro ? 'Activar modo día' : 'Activar modo noche');
-    btn.title = oscuro ? 'Modo día' : 'Modo noche';
-  }
+  dibujarCalendario();
+  dibujarHoras();
+  mostrarCitas();
 }
-
-function inicializarTema() {
-  const navList = document.querySelector('.nav-list');
-  if (navList) {
-    const li = document.createElement('li');
-    li.className = 'theme-btn';
-    li.innerHTML = '<button type="button" id="theme-toggle" class="theme-toggle" aria-label="Cambiar tema"></button>';
-    navList.appendChild(li);
-
-    document.getElementById('theme-toggle').onclick = function () {
-      const esOscuro = !document.body.classList.contains('dark-mode');
-      localStorage.setItem('temaOscuro', esOscuro);
-      aplicarTema(esOscuro);
-    };
-  }
-
-  const guardado = localStorage.getItem('temaOscuro');
-  const prefiereOscuro = window.matchMedia('(prefers-color-scheme: dark)').matches;
-  const activarOscuro = guardado !== null ? guardado === 'true' : prefiereOscuro;
-
-  aplicarTema(activarOscuro);
-}
-
-inicializarTema();
