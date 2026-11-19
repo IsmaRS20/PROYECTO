@@ -1,4 +1,24 @@
-/* ===== VARIABLES ===== */
+/* =====================================================
+   PICANYA MUSIC - style.css
+
+   Orden del archivo:
+    1. Variables y modo noche
+    2. Base
+    3. Botones y tarjetas comunes
+    4. Cabecera y navegación
+    5. Portada (carrusel)
+    6. Productos
+    7. Nuestra historia
+    8. Catálogo
+    9. Servicios
+   10. Contacto y calendario de citas
+   11. Carrito lateral e historial
+   12. Pie de página
+   13. Responsive y movimiento reducido
+   ===================================================== */
+
+
+/* ===== 1. VARIABLES ===== */
 :root {
     --color-main: rgb(49, 36, 1);
     --color-main-glass: rgba(36, 23, 0, 0.75);
@@ -38,16 +58,16 @@
         inset 0 -2px 0 rgba(0, 0, 0, .12);
     --relieve-btn-pulsado: inset 0 3px 6px rgba(0, 0, 0, .35);
 
-    /* Relieve suave: campos de texto (hundidos) */
-    --relieve-hundido:
-        inset 0 2px 5px rgba(49, 36, 1, .18),
-        inset 0 1px 1px rgba(49, 36, 1, .12);
+    /* Cuánto se elevan botones y tarjetas al pasar el ratón
+       (con "movimiento reducido" valen none, ver el final del archivo) */
+    --lift-btn: translateY(-2px);
+    --lift-card: translateY(-3px);
 
     --trans-btn: transform .2s ease, box-shadow .2s ease, background .2s, color .2s;
     --trans-card: transform .25s ease, box-shadow .25s ease, background .2s, border-color .2s, color .2s;
 }
 
-/* ===== MODO NOCHE ===== */
+/* ===== MODO NOCHE (solo cambia las variables) ===== */
 body.dark-mode {
     --color-bg: #222222;
     --color-surface: #363636;
@@ -77,9 +97,14 @@ body.dark-mode {
         0 6px 12px rgba(0, 0, 0, .50),
         inset 0 1px 0 rgba(255, 255, 255, .20),
         inset 0 -2px 0 rgba(0, 0, 0, .20);
-    --relieve-hundido:
-        inset 0 2px 5px rgba(0, 0, 0, .50),
-        inset 0 1px 1px rgba(0, 0, 0, .40);
+}
+
+
+/* ===== 2. BASE ===== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
 html,
@@ -91,31 +116,31 @@ body {
 body {
     background-color: var(--color-bg);
     color: var(--color-text);
-    transition: background-color 0.25s ease, color 0.25s ease;
-}
-
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
     font-family: system-ui, -apple-system, sans-serif;
+    transition: background-color .25s ease, color .25s ease;
 }
 
-/* Foco visible para quien navega con teclado (mantiene el estilo de la web) */
+button,
+input,
+select {
+    font-family: inherit;
+}
+
+/* Sin esto, display:grid o flex ganaría al atributo hidden */
+[hidden] {
+    display: none !important;
+}
+
+/* Foco visible para quien navega con teclado */
 a:focus-visible,
 button:focus-visible,
-input:focus-visible {
+input:focus-visible,
+select:focus-visible {
     outline: 3px solid var(--color-accent);
     outline-offset: 2px;
 }
 
-body.home .site-header {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-}
-
+/* Oculto a la vista pero legible por lectores de pantalla */
 .hidden {
     position: absolute;
     width: 1px;
@@ -128,13 +153,187 @@ body.home .site-header {
     border: 0;
 }
 
-/* Miniatura reutilizable (tarjetas de producto y carrito) */
+/* Imagen de fondo de las miniaturas (tarjetas y carrito) */
 .thumb {
     background-size: cover;
     background-position: center;
 }
 
-/* ===== CABECERA Y NAVEGACIÓN ===== */
+/* Contenedor de las páginas interiores */
+.page {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2.5rem 5vw;
+}
+
+.page p {
+    margin-bottom: 1rem;
+    line-height: 1.6;
+    color: var(--color-text);
+}
+
+/* Títulos de sección */
+.about-header h2,
+.page h1,
+.page h2 {
+    position: relative;
+    display: inline-block;
+    margin-bottom: .5rem;
+    font-size: 2.5rem;
+    color: var(--color-heading);
+}
+
+
+/* ===== 3. BOTONES Y TARJETAS COMUNES ===== */
+
+/* --- Botones: aspecto en relieve compartido --- */
+.shop-btn a,
+.link-btn,
+.product-card button,
+.back-btn,
+.theme-toggle,
+.cart-btn a,
+.service-nav a,
+.cal-nav,
+.hora-btn,
+.cita-item button,
+.fila-recibo button,
+.cart-item .plus,
+.btn-red,
+.btn-green {
+    cursor: pointer;
+    box-shadow: var(--relieve-btn);
+    transition: var(--trans-btn);
+}
+
+/* Al pasar el ratón: fondo amarillo y se eleva */
+.shop-btn a:hover,
+.link-btn:hover,
+.product-card button:hover,
+.back-btn:hover,
+.theme-toggle:hover,
+.cal-nav:hover:not(:disabled),
+.hora-btn:hover:not(:disabled),
+.cita-item button:hover,
+.fila-recibo button:hover,
+.cart-item .plus:hover {
+    background: var(--color-accent);
+    color: #111;
+    transform: var(--lift-btn);
+    box-shadow: var(--relieve-btn-hover);
+}
+
+/* Al pasar el ratón: fondo blanco (los botones que ya son amarillos) */
+.cart-btn a:hover,
+.service-nav a:hover {
+    background: #fff;
+    color: #111;
+    transform: var(--lift-btn);
+    box-shadow: var(--relieve-btn-hover);
+}
+
+.btn-red:hover,
+.btn-green:hover {
+    color: #fff;
+    transform: var(--lift-btn);
+    box-shadow: var(--relieve-btn-hover);
+}
+
+.btn-red:hover {
+    background: var(--color-red);
+}
+
+.btn-green:hover {
+    background: var(--color-green);
+}
+
+/* Al pulsar: el botón se hunde (va después de los hover para ganarles) */
+.shop-btn a:active,
+.link-btn:active,
+.product-card button:active,
+.back-btn:active,
+.theme-toggle:active,
+.cart-btn a:active,
+.service-nav a:active,
+.cal-nav:active:not(:disabled),
+.cart-item .plus:active,
+.btn-red:active,
+.btn-green:active {
+    transform: none;
+    box-shadow: var(--relieve-btn-pulsado);
+}
+
+/* Botón principal (enlace o <button>) */
+.link-btn {
+    display: inline-block;
+    padding: .7rem 1.6rem;
+    background: var(--color-main);
+    border-radius: 50px;
+    color: #fff;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+button.link-btn {
+    border: 0;
+    font-size: 1rem;
+}
+
+/* --- Tarjetas: aspecto compartido --- */
+.product-card,
+.cat-card,
+.service-card,
+.cart-item,
+.cal,
+.cita-form {
+    background: var(--color-surface);
+    border: 2px solid var(--color-border);
+    border-radius: 8px;
+    box-shadow: var(--relieve-card);
+}
+
+/* Las tarjetas grandes se elevan al pasar el ratón */
+.product-card,
+.cat-card,
+.service-card {
+    transition: var(--trans-card);
+}
+
+.product-card:hover,
+.cat-card:hover,
+.service-card:hover {
+    transform: var(--lift-card);
+    box-shadow: var(--relieve-card-hover);
+}
+
+/* Tarjetas con barra de color a la izquierda */
+.feature-card,
+.contact-info li,
+.process-step,
+.cita-item {
+    background: var(--color-surface);
+    border-left: 4px solid var(--color-secondary);
+    border-radius: 0 8px 8px 0;
+    box-shadow: var(--relieve-card);
+}
+
+/* Textos secundarios (gris) */
+.product-card small,
+.cat-card span,
+.cart-item small,
+.cita-item small,
+.page .empty-msg {
+    color: var(--color-text-muted);
+    font-size: 1rem;
+}
+
+.cart-item small,
+.cita-item small {
+    display: block;
+}
+
+
+/* ===== 4. CABECERA Y NAVEGACIÓN ===== */
 .site-header {
     position: sticky;
     top: 0;
@@ -142,6 +341,14 @@ body.home .site-header {
     background-color: var(--color-main-glass);
     backdrop-filter: blur(5px);
     box-shadow: 0 4px 14px rgba(0, 0, 0, .30), inset 0 -1px 0 rgba(255, 255, 255, .08);
+}
+
+/* En la portada la cabecera flota sobre el carrusel */
+body.home .site-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
 }
 
 .nav-container {
@@ -163,29 +370,6 @@ body.home .site-header {
     height: auto;
 }
 
-.nav-toggler {
-    display: none;
-    padding: .25rem .75rem;
-    background: none;
-    border: 1px solid rgba(255, 255, 255, .5);
-    border-radius: .25rem;
-    color: #fff;
-    font-size: 1.25rem;
-    cursor: pointer;
-    box-shadow: var(--relieve-btn);
-    transition: var(--trans-btn);
-}
-
-.nav-toggler:hover {
-    transform: translateY(-2px);
-    box-shadow: var(--relieve-btn-hover);
-}
-
-.nav-toggler:active {
-    transform: translateY(0);
-    box-shadow: var(--relieve-btn-pulsado);
-}
-
 .nav-menu {
     display: flex;
     align-items: center;
@@ -193,21 +377,20 @@ body.home .site-header {
 
 .nav-list {
     display: flex;
+    align-items: center;
     gap: 1.5rem;
     margin: 0 2rem 0 0;
-    padding: 0;
     list-style: none;
-    align-items: center;
 }
 
 .nav-link {
     display: block;
     padding: 1rem;
+    border-radius: 50px;
     color: #fff;
     font-size: 1.1rem;
     text-decoration: none;
     transition: color .2s, box-shadow .2s, transform .2s;
-    border-radius: 50px;
 }
 
 .nav-link:hover,
@@ -225,8 +408,9 @@ body.home .site-header {
     font-weight: 600;
 }
 
-/* Botón de Modo Día / Noche */
-.theme-btn {
+/* Botón de modo día / noche (lo crea el JS dentro del menú) */
+.theme-btn,
+.cart-btn {
     align-content: center;
 }
 
@@ -237,30 +421,15 @@ body.home .site-header {
     width: 42px;
     height: 42px;
     background: var(--color-main);
-    border: 1px solid rgba(255, 207, 103, 0.3);
+    border: 1px solid rgba(255, 207, 103, .3);
     border-radius: 50%;
     color: var(--color-accent);
     font-size: 1.1rem;
-    cursor: pointer;
-    transition: var(--trans-btn);
-    box-shadow: var(--relieve-btn);
 }
 
-.theme-toggle:hover {
-    background-color: var(--color-accent);
-    color: #111;
-    transform: translateY(-2px);
-    box-shadow: var(--relieve-btn-hover);
-}
-
-.theme-toggle:active {
-    transform: translateY(0);
-    box-shadow: var(--relieve-btn-pulsado);
-}
-
+/* Botón del carrito */
 .cart-btn {
     font-weight: 500;
-    align-content: center;
 }
 
 .cart-btn a {
@@ -270,21 +439,6 @@ body.home .site-header {
     border-radius: 50px;
     color: #111;
     text-decoration: none;
-    cursor: pointer;
-    transition: var(--trans-btn);
-    box-shadow: var(--relieve-btn);
-}
-
-.cart-btn a:hover {
-    background-color: #fff;
-    color: #111;
-    transform: translateY(-2px);
-    box-shadow: var(--relieve-btn-hover);
-}
-
-.cart-btn a:active {
-    transform: translateY(0);
-    box-shadow: var(--relieve-btn-pulsado);
 }
 
 .cart-btn span {
@@ -308,7 +462,7 @@ body.home .site-header {
     }
 }
 
-/* ===== BARRA DE PROGRESO ===== */
+/* Barra de progreso del scroll */
 .progress-bar {
     width: 100%;
     height: 5px;
@@ -316,13 +470,14 @@ body.home .site-header {
 }
 
 .progress-fill {
-    height: 100%;
     width: 0%;
+    height: 100%;
     background: linear-gradient(90deg, var(--color-secondary), var(--color-accent));
     box-shadow: 0 0 10px rgba(255, 226, 96, .6);
 }
 
-/* ===== CARRUSEL INFINITO ===== */
+
+/* ===== 5. PORTADA ===== */
 .carousel {
     position: relative;
     height: 800px;
@@ -350,6 +505,7 @@ body.home .site-header {
     user-select: none;
 }
 
+/* La mitad exacta del recorrido son las 3 imágenes originales (las otras 3 son la copia) */
 @keyframes scroll-infinito {
     from {
         transform: translateX(0);
@@ -360,6 +516,7 @@ body.home .site-header {
     }
 }
 
+/* Texto fijo en el centro del carrusel */
 .text-carousel {
     position: absolute;
     top: 50%;
@@ -390,7 +547,6 @@ body.home .site-header {
     filter: drop-shadow(2px 2px 8px rgba(0, 0, 0, .9));
 }
 
-/* ===== PÁGINA PRINCIPAL ===== */
 .shop-btn {
     padding: 2rem 5vw 0;
     text-align: center;
@@ -405,20 +561,6 @@ body.home .site-header {
     font-size: 1.25rem;
     font-weight: 600;
     text-decoration: none;
-    transition: var(--trans-btn);
-    box-shadow: var(--relieve-btn);
-}
-
-.shop-btn a:hover {
-    background: var(--color-accent);
-    color: #111;
-    transform: translateY(-2px);
-    box-shadow: var(--relieve-btn-hover);
-}
-
-.shop-btn a:active {
-    transform: translateY(0);
-    box-shadow: var(--relieve-btn-pulsado);
 }
 
 .store-new {
@@ -434,55 +576,15 @@ body.home .site-header {
     padding: 2rem 5vw;
 }
 
-/* ===== TARJETAS DE PRODUCTO ===== */
+
+/* ===== 6. PRODUCTOS ===== */
 .product-card {
     position: relative;
     display: flex;
     flex-direction: column;
     gap: .4rem;
     padding: 1rem;
-    background: var(--color-surface);
-    border: 2px solid var(--color-border);
-    border-radius: 8px;
     text-align: center;
-    box-shadow: var(--relieve-card);
-    transition: var(--trans-card);
-}
-
-/* Al pasar el ratón la tarjeta se eleva un poco */
-.product-card:hover {
-    transform: translateY(-3px);
-    box-shadow: var(--relieve-card-hover);
-}
-
-/* Color de estado del producto: amarillo si es nuevo y verde si está en oferta
-   (si es nuevo y oferta a la vez, gana el de oferta) */
-.product-card.es-nuevo {
-    --tinte: var(--color-accent);
-    box-shadow: var(--relieve-card), 0 0 10px var(--color-accent);
-}
-
-.product-card.en-oferta {
-    --tinte: var(--color-green);
-    box-shadow: var(--relieve-card), 0 0 10px var(--color-green);
-}
-
-/* Borde del color de estado y fondo en degradado: del color de fondo hacia el color del borde.
-   Cambia el 40% para que el degradado sea más suave (menos %) o más intenso (más %). */
-.product-card.es-nuevo,
-.product-card.en-oferta {
-    border-color: var(--tinte);
-    background: linear-gradient(to bottom,
-            var(--color-surface) 0%,
-            color-mix(in srgb, var(--tinte) 40%, var(--color-surface)) 100%);
-}
-
-.product-card.es-nuevo:hover {
-    box-shadow: var(--relieve-card-hover), 0 0 14px var(--color-accent);
-}
-
-.product-card.en-oferta:hover {
-    box-shadow: var(--relieve-card-hover), 0 0 14px var(--color-green);
 }
 
 .product-card .thumb {
@@ -490,12 +592,10 @@ body.home .site-header {
     height: 200px;
 }
 
-.product-card small,
-.cat-card span,
-.cart-item small,
-.empty-msg {
-    color: var(--color-text-muted);
-    font-size: 1rem;
+.product-card .precio {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--color-text);
 }
 
 .precio-original {
@@ -505,10 +605,9 @@ body.home .site-header {
     color: var(--color-text);
 }
 
-.product-card .precio {
-    font-weight: 600;
-    font-size: 1.25rem;
-    color: var(--color-text);
+.precio-oferta {
+    font-weight: 700;
+    color: var(--color-sale);
 }
 
 .product-card button {
@@ -519,24 +618,62 @@ body.home .site-header {
     border-radius: 50px;
     color: #fff;
     font-weight: 600;
-    cursor: pointer;
-    transition: var(--trans-btn);
-    box-shadow: var(--relieve-btn);
 }
 
-.product-card button:hover {
+/* Estado del producto: borde y brillo amarillo si es nuevo, verde si está en oferta
+   (si es las dos cosas, gana la oferta porque va después) */
+.product-card.es-nuevo {
+    --tinte: var(--color-accent);
+}
+
+.product-card.en-oferta {
+    --tinte: var(--color-green);
+}
+
+/* El fondo es un degradado hacia el color de estado.
+   Cambia el 40% para que sea más suave (menos) o más intenso (más). */
+.product-card.es-nuevo,
+.product-card.en-oferta {
+    border-color: var(--tinte);
+    background: linear-gradient(to bottom,
+            var(--color-surface) 0%,
+            color-mix(in srgb, var(--tinte) 40%, var(--color-surface)) 100%);
+    box-shadow: var(--relieve-card), 0 0 10px var(--tinte);
+}
+
+.product-card.es-nuevo:hover,
+.product-card.en-oferta:hover {
+    box-shadow: var(--relieve-card-hover), 0 0 14px var(--tinte);
+}
+
+/* Etiquetas "Nuevo" y "-20%" sobre el borde superior */
+.badge-new,
+.badge-oferta {
+    position: absolute;
+    top: -1px;
+    left: 50%;
+    z-index: 1;
+    transform: translate(-50%, -50%);
+    padding: .3rem .7rem;
+    border-radius: 50px;
+    font-size: 1rem;
+    font-weight: 700;
+    white-space: nowrap;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, .3), inset 0 1px 0 rgba(255, 255, 255, .4);
+}
+
+.badge-new {
     background: var(--color-accent);
     color: #111;
-    transform: translateY(-2px);
-    box-shadow: var(--relieve-btn-hover);
 }
 
-.product-card button:active {
-    transform: translateY(0);
-    box-shadow: var(--relieve-btn-pulsado);
+.badge-oferta {
+    background: var(--color-sale);
+    color: #fff;
 }
 
-/* ===== SECCIÓN NUESTRA HISTORIA ===== */
+
+/* ===== 7. NUESTRA HISTORIA ===== */
 .about-section {
     padding: 4rem 5vw;
     background-color: var(--color-surface-alt);
@@ -549,18 +686,8 @@ body.home .site-header {
 }
 
 .about-header {
-    text-align: center;
     margin-bottom: 3rem;
-}
-
-.about-header h2,
-.page h1,
-.page h2 {
-    font-size: 2.5rem;
-    color: var(--color-heading);
-    margin-bottom: 0.5rem;
-    position: relative;
-    display: inline-block;
+    text-align: center;
 }
 
 .about-header h2::after {
@@ -568,15 +695,15 @@ body.home .site-header {
     display: block;
     width: 60px;
     height: 4px;
+    margin: .5rem auto 0;
     background: var(--color-secondary);
-    margin: 0.5rem auto 0;
     border-radius: 2px;
 }
 
 .about-subtitle {
     font-size: 1.2rem;
-    color: var(--color-text);
     font-weight: 500;
+    color: var(--color-text);
 }
 
 .about-grid {
@@ -587,16 +714,16 @@ body.home .site-header {
 }
 
 .about-text p {
+    margin-bottom: 1.5rem;
     font-size: 1.1rem;
     line-height: 1.7;
-    margin-bottom: 1.5rem;
     color: var(--color-text);
 }
 
 .about-text p.lead {
     font-size: 1.25rem;
-    color: var(--color-heading);
     line-height: 1.6;
+    color: var(--color-heading);
 }
 
 .about-features {
@@ -607,16 +734,12 @@ body.home .site-header {
 
 .feature-card {
     padding: 1.5rem;
-    background: var(--color-surface);
-    border-left: 4px solid var(--color-secondary);
-    border-radius: 0 8px 8px 0;
-    box-shadow: var(--relieve-card);
 }
 
 .feature-card h3 {
-    color: var(--color-heading);
-    margin-bottom: 0.5rem;
+    margin-bottom: .5rem;
     font-size: 1.3rem;
+    color: var(--color-heading);
 }
 
 .feature-card p {
@@ -625,33 +748,535 @@ body.home .site-header {
     color: var(--color-text);
 }
 
-.about-footer-text {
+/* Cajas marrones: cierre de la historia y llamada a la acción de servicios */
+.about-footer-text,
+.service-cta {
+    background: var(--color-main);
+    border-radius: 12px;
     text-align: center;
+    box-shadow: 0 8px 24px rgba(49, 36, 1, .25), inset 0 1px 0 rgba(255, 255, 255, .12);
+}
+
+.about-footer-text {
     margin-top: 3.5rem;
     padding: 1.5rem;
-    background: var(--color-main);
     color: #fff;
-    border-radius: 12px;
     font-size: 1.2rem;
     line-height: 1.6;
-    box-shadow: 0 8px 24px rgba(49, 36, 1, .25), inset 0 1px 0 rgba(255, 255, 255, .12);
 }
 
 .about-footer-text strong {
     color: var(--color-accent);
 }
 
-/* ===== PIE DE PÁGINA ===== */
-.site-footer {
-    margin-top: 3rem;
-    padding: 2rem 1rem;
-    background: var(--color-main);
-    color: #fff;
-    text-align: center;
-    box-shadow: inset 0 1px 0 rgba(255, 255, 255, .12);
+
+/* ===== 8. CATÁLOGO ===== */
+.catalog-search {
+    display: flex;
+    gap: .5rem;
+    margin-bottom: 2rem;
 }
 
-/* ===== CARRITO LATERAL ===== */
+/* Campos de texto: fondo gris con la línea de abajo que se vuelve amarilla */
+.catalog-search input,
+.cita-form input,
+.cita-form select {
+    padding: .7rem 1.1rem;
+    background: var(--color-surface-alt);
+    border: none;
+    border-bottom: 2px solid var(--color-text-muted);
+    color: var(--color-text);
+    font-size: 1rem;
+    transition: border-color .2s ease;
+}
+
+.catalog-search input {
+    flex: 1;
+}
+
+.catalog-search input:focus,
+.cita-form input:focus,
+.cita-form select:focus {
+    border-bottom-color: var(--color-accent);
+    outline: none;
+}
+
+.cat-grid,
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1.5rem;
+}
+
+.cat-card {
+    display: flex;
+    flex-direction: column;
+    gap: .3rem;
+    padding: 2.2rem 1rem;
+    color: var(--color-text);
+    text-align: center;
+    cursor: pointer;
+}
+
+.cat-card strong {
+    font-size: 1.3rem;
+    color: var(--color-heading);
+}
+
+.cat-card:hover {
+    background: var(--color-accent);
+}
+
+.cat-card:hover strong,
+.cat-card:hover span {
+    color: #111;
+}
+
+.cat-card:active {
+    transform: none;
+    box-shadow: var(--relieve-card);
+}
+
+.results-top {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.results-top h2 {
+    margin: 0;
+}
+
+.back-btn {
+    padding: .5rem 1.1rem;
+    background: none;
+    border: 2px solid var(--color-border);
+    border-radius: 50px;
+    color: var(--color-heading);
+    font-weight: 600;
+}
+
+.page .empty-msg {
+    grid-column: 1 / -1;
+}
+
+
+/* ===== 9. SERVICIOS ===== */
+.service-nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .6rem;
+    margin: 1.5rem 0 2.5rem;
+}
+
+.service-nav a {
+    display: block;
+    padding: 1rem;
+    background: var(--color-accent);
+    border-radius: 50px;
+    color: #111;
+    text-decoration: none;
+}
+
+.service-group {
+    margin-bottom: 3rem;
+    scroll-margin-top: 140px; /* deja sitio a la cabecera al saltar a un grupo */
+}
+
+.page .service-group h2 {
+    margin-bottom: .3rem;
+    font-size: 1.8rem;
+}
+
+.service-group-desc {
+    max-width: 70ch;
+    margin-bottom: 1.5rem;
+    color: var(--color-text-muted);
+}
+
+.service-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1.5rem;
+}
+
+.service-card {
+    display: flex;
+    flex-direction: column;
+    gap: .6rem;
+    padding: 1.5rem;
+}
+
+.service-card:hover {
+    border-color: var(--color-accent);
+}
+
+/* Iconos redondos (servicios) y números de paso (cómo trabajamos) */
+.service-icon,
+.step-num {
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, .3), inset 0 1px 0 rgba(255, 255, 255, .3);
+}
+
+.service-icon {
+    width: 52px;
+    height: 52px;
+    background: var(--color-main);
+    color: var(--color-accent);
+    font-size: 1.3rem;
+}
+
+.step-num {
+    width: 36px;
+    height: 36px;
+    background: var(--color-accent);
+    color: #111;
+    font-weight: 800;
+}
+
+.service-card h3,
+.process-step h3 {
+    color: var(--color-heading);
+}
+
+.service-card h3 {
+    font-size: 1.25rem;
+}
+
+.process-step h3 {
+    font-size: 1.1rem;
+}
+
+.page .service-card p,
+.page .process-step p {
+    margin: 0;
+    line-height: 1.5;
+}
+
+.service-card ul {
+    display: flex;
+    flex-direction: column;
+    gap: .3rem;
+    margin-top: auto;
+    padding-top: .5rem;
+    list-style: none;
+    font-size: .95rem;
+    color: var(--color-text-muted);
+}
+
+.service-card li::before {
+    content: '✓ ';
+    font-weight: 700;
+    color: var(--color-green);
+}
+
+/* Cómo trabajamos */
+.process-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+    list-style: none;
+}
+
+.process-step {
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
+    padding: 1.2rem;
+    background: var(--color-surface-alt);
+}
+
+/* Llamada a la acción (la caja marrón está en la sección 7) */
+.service-cta {
+    padding: 2.5rem 1.5rem;
+}
+
+.page .service-cta h2 {
+    color: var(--color-accent);
+}
+
+.page .service-cta p {
+    color: #fff;
+}
+
+.service-cta .link-btn {
+    background: var(--color-accent);
+    color: #111;
+}
+
+.service-cta .link-btn:hover {
+    background: #fff;
+}
+
+
+/* ===== 10. CONTACTO Y CALENDARIO DE CITAS ===== */
+.contact-info {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1.5rem;
+    margin: 1.5rem 0;
+    list-style: none;
+}
+
+.contact-info li {
+    padding: 1.2rem;
+    line-height: 1.6;
+}
+
+.contact-info strong {
+    color: var(--color-heading);
+}
+
+.contact-info i {
+    margin-right: .3rem;
+    color: var(--color-secondary);
+}
+
+.booking {
+    display: grid;
+    grid-template-columns: minmax(280px, 1.1fr) 1fr;
+    gap: 2rem;
+    align-items: start;
+    margin-top: 1.5rem;
+}
+
+/* --- Calendario --- */
+.cal {
+    padding: 1.2rem;
+}
+
+.cal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.cal-header h3,
+.booking-side h3 {
+    color: var(--color-heading);
+}
+
+.cal-header h3 {
+    font-size: 1.3rem;
+}
+
+.cal-nav {
+    display: grid;
+    place-items: center;
+    width: 40px;
+    height: 40px;
+    background: var(--color-main);
+    border: 0;
+    border-radius: 50%;
+    color: var(--color-accent);
+}
+
+.cal-nav:disabled {
+    opacity: .35;
+    cursor: not-allowed;
+    box-shadow: none;
+}
+
+.cal-semana,
+.cal-dias {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: .4rem;
+}
+
+.cal-semana span {
+    padding-bottom: .3rem;
+    text-align: center;
+    font-size: .9rem;
+    font-weight: 700;
+    color: var(--color-text-muted);
+}
+
+.cal-dia {
+    position: relative;
+    display: grid;
+    place-items: center;
+    aspect-ratio: 1;
+    background: var(--color-surface-alt);
+    border: 2px solid transparent;
+    border-radius: 8px;
+    color: var(--color-text);
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--trans-btn);
+}
+
+.cal-dia:hover:not(:disabled) {
+    background: var(--color-accent);
+    color: #111;
+    transform: var(--lift-btn);
+    box-shadow: var(--relieve-btn);
+}
+
+.cal-dia:disabled {
+    opacity: .3;
+    cursor: not-allowed;
+}
+
+.cal-dia.hoy {
+    border-color: var(--color-secondary);
+}
+
+/* Día y hora elegidos */
+.cal-dia.elegido,
+.hora-btn.elegida {
+    background: var(--color-main);
+    border-color: var(--color-accent);
+    color: var(--color-accent);
+}
+
+.cal-dia.elegido {
+    box-shadow: var(--relieve-btn);
+}
+
+/* Punto verde en los días que ya tienen una cita tuya */
+.cal-dia.con-cita::after {
+    content: '';
+    position: absolute;
+    bottom: 5px;
+    width: 6px;
+    height: 6px;
+    background: var(--color-green);
+    border-radius: 50%;
+}
+
+.page .cal-leyenda {
+    margin: 1rem 0 0;
+    font-size: .9rem;
+    color: var(--color-text-muted);
+}
+
+/* --- Horas --- */
+.booking-side h3 {
+    margin-bottom: 1rem;
+}
+
+.horas {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
+    gap: .6rem;
+    margin-bottom: 1.2rem;
+}
+
+.hora-btn {
+    padding: .6rem;
+    background: var(--color-surface);
+    border: 2px solid var(--color-border);
+    border-radius: 50px;
+    color: var(--color-text);
+    font-weight: 600;
+}
+
+.hora-btn:disabled {
+    opacity: .35;
+    text-decoration: line-through;
+    cursor: not-allowed;
+    box-shadow: none;
+}
+
+/* --- Formulario de la cita --- */
+.cita-form {
+    display: flex;
+    flex-direction: column;
+    gap: .9rem;
+    padding: 1.2rem;
+}
+
+.page .cita-resumen {
+    margin: 0;
+    font-weight: 700;
+    color: var(--color-heading);
+}
+
+.cita-form label {
+    display: flex;
+    flex-direction: column;
+    gap: .3rem;
+    font-weight: 600;
+    color: var(--color-heading);
+}
+
+.cita-form input,
+.cita-form select {
+    font-weight: 400;
+}
+
+.page .cal-msg {
+    min-height: 1.4em;
+    margin: .8rem 0 0;
+    font-weight: 600;
+    color: var(--color-green);
+}
+
+.page .cal-msg.error {
+    color: var(--color-red);
+}
+
+/* --- Mis citas --- */
+.mis-citas-titulo {
+    margin: 2.5rem 0 1rem;
+    font-size: 1.4rem;
+    color: var(--color-heading);
+}
+
+.mis-citas {
+    display: flex;
+    flex-direction: column;
+    gap: .8rem;
+    list-style: none;
+}
+
+.cita-item {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: .8rem;
+    padding: 1rem;
+    border-left-color: var(--color-green);
+}
+
+.cita-item strong {
+    color: var(--color-heading);
+}
+
+.cita-item .acciones {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .5rem;
+}
+
+.cita-item button {
+    padding: .4rem .9rem;
+    background: var(--color-surface-alt);
+    border: 2px solid var(--color-border);
+    border-radius: 50px;
+    color: var(--color-text);
+    font-weight: 600;
+}
+
+.cita-item button.cancelar {
+    border-color: var(--color-red);
+    color: var(--color-red);
+}
+
+.cita-item button.cancelar:hover {
+    background: var(--color-red);
+    color: #fff;
+}
+
+
+/* ===== 11. CARRITO LATERAL E HISTORIAL ===== */
 .overlay {
     position: fixed;
     inset: 0;
@@ -707,8 +1332,8 @@ body.home .site-header {
     border: 0;
     font-size: 2rem;
     line-height: 1;
-    cursor: pointer;
     color: var(--color-text);
+    cursor: pointer;
 }
 
 .cart-items {
@@ -728,19 +1353,11 @@ body.home .site-header {
     gap: .7rem;
     align-items: center;
     padding: .5rem;
-    border: 2px solid var(--color-border);
-    border-radius: 8px;
-    background: var(--color-surface);
-    box-shadow: var(--relieve-card);
 }
 
 .cart-item .thumb {
     width: 56px;
     height: 56px;
-}
-
-.cart-item small {
-    display: block;
 }
 
 .cart-item b {
@@ -754,21 +1371,8 @@ body.home .site-header {
     background: var(--color-accent);
     border: 0;
     border-radius: 4px;
-    font-weight: 800;
-    cursor: pointer;
     color: #111;
-    box-shadow: var(--relieve-btn);
-    transition: var(--trans-btn);
-}
-
-.cart-item .plus:hover {
-    transform: translateY(-2px);
-    box-shadow: var(--relieve-btn-hover);
-}
-
-.cart-item .plus:active {
-    transform: translateY(0);
-    box-shadow: var(--relieve-btn-pulsado);
+    font-weight: 800;
 }
 
 .cart-item .rm {
@@ -784,31 +1388,26 @@ body.home .site-header {
 }
 
 .cart-total {
-    margin: 0;
     text-align: right;
-    font-weight: 800;
     font-size: 1.2rem;
+    font-weight: 800;
     color: var(--color-text);
 }
 
 .cart-msg {
-    margin: 0;
     min-height: 1.4em;
-    color: var(--color-green);
     font-weight: 600;
+    color: var(--color-green);
 }
 
 .btn-red,
 .btn-green {
     padding: .7rem;
-    border-radius: 6px;
     background: var(--color-surface);
+    border-radius: 6px;
     font: inherit;
     font-weight: 800;
     text-transform: uppercase;
-    cursor: pointer;
-    transition: var(--trans-btn);
-    box-shadow: var(--relieve-btn);
 }
 
 .btn-red {
@@ -821,43 +1420,23 @@ body.home .site-header {
     color: var(--color-green);
 }
 
-.btn-red:hover {
-    background: var(--color-red);
-    color: #fff;
-    transform: translateY(-2px);
-    box-shadow: var(--relieve-btn-hover);
-}
-
-.btn-green:hover {
-    background: var(--color-green);
-    color: #fff;
-    transform: translateY(-2px);
-    box-shadow: var(--relieve-btn-hover);
-}
-
-.btn-red:active,
-.btn-green:active {
-    transform: translateY(0);
-    box-shadow: var(--relieve-btn-pulsado);
-}
-
-/* ===== HISTORIAL DE COMPRAS ===== */
+/* --- Historial de compras --- */
 .history-toggle {
     background: none;
     border: 0;
     font-weight: 700;
     text-align: left;
-    cursor: pointer;
     color: var(--color-text);
+    cursor: pointer;
 }
 
 .history-list {
     max-height: 180px;
     overflow-y: auto;
+    padding: .3rem; /* deja sitio a la sombra del botón de descarga */
     list-style: none;
     font-size: .9rem;
     color: var(--color-text);
-    padding: .3rem; /* deja sitio a la sombra del botón de descarga */
 }
 
 .history-list li {
@@ -884,390 +1463,31 @@ body.home .site-header {
     background: var(--color-surface-alt);
     border: 1px solid var(--color-border);
     border-radius: 4px;
-    cursor: pointer;
-    color: var(--color-text);
-    box-shadow: var(--relieve-btn);
-    transition: var(--trans-btn);
-}
-
-.fila-recibo button:hover {
-    background: var(--color-accent);
-    color: #111;
-    transform: translateY(-2px);
-    box-shadow: var(--relieve-btn-hover);
-}
-
-.fila-recibo button:active {
-    transform: translateY(0);
-    box-shadow: var(--relieve-btn-pulsado);
-}
-
-/* ===== CATÁLOGO ===== */
-[hidden] {
-    display: none !important;
-}
-
-.page {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 2.5rem 5vw;
-}
-
-.page p {
-    margin-bottom: 1rem;
-    line-height: 1.6;
     color: var(--color-text);
 }
 
-.catalog-search {
-    display: flex;
-    gap: .5rem;
-    max-width: 100%;
-    margin-bottom: 2rem;
-}
 
-/* Campo de búsqueda hundido (el contrario de un botón en relieve) */
-.catalog-search input {
-    flex: 1;
-    padding: .7rem 1.1rem;
-    background: var(--color-surface);
-    color: var(--color-text);
-    border: none;
-    border-bottom: 2px solid var(--color-text-muted);
-    font-size: 1rem;
-    transition: border-color .2s ease, box-shadow .2s ease;
-    background-color: var(--color-surface-alt);
-}
-
-.catalog-search input:focus {
-    border-bottom: 2px solid var(--color-accent);
-    outline: none;
-}
-
-.cat-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 1.5rem;
-}
-
-.cat-card {
-    display: flex;
-    flex-direction: column;
-    gap: .3rem;
-    padding: 2.2rem 1rem;
-    background: var(--color-surface);
-    border: 2px solid var(--color-border);
-    border-radius: 8px;
-    color: var(--color-text);
+/* ===== 12. PIE DE PÁGINA ===== */
+.site-footer {
+    margin-top: 3rem;
+    padding: 2rem 1rem;
+    background: var(--color-main);
+    color: #fff;
     text-align: center;
-    cursor: pointer;
-    transition: var(--trans-card);
-    box-shadow: var(--relieve-card);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, .12);
 }
 
-.cat-card strong {
-    font-size: 1.3rem;
-    color: var(--color-heading);
-}
-
-.cat-card:hover {
-    background: var(--color-accent);
-    color: #111;
-    transform: translateY(-3px);
-    box-shadow: var(--relieve-card-hover);
-}
-
-.cat-card:active {
-    transform: translateY(0);
-    box-shadow: var(--relieve-card);
-}
-
-.cat-card:hover strong,
-.cat-card:hover span {
-    color: #111;
-}
-
-.results-top {
-    display: flex;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 1rem;
-    margin-bottom: 1.5rem;
-}
-
-.results-top h2 {
-    margin: 0;
-}
-
-.back-btn {
-    padding: .5rem 1.1rem;
-    background: none;
-    border: 2px solid var(--color-border);
-    border-radius: 50px;
-    color: var(--color-heading);
-    font-weight: 600;
-    cursor: pointer;
-    transition: var(--trans-btn);
-    box-shadow: var(--relieve-btn);
-}
-
-.back-btn:hover {
-    background: var(--color-accent);
-    color: #111;
-    transform: translateY(-2px);
-    box-shadow: var(--relieve-btn-hover);
-}
-
-.back-btn:active {
-    transform: translateY(0);
-    box-shadow: var(--relieve-btn-pulsado);
-}
-
-.product-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 1.5rem;
-}
-
-.badge-new {
-    position: absolute;
-    top: -1px;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    z-index: 1;
-    padding: .3rem .7rem;
-    background: var(--color-accent);
-    border-radius: 50px;
-    font-size: 1rem;
-    font-weight: 700;
-    white-space: nowrap;
-    color: #111;
-    box-shadow: 0 3px 6px rgba(0, 0, 0, .3), inset 0 1px 0 rgba(255, 255, 255, .4);
-}
-
-.precio-oferta {
-    color: var(--color-sale);
-    font-weight: 700;
-}
-
-.badge-oferta {
-    position: absolute;
-    top: -1px;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    z-index: 1;
-    padding: .3rem .7rem;
-    background: var(--color-sale);
-    border-radius: 50px;
-    color: #fff;
-    font-size: 1rem;
-    font-weight: 700;
-    white-space: nowrap;
-    box-shadow: 0 3px 6px rgba(0, 0, 0, .3), inset 0 1px 0 rgba(255, 255, 255, .4);
-}
-
-.link-btn {
-    display: inline-block;
-    padding: .7rem 1.6rem;
-    background: var(--color-main);
-    border-radius: 50px;
-    color: #fff;
-    font-weight: 600;
-    text-decoration: none;
-    transition: var(--trans-btn);
-    box-shadow: var(--relieve-btn);
-}
-
-.link-btn:hover {
-    background: var(--color-accent);
-    color: #111;
-    transform: translateY(-2px);
-    box-shadow: var(--relieve-btn-hover);
-}
-
-.link-btn:active {
-    transform: translateY(0);
-    box-shadow: var(--relieve-btn-pulsado);
-}
-
-/* ===== SERVICIOS ===== */
-.service-nav {
-    display: flex;
-    flex-wrap: wrap;
-    gap: .6rem;
-    margin: 1.5rem 0 2.5rem;
-}
-
-.service-nav a {
-    display: block;
-    padding: 1rem;
-    background: var(--color-accent);
-    border-radius: 50px;
-    color: #111;
-    text-decoration: none;
-    cursor: pointer;
-    transition: var(--trans-btn);
-    box-shadow: var(--relieve-btn);
-}
-
-.service-nav a:hover {
-    background: #fff;
-    color: #111;
-    transform: translateY(-2px);
-    box-shadow: var(--relieve-btn-hover);
-}
-
-.service-nav a:active {
-    transform: translateY(0);
-    box-shadow: var(--relieve-btn-pulsado);
-}
-
-.service-group {
-    margin-bottom: 3rem;
-    scroll-margin-top: 140px; /* deja sitio al header al saltar a un grupo */
-}
-
-.page .service-group h2 {
-    font-size: 1.8rem;
-    margin-bottom: .3rem;
-}
-
-.service-group-desc {
-    max-width: 70ch;
-    margin-bottom: 1.5rem;
-    color: var(--color-text-muted);
-}
-
-.service-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-    gap: 1.5rem;
-}
-
-.service-card {
-    display: flex;
-    flex-direction: column;
-    gap: .6rem;
-    padding: 1.5rem;
-    background: var(--color-surface);
-    border: 2px solid var(--color-border);
-    border-radius: 8px;
-    transition: var(--trans-card);
-    box-shadow: var(--relieve-card);
-}
-
-.service-card:hover {
-    transform: translateY(-3px);
-    border-color: var(--color-accent);
-    box-shadow: var(--relieve-card-hover);
-}
-
-.service-icon {
-    display: grid;
-    place-items: center;
-    width: 52px;
-    height: 52px;
-    background: var(--color-main);
-    border-radius: 50%;
+.footer-links a {
     color: var(--color-accent);
-    font-size: 1.3rem;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, .3), inset 0 1px 0 rgba(255, 255, 255, .3);
+    text-decoration: none;
 }
 
-.service-card h3 {
-    color: var(--color-heading);
-    font-size: 1.25rem;
+.footer-links a:hover {
+    text-decoration: underline;
 }
 
-.page .service-card p {
-    margin: 0;
-    line-height: 1.5;
-}
 
-.service-card ul {
-    display: flex;
-    flex-direction: column;
-    gap: .3rem;
-    margin-top: auto;
-    padding-top: .5rem;
-    list-style: none;
-    font-size: .95rem;
-    color: var(--color-text-muted);
-}
-
-.service-card li::before {
-    content: '✓ ';
-    color: var(--color-green);
-    font-weight: 700;
-}
-
-/* Cómo trabajamos */
-.process-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 1.5rem;
-    list-style: none;
-}
-
-.process-step {
-    display: flex;
-    flex-direction: column;
-    gap: .5rem;
-    padding: 1.2rem;
-    background: var(--color-surface-alt);
-    border-left: 4px solid var(--color-secondary);
-    border-radius: 0 8px 8px 0;
-    box-shadow: var(--relieve-card);
-}
-
-.step-num {
-    display: grid;
-    place-items: center;
-    width: 36px;
-    height: 36px;
-    background: var(--color-accent);
-    border-radius: 50%;
-    color: #111;
-    font-weight: 800;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, .3), inset 0 1px 0 rgba(255, 255, 255, .3);
-}
-
-.process-step h3 {
-    color: var(--color-heading);
-    font-size: 1.1rem;
-}
-
-.page .process-step p {
-    margin: 0;
-    line-height: 1.5;
-}
-
-/* Llamada a la acción */
-.service-cta {
-    padding: 2.5rem 1.5rem;
-    background: var(--color-main);
-    border-radius: 12px;
-    text-align: center;
-    box-shadow: 0 8px 24px rgba(49, 36, 1, .25), inset 0 1px 0 rgba(255, 255, 255, .12);
-}
-
-.page .service-cta h2 {
-    color: var(--color-accent);
-}
-
-.page .service-cta p {
-    color: #fff;
-}
-
-.service-cta .link-btn {
-    background: var(--color-accent);
-    color: #111;
-}
-
-.service-cta .link-btn:hover {
-    background: #fff;
-}
-
+/* ===== 13. RESPONSIVE (siempre al final para que gane a lo anterior) ===== */
 @media (max-width: 768px) {
     .nav-container {
         flex-direction: column;
@@ -1285,9 +1505,12 @@ body.home .site-header {
         width: 220px;
     }
 
+    .carousel {
+        height: 500px;
+    }
+
     .carousel-track img {
         width: 260px;
-        height: 300px;
     }
 
     .text-carousel h1 {
@@ -1306,8 +1529,12 @@ body.home .site-header {
         font-size: 2rem;
     }
 
-    .about-grid {
+    .about-grid,
+    .booking {
         grid-template-columns: 1fr;
+    }
+
+    .about-grid {
         gap: 2rem;
     }
 
@@ -1316,382 +1543,20 @@ body.home .site-header {
     }
 
     .about-footer-text {
-        font-size: 1.05rem;
         margin-top: 2.5rem;
+        font-size: 1.05rem;
     }
 }
 
+/* Para quien tiene activado "reducir movimiento": sin carrusel ni elevaciones */
 @media (prefers-reduced-motion: reduce) {
+    :root {
+        --lift-btn: none;
+        --lift-card: none;
+    }
+
     .carousel-track {
         animation: none;
-    }
-
-    .product-card:hover,
-    .cat-card:hover,
-    .service-card:hover,
-    .product-card button:hover,
-    .shop-btn a:hover,
-    .link-btn:hover,
-    .cart-btn a:hover,
-    .cart-item .plus:hover,
-    .fila-recibo button:hover,
-    .nav-toggler:hover,
-    .theme-toggle:hover,
-    .back-btn:hover,
-    .service-nav a:hover,
-    .btn-red:hover,
-    .btn-green:hover {
-        transform: none;
-    }
-}
-
-/* ===== CONTACTO ===== */
-.contact-info {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 1.5rem;
-    margin: 1.5rem 0;
-    list-style: none;
-}
-
-.contact-info li {
-    padding: 1.2rem;
-    background: var(--color-surface);
-    border-left: 4px solid var(--color-secondary);
-    border-radius: 0 8px 8px 0;
-    line-height: 1.6;
-    box-shadow: var(--relieve-card);
-}
-
-.contact-info strong {
-    color: var(--color-heading);
-}
-
-.contact-info i {
-    margin-right: .3rem;
-    color: var(--color-secondary);
-}
-
-/* ===== CALENDARIO DE CITAS ===== */
-.booking {
-    display: grid;
-    grid-template-columns: minmax(280px, 1.1fr) 1fr;
-    gap: 2rem;
-    align-items: start;
-    margin-top: 1.5rem;
-}
-
-.cal {
-    padding: 1.2rem;
-    background: var(--color-surface);
-    border: 2px solid var(--color-border);
-    border-radius: 8px;
-    box-shadow: var(--relieve-card);
-}
-
-.cal-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 1rem;
-}
-
-.cal-header h3 {
-    color: var(--color-heading);
-    font-size: 1.3rem;
-}
-
-.cal-nav {
-    display: grid;
-    place-items: center;
-    width: 40px;
-    height: 40px;
-    background: var(--color-main);
-    border: 0;
-    border-radius: 50%;
-    color: var(--color-accent);
-    cursor: pointer;
-    transition: var(--trans-btn);
-    box-shadow: var(--relieve-btn);
-}
-
-.cal-nav:hover:not(:disabled) {
-    background: var(--color-accent);
-    color: #111;
-    transform: translateY(-2px);
-    box-shadow: var(--relieve-btn-hover);
-}
-
-.cal-nav:active:not(:disabled) {
-    transform: translateY(0);
-    box-shadow: var(--relieve-btn-pulsado);
-}
-
-.cal-nav:disabled {
-    opacity: .35;
-    cursor: not-allowed;
-    box-shadow: none;
-}
-
-.cal-semana,
-.cal-dias {
-    display: grid;
-    grid-template-columns: repeat(7, 1fr);
-    gap: .4rem;
-}
-
-.cal-semana span {
-    padding-bottom: .3rem;
-    text-align: center;
-    font-size: .9rem;
-    font-weight: 700;
-    color: var(--color-text-muted);
-}
-
-.cal-dia {
-    position: relative;
-    display: grid;
-    place-items: center;
-    aspect-ratio: 1;
-    background: var(--color-surface-alt);
-    border: 2px solid transparent;
-    border-radius: 8px;
-    color: var(--color-text);
-    font-weight: 600;
-    cursor: pointer;
-    transition: var(--trans-btn);
-}
-
-.cal-dia:hover:not(:disabled) {
-    background: var(--color-accent);
-    color: #111;
-    transform: translateY(-2px);
-    box-shadow: var(--relieve-btn);
-}
-
-.cal-dia:disabled {
-    opacity: .3;
-    cursor: not-allowed;
-}
-
-.cal-dia.hoy {
-    border-color: var(--color-secondary);
-}
-
-.cal-dia.elegido {
-    background: var(--color-main);
-    border-color: var(--color-accent);
-    color: var(--color-accent);
-    box-shadow: var(--relieve-btn);
-}
-
-/* Punto verde en los días que ya tienen una cita tuya */
-.cal-dia.con-cita::after {
-    content: '';
-    position: absolute;
-    bottom: 5px;
-    width: 6px;
-    height: 6px;
-    background: var(--color-green);
-    border-radius: 50%;
-}
-
-.page .cal-leyenda {
-    margin: 1rem 0 0;
-    font-size: .9rem;
-    color: var(--color-text-muted);
-}
-
-/* Horas */
-.booking-side h3 {
-    margin-bottom: 1rem;
-    color: var(--color-heading);
-}
-
-.horas {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
-    gap: .6rem;
-    margin-bottom: 1.2rem;
-}
-
-.hora-btn {
-    padding: .6rem;
-    background: var(--color-surface);
-    border: 2px solid var(--color-border);
-    border-radius: 50px;
-    color: var(--color-text);
-    font-weight: 600;
-    cursor: pointer;
-    transition: var(--trans-btn);
-    box-shadow: var(--relieve-btn);
-}
-
-.hora-btn:hover:not(:disabled) {
-    background: var(--color-accent);
-    color: #111;
-    transform: translateY(-2px);
-    box-shadow: var(--relieve-btn-hover);
-}
-
-.hora-btn.elegida {
-    background: var(--color-main);
-    border-color: var(--color-accent);
-    color: var(--color-accent);
-}
-
-.hora-btn:disabled {
-    opacity: .35;
-    text-decoration: line-through;
-    cursor: not-allowed;
-    box-shadow: none;
-}
-
-/* Formulario de la cita */
-.cita-form {
-    display: flex;
-    flex-direction: column;
-    gap: .9rem;
-    padding: 1.2rem;
-    background: var(--color-surface);
-    border: 2px solid var(--color-border);
-    border-radius: 8px;
-    box-shadow: var(--relieve-card);
-}
-
-.page .cita-resumen {
-    margin: 0;
-    font-weight: 700;
-    color: var(--color-heading);
-}
-
-.cita-form label {
-    display: flex;
-    flex-direction: column;
-    gap: .3rem;
-    font-weight: 600;
-    color: var(--color-heading);
-}
-
-.cita-form input,
-.cita-form select {
-    padding: .7rem 1.1rem;
-    background: var(--color-surface-alt);
-    border: none;
-    border-bottom: 2px solid var(--color-text-muted);
-    color: var(--color-text);
-    font-size: 1rem;
-    font-weight: 400;
-}
-
-.cita-form input:focus,
-.cita-form select:focus {
-    border-bottom-color: var(--color-accent);
-    outline: none;
-}
-
-/* El .link-btn también se usa en <button> */
-button.link-btn {
-    border: 0;
-    font-size: 1rem;
-    cursor: pointer;
-}
-
-.page .cal-msg {
-    min-height: 1.4em;
-    margin: .8rem 0 0;
-    font-weight: 600;
-    color: var(--color-green);
-}
-
-.page .cal-msg.error {
-    color: var(--color-red);
-}
-
-/* Mis citas */
-.mis-citas-titulo {
-    margin: 2.5rem 0 1rem;
-    color: var(--color-heading);
-    font-size: 1.4rem;
-}
-
-.mis-citas {
-    display: flex;
-    flex-direction: column;
-    gap: .8rem;
-    list-style: none;
-}
-
-.cita-item {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    align-items: center;
-    gap: .8rem;
-    padding: 1rem;
-    background: var(--color-surface);
-    border-left: 4px solid var(--color-green);
-    border-radius: 0 8px 8px 0;
-    box-shadow: var(--relieve-card);
-}
-
-.cita-item strong {
-    color: var(--color-heading);
-}
-
-.cita-item small {
-    display: block;
-    color: var(--color-text-muted);
-    font-size: 1rem;
-}
-
-.cita-item .acciones {
-    display: flex;
-    flex-wrap: wrap;
-    gap: .5rem;
-}
-
-.cita-item button {
-    padding: .4rem .9rem;
-    background: var(--color-surface-alt);
-    border: 2px solid var(--color-border);
-    border-radius: 50px;
-    color: var(--color-text);
-    font-weight: 600;
-    cursor: pointer;
-    transition: var(--trans-btn);
-    box-shadow: var(--relieve-btn);
-}
-
-.cita-item button:hover {
-    background: var(--color-accent);
-    color: #111;
-    transform: translateY(-2px);
-    box-shadow: var(--relieve-btn-hover);
-}
-
-.cita-item button.cancelar {
-    border-color: var(--color-red);
-    color: var(--color-red);
-}
-
-.cita-item button.cancelar:hover {
-    background: var(--color-red);
-    color: #fff;
-}
-
-@media (max-width: 768px) {
-    .booking {
-        grid-template-columns: 1fr;
-    }
-}
-
-@media (prefers-reduced-motion: reduce) {
-    .cal-nav:hover,
-    .cal-dia:hover,
-    .hora-btn:hover,
-    .cita-item button:hover {
-        transform: none;
     }
 }
 
