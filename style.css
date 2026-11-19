@@ -14,27 +14,35 @@
     --color-red: #c0392b;
     --color-green: #23aa2a;
     --color-sale: #128117;
+
     /* Relieve suave: tarjetas (sombra en capas + brillo arriba) */
-    --relieve-card: 
+    --relieve-card:
         0 1px 2px rgba(49, 36, 1, .10),
         0 4px 8px rgba(49, 36, 1, .10),
         0 12px 24px rgba(49, 36, 1, .10),
         inset 0 1px 0 rgba(255, 255, 255, .6);
-    --relieve-card-hover: 
+    --relieve-card-hover:
         0 2px 4px rgba(49, 36, 1, .12),
         0 8px 16px rgba(49, 36, 1, .14),
         0 20px 36px rgba(49, 36, 1, .14),
         inset 0 1px 0 rgba(255, 255, 255, .6);
+
     /* Relieve suave: botones (luz arriba, sombra abajo, hundido al pulsar) */
-    --relieve-btn: 
+    --relieve-btn:
         0 3px 6px rgba(49, 36, 1, .25),
         inset 0 1px 0 rgba(255, 255, 255, .25),
         inset 0 -2px 0 rgba(0, 0, 0, .15);
-    --relieve-btn-hover: 
+    --relieve-btn-hover:
         0 6px 12px rgba(49, 36, 1, .30),
         inset 0 1px 0 rgba(255, 255, 255, .30),
         inset 0 -2px 0 rgba(0, 0, 0, .12);
     --relieve-btn-pulsado: inset 0 3px 6px rgba(0, 0, 0, .35);
+
+    /* Relieve suave: campos de texto (hundidos) */
+    --relieve-hundido:
+        inset 0 2px 5px rgba(49, 36, 1, .18),
+        inset 0 1px 1px rgba(49, 36, 1, .12);
+
     --trans-btn: transform .2s ease, box-shadow .2s ease, background .2s, color .2s;
     --trans-card: transform .25s ease, box-shadow .25s ease, background .2s, border-color .2s, color .2s;
 }
@@ -51,24 +59,27 @@ body.dark-mode {
     --color-green: #68d16d;
     --color-sale: #03c90d;
     --color-red: #ff6150;
-    --relieve-card: 
+    --relieve-card:
         0 1px 2px rgba(0, 0, 0, .35),
         0 4px 8px rgba(0, 0, 0, .30),
         0 12px 24px rgba(0, 0, 0, .30),
         inset 0 1px 0 rgba(255, 255, 255, .06);
-    --relieve-card-hover: 
+    --relieve-card-hover:
         0 2px 4px rgba(0, 0, 0, .40),
         0 8px 16px rgba(0, 0, 0, .38),
         0 20px 36px rgba(0, 0, 0, .35),
         inset 0 1px 0 rgba(255, 255, 255, .08);
-    --relieve-btn: 
+    --relieve-btn:
         0 3px 6px rgba(0, 0, 0, .45),
         inset 0 1px 0 rgba(255, 255, 255, .15),
         inset 0 -2px 0 rgba(0, 0, 0, .25);
-    --relieve-btn-hover: 
+    --relieve-btn-hover:
         0 6px 12px rgba(0, 0, 0, .50),
         inset 0 1px 0 rgba(255, 255, 255, .20),
         inset 0 -2px 0 rgba(0, 0, 0, .20);
+    --relieve-hundido:
+        inset 0 2px 5px rgba(0, 0, 0, .50),
+        inset 0 1px 1px rgba(0, 0, 0, .40);
 }
 
 html,
@@ -88,6 +99,14 @@ body {
     padding: 0;
     box-sizing: border-box;
     font-family: system-ui, -apple-system, sans-serif;
+}
+
+/* Foco visible para quien navega con teclado (mantiene el estilo de la web) */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible {
+    outline: 3px solid var(--color-accent);
+    outline-offset: 2px;
 }
 
 body.home .site-header {
@@ -122,6 +141,7 @@ body.home .site-header {
     z-index: 1000;
     background-color: var(--color-main-glass);
     backdrop-filter: blur(5px);
+    box-shadow: 0 4px 14px rgba(0, 0, 0, .30), inset 0 -1px 0 rgba(255, 255, 255, .08);
 }
 
 .nav-container {
@@ -222,7 +242,7 @@ body.home .site-header {
     color: var(--color-accent);
     font-size: 1.1rem;
     cursor: pointer;
-    transition: all .2s ease;
+    transition: var(--trans-btn);
     box-shadow: var(--relieve-btn);
 }
 
@@ -251,13 +271,14 @@ body.home .site-header {
     color: #111;
     text-decoration: none;
     cursor: pointer;
-    transition: all .2s ease;
+    transition: var(--trans-btn);
     box-shadow: var(--relieve-btn);
 }
 
 .cart-btn a:hover {
     background-color: #fff;
     color: #111;
+    transform: translateY(-2px);
     box-shadow: var(--relieve-btn-hover);
 }
 
@@ -428,8 +449,14 @@ body.home .site-header {
     transition: var(--trans-card);
 }
 
-/* Color de estado del producto: amarillo si es nuevo y rojo si está en oferta
-   (si es nuevo y oferta a la vez, gana el rojo) */
+/* Al pasar el ratón la tarjeta se eleva un poco */
+.product-card:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--relieve-card-hover);
+}
+
+/* Color de estado del producto: amarillo si es nuevo y verde si está en oferta
+   (si es nuevo y oferta a la vez, gana el de oferta) */
 .product-card.es-nuevo {
     --tinte: var(--color-accent);
     box-shadow: var(--relieve-card), 0 0 10px var(--color-accent);
@@ -621,6 +648,7 @@ body.home .site-header {
     background: var(--color-main);
     color: #fff;
     text-align: center;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, .12);
 }
 
 /* ===== CARRITO LATERAL ===== */
@@ -657,8 +685,10 @@ body.home .site-header {
     transition: transform .35s ease;
 }
 
+/* La sombra solo se ve con el carrito abierto (cerrado no debe asomar por el borde) */
 .cart-drawer.open {
     transform: none;
+    box-shadow: -10px 0 30px rgba(0, 0, 0, .30);
 }
 
 .drawer-top {
@@ -688,6 +718,7 @@ body.home .site-header {
     display: flex;
     flex-direction: column;
     gap: .7rem;
+    padding: .3rem; /* deja sitio a las sombras de las filas para que no se recorten */
 }
 
 .cart-item {
@@ -826,6 +857,7 @@ body.home .site-header {
     list-style: none;
     font-size: .9rem;
     color: var(--color-text);
+    padding: .3rem; /* deja sitio a la sombra del botón de descarga */
 }
 
 .history-list li {
@@ -849,11 +881,25 @@ body.home .site-header {
 
 .fila-recibo button {
     padding: 0 .4rem;
-    background: none;
+    background: var(--color-surface-alt);
     border: 1px solid var(--color-border);
     border-radius: 4px;
     cursor: pointer;
     color: var(--color-text);
+    box-shadow: var(--relieve-btn);
+    transition: var(--trans-btn);
+}
+
+.fila-recibo button:hover {
+    background: var(--color-accent);
+    color: #111;
+    transform: translateY(-2px);
+    box-shadow: var(--relieve-btn-hover);
+}
+
+.fila-recibo button:active {
+    transform: translateY(0);
+    box-shadow: var(--relieve-btn-pulsado);
 }
 
 /* ===== CATÁLOGO ===== */
@@ -880,6 +926,7 @@ body.home .site-header {
     margin-bottom: 2rem;
 }
 
+/* Campo de búsqueda hundido (el contrario de un botón en relieve) */
 .catalog-search input {
     flex: 1;
     padding: .7rem 1.1rem;
@@ -887,14 +934,16 @@ body.home .site-header {
     color: var(--color-text);
     border: none;
     border-bottom: 2px solid var(--color-text-muted);
+    border-radius: 8px 8px 0 0;
     font-size: 1rem;
-    transition: all .2s ease;
+    transition: border-color .2s ease, box-shadow .2s ease;
     background-color: var(--color-surface-alt);
+    box-shadow: var(--relieve-hundido);
 }
 
 .catalog-search input:focus {
-        border-bottom: 2px solid var(--color-accent);
-        outline: none;
+    border-bottom: 2px solid var(--color-accent);
+    outline: none;
 }
 
 .cat-grid {
@@ -928,6 +977,11 @@ body.home .site-header {
     color: #111;
     transform: translateY(-3px);
     box-shadow: var(--relieve-card-hover);
+}
+
+.cat-card:active {
+    transform: translateY(0);
+    box-shadow: var(--relieve-card);
 }
 
 .cat-card:hover strong,
@@ -1054,14 +1108,14 @@ body.home .site-header {
     color: #111;
     text-decoration: none;
     cursor: pointer;
-    transition: all .2s ease;
+    transition: var(--trans-btn);
     box-shadow: var(--relieve-btn);
-    
 }
 
 .service-nav a:hover {
     background: #fff;
     color: #111;
+    transform: translateY(-2px);
     box-shadow: var(--relieve-btn-hover);
 }
 
@@ -1277,11 +1331,13 @@ body.home .site-header {
     .product-card:hover,
     .cat-card:hover,
     .service-card:hover,
-    .product-card:hover .thumb,
     .product-card button:hover,
     .shop-btn a:hover,
     .link-btn:hover,
     .cart-btn a:hover,
+    .cart-item .plus:hover,
+    .fila-recibo button:hover,
+    .nav-toggler:hover,
     .theme-toggle:hover,
     .back-btn:hover,
     .service-nav a:hover,
