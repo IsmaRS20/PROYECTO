@@ -226,18 +226,10 @@ const mensaje = document.getElementById('cart-msg');
 const desplegable = document.getElementById('history-toggle');
 const listaPrevias = document.getElementById('history-list');
 
+// Tanto el carrito como el historial de compras se guardan en el navegador (localStorage)
 let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
-let historial = [];
+let historial = JSON.parse(localStorage.getItem('historial')) || [];
 let desplegado = false;
-let comprando = false;
-
-// Servidor donde se guardan las compras
-const id = 'PabloPicanyaMusic';
-const url_guardar = `https://datos.cursoweb.tech/guardar.php?dest=${id}`;
-const url_leer = `https://datos.cursoweb.tech/leer.php?dest=${id}`;
-const usuario = 'labora';
-const password = 'Cl4v3$';
-const credenciales = btoa(`${usuario}:${password}`);
 
 function guardarCarrito() {
   localStorage.setItem('carrito', JSON.stringify(carrito));
@@ -360,21 +352,14 @@ function dibujarCarrito() {
 
 
 // =====================================================
-// CHECKOUT Y SERVIDOR
+// CHECKOUT E HISTORIAL (guardado en local)
 // =====================================================
 
-async function checkOut() {
-  if (comprando) {
-    return;
-  }
-
+function checkOut() {
   if (carrito.length == 0) {
     mensaje.textContent = 'Añade productos para realizar la compra.';
     return;
   }
-
-  comprando = true;
-  mensaje.textContent = 'Guardando compra...';
 
   // Guardamos nombre y precio (no solo el id) para que el recibo sea siempre igual
   const lineas = [];
@@ -393,55 +378,23 @@ async function checkOut() {
     total: calcularTotal()
   };
 
-  const guardada = await guardarCompra(compra);
-  comprando = false;
+  guardarCompra(compra);
 
-  if (guardada) {
-    carrito = [];
-    guardarCarrito();
-    dibujarCarrito();
-    mensaje.textContent = 'Compra realizada con éxito.';
-  } else {
-    mensaje.textContent = 'No se pudo realizar la compra.';
-  }
+  carrito = [];
+  guardarCarrito();
+  dibujarCarrito();
+  mostrarHistorial();
+  mensaje.textContent = 'Compra realizada con éxito.';
 }
 
-async function guardarCompra(compra) {
-  try {
-    const res = await fetch(url_guardar, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Basic ${credenciales}`
-      },
-      body: JSON.stringify(compra)
-    });
-
-    if (!res.ok) {
-      throw new Error('Error en la conexión');
-    }
-
-    await leerHistorial();
-    return true;
-  } catch (error) {
-    console.error('Error al guardar la compra:', error);
-    return false;
-  }
+function guardarCompra(compra) {
+  historial.push(compra);
+  localStorage.setItem('historial', JSON.stringify(historial));
 }
 
-async function leerHistorial() {
-  try {
-    const res = await fetch(url_leer);
-
-    if (!res.ok) {
-      throw new Error('No se ha podido conectar');
-    }
-
-    historial = await res.json();
-    mostrarHistorial();
-  } catch (error) {
-    console.error('Error al leer el historial:', error);
-  }
+function leerHistorial() {
+  historial = JSON.parse(localStorage.getItem('historial')) || [];
+  mostrarHistorial();
 }
 
 function mostrarHistorial() {
