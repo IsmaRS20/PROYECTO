@@ -934,11 +934,9 @@ body.home .site-header {
     color: var(--color-text);
     border: none;
     border-bottom: 2px solid var(--color-text-muted);
-    border-radius: 8px 8px 0 0;
     font-size: 1rem;
     transition: border-color .2s ease, box-shadow .2s ease;
     background-color: var(--color-surface-alt);
-    box-shadow: var(--relieve-hundido);
 }
 
 .catalog-search input:focus {
