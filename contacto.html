@@ -85,11 +85,11 @@
                             <p class="cita-resumen" id="cita-resumen"></p>
 
                             <label>Nombre
-                                <input type="text" id="cita-nombre" required autocomplete="name">
+                                <input type="text" id="cita-nombre" required placeholder="Ej. Ramón" autocomplete="name">
                             </label>
 
                             <label>Teléfono
-                                <input type="tel" id="cita-telefono" required pattern="[0-9 +]{9,15}"
+                                <input type="tel" id="cita-telefono" pattern="^[6789]\d{2}\s?\d{3}\s?\d{3}$" placeholder="Ej. 612 345 678"
                                     title="Escribe un teléfono válido, por ejemplo 600 000 000" autocomplete="tel">
                             </label>
 

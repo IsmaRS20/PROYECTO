@@ -1211,6 +1211,18 @@ body.home .site-header {
     font-weight: 400;
 }
 
+#cita-nombre:user-invalid {
+  border-color: #e63946;
+  background-color: rgba(230, 57, 70, 0.08);
+  outline-color: #e63946;
+}
+
+#cita-telefono:user-invalid {
+  border-color: #e63946;
+  background-color: rgba(230, 57, 70, 0.08);
+  outline-color: #e63946;
+}
+
 .page .cal-msg {
     min-height: 1.4em;
     margin: .8rem 0 0;

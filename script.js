@@ -689,13 +689,11 @@ function tieneCita(clave) {
 }
 
 // Una hora está ocupada si ya la has reservado tú o si la damos por ocupada
-// (esto último es inventado, para que la tienda parezca real: ocupa más o menos 1 de cada 5 horas)
 function horaOcupada(clave, hora) {
   const reservada = citas.some(function (c) {
     return c.fecha === clave && c.hora === hora;
   });
-  const simulada = (fechaDeClave(clave).getDate() * 3 + HORAS_CITA.indexOf(hora)) % 5 == 0;
-  return reservada || simulada;
+  return reservada;
 }
 
 // Si el día elegido es hoy, las horas que ya han empezado no se pueden reservar
