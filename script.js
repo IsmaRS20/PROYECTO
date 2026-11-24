@@ -32,75 +32,76 @@ const categorias = [
   { id: 'equipamiento', nombre: 'Equipamiento' }
 ];
 
+// "nuevo" y "oferta" solo se escriben cuando valen true (si no están, valen false)
 const productos = [
 
   // TOTAL ITEM COUNT: 54
 
   // GUITARRAS
-  { id: 1, nombre: 'Les Paul', cat: 'guitarras', marca: 'Epiphone', precio: 379.95, nuevo: false, oferta: true, imagen: 'guitarras/epiphone/epiphone_lespaul.webp' },
-  { id: 2, nombre: 'Les Paul Tribute', cat: 'guitarras', marca: 'Epiphone', precio: 499.95, nuevo: false, oferta: true, imagen: 'guitarras/epiphone/epiphone_lespaul_tribute.webp' },
-  { id: 3, nombre: 'Les Paul Pro', cat: 'guitarras', marca: 'Epiphone', precio: 819.95, nuevo: false, oferta: false, imagen: 'guitarras/epiphone/epiphone_lespaul_pro.webp' },
-  { id: 4, nombre: 'GRG121DX WNF', cat: 'guitarras', marca: 'Ibanez', precio: 219.95, nuevo: false, oferta: false, imagen: 'guitarras/ibanez/ibanez_grg121dx.webp' },
-  { id: 5, nombre: 'GRG140 WH', cat: 'guitarras', marca: 'Ibanez', precio: 239.95, nuevo: false, oferta: false, imagen: 'guitarras/ibanez/ibanez_grg140.webp' },
-  { id: 6, nombre: 'GIO GRG170 DX', cat: 'guitarras', marca: 'Ibanez', precio: 289.95, nuevo: false, oferta: false, imagen: 'guitarras/ibanez/ibanez_grg170dx.webp' },
-  { id: 7, nombre: 'GIO GRG70 QA', cat: 'guitarras', marca: 'Ibanez', precio: 229.95, nuevo: false, oferta: false, imagen: 'guitarras/ibanez/ibanez_grx70qa.webp' },
+  { id: 1, nombre: 'Les Paul', cat: 'guitarras', marca: 'Epiphone', precio: 379.95, oferta: true, imagen: 'guitarras/epiphone/epiphone_lespaul.webp' },
+  { id: 2, nombre: 'Les Paul Tribute', cat: 'guitarras', marca: 'Epiphone', precio: 499.95, oferta: true, imagen: 'guitarras/epiphone/epiphone_lespaul_tribute.webp' },
+  { id: 3, nombre: 'Les Paul Pro', cat: 'guitarras', marca: 'Epiphone', precio: 819.95, imagen: 'guitarras/epiphone/epiphone_lespaul_pro.webp' },
+  { id: 4, nombre: 'GRG121DX WNF', cat: 'guitarras', marca: 'Ibanez', precio: 219.95, imagen: 'guitarras/ibanez/ibanez_grg121dx.webp' },
+  { id: 5, nombre: 'GRG140 WH', cat: 'guitarras', marca: 'Ibanez', precio: 239.95, imagen: 'guitarras/ibanez/ibanez_grg140.webp' },
+  { id: 6, nombre: 'GIO GRG170 DX', cat: 'guitarras', marca: 'Ibanez', precio: 289.95, imagen: 'guitarras/ibanez/ibanez_grg170dx.webp' },
+  { id: 7, nombre: 'GIO GRG70 QA', cat: 'guitarras', marca: 'Ibanez', precio: 229.95, imagen: 'guitarras/ibanez/ibanez_grx70qa.webp' },
   { id: 8, nombre: 'RG5121RET Prestige', cat: 'guitarras', marca: 'Ibanez', precio: 2779.95, nuevo: true, imagen: 'guitarras/ibanez/ibanez_prestige_rg5121ret.webp' },
-  { id: 9, nombre: 'RG450DBX WH', cat: 'guitarras', marca: 'Ibanez', precio: 499.95, nuevo: false, imagen: 'guitarras/ibanez/ibanez_rg450dbx.webp' },
-  { id: 10, nombre: 'RGMS8 BK Multiscale', cat: 'guitarras', marca: 'Ibanez', precio: 599.95, nuevo: false, oferta: false, imagen: 'guitarras/ibanez/ibanez_rgms8.webp' },
-  { id: 11, nombre: 'SA260FM-BRG', cat: 'guitarras', marca: 'Ibanez', precio: 389.95, nuevo: false, oferta: false, imagen: 'guitarras/ibanez/ibanez_sa260fm.webp' },
-  { id: 12, nombre: 'PX-SOLAR170C Parallaxe 7', cat: 'guitarras', marca: 'Solar', precio: 569.95, nuevo: true, oferta: false, imagen: 'guitarras/solar/solar_pxsolar170c.webp' },
-  { id: 13, nombre: 'Stratocaster', cat: 'guitarras', marca: 'Squier', precio: 109.95, nuevo: false, oferta: false, imagen: 'guitarras/squier/squier_stratocaster.webp' },
-  { id: 14, nombre: 'Telecaster', cat: 'guitarras', marca: 'Squier', precio: 559.95, nuevo: false, oferta: false, imagen: 'guitarras/squier/squier_telecaster.webp' },
-  { id: 15, nombre: 'Telecaster Thinline', cat: 'guitarras', marca: 'Squier', precio: 2549.95, nuevo: false, oferta: false, imagen: 'guitarras/squier/squier_telecaster_thinline.webp' },
+  { id: 9, nombre: 'RG450DBX WH', cat: 'guitarras', marca: 'Ibanez', precio: 499.95, imagen: 'guitarras/ibanez/ibanez_rg450dbx.webp' },
+  { id: 10, nombre: 'RGMS8 BK Multiscale', cat: 'guitarras', marca: 'Ibanez', precio: 599.95, imagen: 'guitarras/ibanez/ibanez_rgms8.webp' },
+  { id: 11, nombre: 'SA260FM-BRG', cat: 'guitarras', marca: 'Ibanez', precio: 389.95, imagen: 'guitarras/ibanez/ibanez_sa260fm.webp' },
+  { id: 12, nombre: 'PX-SOLAR170C Parallaxe 7', cat: 'guitarras', marca: 'Solar', precio: 569.95, nuevo: true, imagen: 'guitarras/solar/solar_pxsolar170c.webp' },
+  { id: 13, nombre: 'Stratocaster', cat: 'guitarras', marca: 'Squier', precio: 109.95, imagen: 'guitarras/squier/squier_stratocaster.webp' },
+  { id: 14, nombre: 'Telecaster', cat: 'guitarras', marca: 'Squier', precio: 559.95, imagen: 'guitarras/squier/squier_telecaster.webp' },
+  { id: 15, nombre: 'Telecaster Thinline', cat: 'guitarras', marca: 'Squier', precio: 2549.95, imagen: 'guitarras/squier/squier_telecaster_thinline.webp' },
 
   // BAJOS
-  { id: 16, nombre: 'GSR200 BK', cat: 'bajos', marca: 'Ibanez', precio: 249.95, nuevo: false, oferta: false, imagen: 'bajos/ibanez/ibanez_gsr200.webp' },
-  { id: 17, nombre: 'SR300EDX BZM', cat: 'bajos', marca: 'Ibanez', precio: 369.95, nuevo: false, oferta: false, imagen: 'bajos/ibanez/ibanez_sr300edx.webp' },
-  { id: 18, nombre: 'CBX IV', cat: 'bajos', marca: 'Jackson', precio: 699.95, nuevo: false, oferta: false, imagen: 'bajos/jackson/jackson_cbxiv.webp' },
-  { id: 19, nombre: 'Spectra JS2', cat: 'bajos', marca: 'Jackson', precio: 229.95, nuevo: false, oferta: false, imagen: 'bajos/jackson/jackson_spectrajs2.webp' },
-  { id: 54, nombre: 'V7 4 TSB Left-Handed', cat: 'bajos', marca: 'Sire Marcus Miller', precio: 809.95, nuevo: true, oferta: false, imagen: 'bajos/marcusmiller/marcusmiller_V7-4.webp' },
+  { id: 16, nombre: 'GSR200 BK', cat: 'bajos', marca: 'Ibanez', precio: 249.95, imagen: 'bajos/ibanez/ibanez_gsr200.webp' },
+  { id: 17, nombre: 'SR300EDX BZM', cat: 'bajos', marca: 'Ibanez', precio: 369.95, imagen: 'bajos/ibanez/ibanez_sr300edx.webp' },
+  { id: 18, nombre: 'CBX IV', cat: 'bajos', marca: 'Jackson', precio: 699.95, imagen: 'bajos/jackson/jackson_cbxiv.webp' },
+  { id: 19, nombre: 'Spectra JS2', cat: 'bajos', marca: 'Jackson', precio: 229.95, imagen: 'bajos/jackson/jackson_spectrajs2.webp' },
+  { id: 54, nombre: 'V7 4 TSB Left-Handed', cat: 'bajos', marca: 'Sire Marcus Miller', precio: 809.95, nuevo: true, imagen: 'bajos/marcusmiller/marcusmiller_V7-4.webp' },
 
   // PERCUSIÓN
-  { id: 20, nombre: 'DPD CM7', cat: 'percusion', marca: 'DW Drums', precio: 1499.95, nuevo: false, oferta: false, imagen: 'baterias/dpd_cm7.webp' },
-  { id: 21, nombre: 'Nitro Max Kit', cat: 'percusion', marca: 'Alesis', precio: 379.95, nuevo: false, oferta: true, imagen: 'baterias/alesis_nitromax.webp' },
-  { id: 22, nombre: 'Electronic Kit', cat: 'percusion', marca: 'Cahaya', precio: 299.95, nuevo: false, oferta: false, imagen: 'baterias/cahaya_electronic.webp' },
-  { id: 23, nombre: 'RM-802 BK', cat: 'percusion', marca: 'RMX Percussion', precio: 429.95, nuevo: true, oferta: false, imagen: 'baterias/rmx_802bk.webp' },
-  { id: 24, nombre: 'LJK48S', cat: 'percusion', marca: 'Tama', precio: 409.95, nuevo: false, oferta: false, imagen: 'baterias/tama_ljk48s.webp' },
-  { id: 25, nombre: 'VEVOR Acoustic', cat: 'percusion', marca: 'Vevor', precio: 419.95, nuevo: false, oferta: false, imagen: 'baterias/vevor_acoustic.webp' },
-  { id: 26, nombre: 'DD-530', cat: 'percusion', marca: 'XDrum', precio: 529.95, nuevo: false, oferta: false, imagen: 'baterias/xdrum_dd530.webp' },
+  { id: 20, nombre: 'DPD CM7', cat: 'percusion', marca: 'DW Drums', precio: 1499.95, imagen: 'baterias/dpd_cm7.webp' },
+  { id: 21, nombre: 'Nitro Max Kit', cat: 'percusion', marca: 'Alesis', precio: 379.95, oferta: true, imagen: 'baterias/alesis_nitromax.webp' },
+  { id: 22, nombre: 'Electronic Kit', cat: 'percusion', marca: 'Cahaya', precio: 299.95, imagen: 'baterias/cahaya_electronic.webp' },
+  { id: 23, nombre: 'RM-802 BK', cat: 'percusion', marca: 'RMX Percussion', precio: 429.95, nuevo: true, imagen: 'baterias/rmx_802bk.webp' },
+  { id: 24, nombre: 'LJK48S', cat: 'percusion', marca: 'Tama', precio: 409.95, imagen: 'baterias/tama_ljk48s.webp' },
+  { id: 25, nombre: 'VEVOR Acoustic', cat: 'percusion', marca: 'Vevor', precio: 419.95, imagen: 'baterias/vevor_acoustic.webp' },
+  { id: 26, nombre: 'DD-530', cat: 'percusion', marca: 'XDrum', precio: 529.95, imagen: 'baterias/xdrum_dd530.webp' },
 
   // CABINAS / AMPLIFICADORES
-  { id: 27, nombre: 'FLY 3', cat: 'cabinas', marca: 'Blackstar', precio: 529.95, nuevo: false, oferta: false, imagen: 'cabinas/blackstar_fly3.webp' },
-  { id: 28, nombre: 'Rumble 15', cat: 'cabinas', marca: 'Fender', precio: 109.95, nuevo: false, oferta: false, imagen: 'cabinas/fender_rumble15.webp' },
-  { id: 29, nombre: 'Rumble 30', cat: 'cabinas', marca: 'Fender', precio: 159.95, nuevo: false, oferta: true, imagen: 'cabinas/fender_rumble30.webp' },
-  { id: 30, nombre: 'Amp 15W', cat: 'cabinas', marca: 'Gear4music', precio: 59.95, nuevo: false, oferta: false, imagen: 'cabinas/gear4music.webp' },
-  { id: 31, nombre: 'MG101GFX', cat: 'cabinas', marca: 'Marshall', precio: 274.95, nuevo: false, oferta: false, imagen: 'cabinas/marshall_mg101gfx.webp' },
-  { id: 32, nombre: 'Crush Bas 50 Purple', cat: 'cabinas', marca: 'Orange', precio: 279.95, nuevo: true, oferta: false, imagen: 'cabinas/orange_crushbass.webp' },
-  { id: 33, nombre: 'T30H Combo', cat: 'cabinas', marca: 'Orange', precio: 559.95, nuevo: false, oferta: false, imagen: 'cabinas/orange_t30h.webp' },
+  { id: 27, nombre: 'FLY 3', cat: 'cabinas', marca: 'Blackstar', precio: 529.95, imagen: 'cabinas/blackstar_fly3.webp' },
+  { id: 28, nombre: 'Rumble 15', cat: 'cabinas', marca: 'Fender', precio: 109.95, imagen: 'cabinas/fender_rumble15.webp' },
+  { id: 29, nombre: 'Rumble 30', cat: 'cabinas', marca: 'Fender', precio: 159.95, oferta: true, imagen: 'cabinas/fender_rumble30.webp' },
+  { id: 30, nombre: 'Amp 15W', cat: 'cabinas', marca: 'Gear4music', precio: 59.95, imagen: 'cabinas/gear4music.webp' },
+  { id: 31, nombre: 'MG101GFX', cat: 'cabinas', marca: 'Marshall', precio: 274.95, imagen: 'cabinas/marshall_mg101gfx.webp' },
+  { id: 32, nombre: 'Crush Bas 50 Purple', cat: 'cabinas', marca: 'Orange', precio: 279.95, nuevo: true, imagen: 'cabinas/orange_crushbass.webp' },
+  { id: 33, nombre: 'T30H Combo', cat: 'cabinas', marca: 'Orange', precio: 559.95, imagen: 'cabinas/orange_t30h.webp' },
 
   // PEDALES
-  { id: 47, nombre: 'Speedy Trigger Noise Gate', cat: 'pedales', marca: 'Artec', precio: 34.95, nuevo: false, oferta: false, imagen: 'pedales/artec_noisegate.webp' },
-  { id: 48, nombre: 'DS-1 Distortion', cat: 'pedales', marca: 'Boss', precio: 79.95, nuevo: false, oferta: false, imagen: 'pedales/boss_ds1_dist.webp' },
-  { id: 49, nombre: 'SD-1 Overdrive', cat: 'pedales', marca: 'Boss', precio: 79.95, nuevo: false, oferta: false, imagen: 'pedales/boss_sd1_overdrive.webp' },
-  { id: 50, nombre: 'RAT 2 Distortion', cat: 'pedales', marca: 'Proco', precio: 89.95, nuevo: false, oferta: true, imagen: 'pedales/proco_rat2_dist.webp' },
-  { id: 51, nombre: 'The Prophet Digital Delay', cat: 'pedales', marca: 'TC Electronic', precio: 39.95, nuevo: false, oferta: false, imagen: 'pedales/theprophet_delay.webp' },
-  { id: 52, nombre: 'Slö Multi Texture Delay', cat: 'pedales', marca: 'Walrus Audio', precio: 109.95, nuevo: true, oferta: false, imagen: 'pedales/walrus_slo_reverb.webp' },
-  { id: 53, nombre: 'Big Muff PI Fuzz', cat: 'pedales', marca: 'Electro-Harmonix', precio: 89.95, nuevo: false, oferta: false, imagen: 'pedales/electro_harmonix_bigmuff_fuzz.webp' },
+  { id: 47, nombre: 'Speedy Trigger Noise Gate', cat: 'pedales', marca: 'Artec', precio: 34.95, imagen: 'pedales/artec_noisegate.webp' },
+  { id: 48, nombre: 'DS-1 Distortion', cat: 'pedales', marca: 'Boss', precio: 79.95, imagen: 'pedales/boss_ds1_dist.webp' },
+  { id: 49, nombre: 'SD-1 Overdrive', cat: 'pedales', marca: 'Boss', precio: 79.95, imagen: 'pedales/boss_sd1_overdrive.webp' },
+  { id: 50, nombre: 'RAT 2 Distortion', cat: 'pedales', marca: 'Proco', precio: 89.95, oferta: true, imagen: 'pedales/proco_rat2_dist.webp' },
+  { id: 51, nombre: 'The Prophet Digital Delay', cat: 'pedales', marca: 'TC Electronic', precio: 39.95, imagen: 'pedales/theprophet_delay.webp' },
+  { id: 52, nombre: 'Slö Multi Texture Delay', cat: 'pedales', marca: 'Walrus Audio', precio: 109.95, nuevo: true, imagen: 'pedales/walrus_slo_reverb.webp' },
+  { id: 53, nombre: 'Big Muff PI Fuzz', cat: 'pedales', marca: 'Electro-Harmonix', precio: 89.95, imagen: 'pedales/electro_harmonix_bigmuff_fuzz.webp' },
 
   // EQUIPAMIENTO
-  { id: 34, nombre: 'M-Track Solo', cat: 'equipamiento', marca: 'M-Audio', precio: 49.95, nuevo: false, oferta: true, imagen: 'equipamiento/mtrack_solo.webp' },
-  { id: 35, nombre: 'M-Track Duo', cat: 'equipamiento', marca: 'M-Audio', precio: 69.95, nuevo: false, oferta: false, imagen: 'equipamiento/mtrack_duo.webp' },
-  { id: 36, nombre: 'Scarlett 2i2', cat: 'equipamiento', marca: 'Focusrite', precio: 124.95, nuevo: true, oferta: false, imagen: 'equipamiento/focusrite_scarlett2i2.webp' },
-  { id: 37, nombre: 'Jack 6.35mm', cat: 'equipamiento', marca: 'Anyplus', precio: 10.95, nuevo: false, oferta: false, imagen: 'equipamiento/anyplus_jack_6_35.webp' },
-  { id: 38, nombre: 'Jack 6.35mm', cat: 'equipamiento', marca: 'OTraki', precio: 12.95, nuevo: false, oferta: false, imagen: 'equipamiento/otraki_jack_6_35.webp' },
-  { id: 39, nombre: 'Blue Light Picks', cat: 'equipamiento', marca: 'Dunlop Gels', precio: 7.95, nuevo: false, oferta: false, imagen: 'equipamiento/dunlop_bluelight_pick.webp' },
-  { id: 40, nombre: 'Red Heavy Picks', cat: 'equipamiento', marca: 'Dunlop Gels', precio: 7.95, nuevo: false, oferta: false, imagen: 'equipamiento/dunlop_heavyred_pick.webp' },
-  { id: 41, nombre: 'Emerald Medium Picks', cat: 'equipamiento', marca: 'Fender', precio: 9.95, nuevo: false, oferta: false, imagen: 'equipamiento/fender_medium_pick.webp' },
-  { id: 42, nombre: 'Black Medium Picks', cat: 'equipamiento', marca: 'Fender', precio: 9.95, nuevo: false, oferta: false, imagen: 'equipamiento/fender_blackmedium_pick.webp' },
-  { id: 43, nombre: 'Regular Slinky 10 - 46', cat: 'equipamiento', marca: 'Ernieball', precio: 6.95, nuevo: false, oferta: false, imagen: 'equipamiento/ernieball_regular_slinky.webp' },
-  { id: 44, nombre: 'Power Slinky 11 - 48', cat: 'equipamiento', marca: 'Ernieball', precio: 7.95, nuevo: false, oferta: false, imagen: 'equipamiento/ernieball_powerslinky.webp' },
-  { id: 45, nombre: 'Heavy Bottom 10 - 62', cat: 'equipamiento', marca: 'Ernieball', precio: 9.95, nuevo: false, oferta: false, imagen: 'equipamiento/ernieball_heavybottom_7.webp' },
-  { id: 46, nombre: 'Regular Slinky 10 - 74', cat: 'equipamiento', marca: 'Ernieball', precio: 11.95, nuevo: false, oferta: false, imagen: 'equipamiento/ernieball_regularslinky_8.webp' }
+  { id: 34, nombre: 'M-Track Solo', cat: 'equipamiento', marca: 'M-Audio', precio: 49.95, oferta: true, imagen: 'equipamiento/mtrack_solo.webp' },
+  { id: 35, nombre: 'M-Track Duo', cat: 'equipamiento', marca: 'M-Audio', precio: 69.95, imagen: 'equipamiento/mtrack_duo.webp' },
+  { id: 36, nombre: 'Scarlett 2i2', cat: 'equipamiento', marca: 'Focusrite', precio: 124.95, nuevo: true, imagen: 'equipamiento/focusrite_scarlett2i2.webp' },
+  { id: 37, nombre: 'Jack 6.35mm', cat: 'equipamiento', marca: 'Anyplus', precio: 10.95, imagen: 'equipamiento/anyplus_jack_6_35.webp' },
+  { id: 38, nombre: 'Jack 6.35mm', cat: 'equipamiento', marca: 'OTraki', precio: 12.95, imagen: 'equipamiento/otraki_jack_6_35.webp' },
+  { id: 39, nombre: 'Blue Light Picks', cat: 'equipamiento', marca: 'Dunlop Gels', precio: 7.95, imagen: 'equipamiento/dunlop_bluelight_pick.webp' },
+  { id: 40, nombre: 'Red Heavy Picks', cat: 'equipamiento', marca: 'Dunlop Gels', precio: 7.95, imagen: 'equipamiento/dunlop_heavyred_pick.webp' },
+  { id: 41, nombre: 'Emerald Medium Picks', cat: 'equipamiento', marca: 'Fender', precio: 9.95, imagen: 'equipamiento/fender_medium_pick.webp' },
+  { id: 42, nombre: 'Black Medium Picks', cat: 'equipamiento', marca: 'Fender', precio: 9.95, imagen: 'equipamiento/fender_blackmedium_pick.webp' },
+  { id: 43, nombre: 'Regular Slinky 10 - 46', cat: 'equipamiento', marca: 'Ernieball', precio: 6.95, imagen: 'equipamiento/ernieball_regular_slinky.webp' },
+  { id: 44, nombre: 'Power Slinky 11 - 48', cat: 'equipamiento', marca: 'Ernieball', precio: 7.95, imagen: 'equipamiento/ernieball_powerslinky.webp' },
+  { id: 45, nombre: 'Heavy Bottom 10 - 62', cat: 'equipamiento', marca: 'Ernieball', precio: 9.95, imagen: 'equipamiento/ernieball_heavybottom_7.webp' },
+  { id: 46, nombre: 'Regular Slinky 10 - 74', cat: 'equipamiento', marca: 'Ernieball', precio: 11.95, imagen: 'equipamiento/ernieball_regularslinky_8.webp' }
 ];
 
 // Porcentaje de descuento por categoría (solo se aplica si el producto tiene oferta: true)
@@ -192,6 +193,7 @@ document.body.insertAdjacentHTML('beforeend', `
 // En todas las páginas
 const progressFill = document.getElementById('progressFill');
 const botonCarrito = document.querySelector('.cart');
+const iconoCarrito = document.querySelector('.cart-btn');
 const contadorCarrito = document.getElementById('cart-count');
 const panel = document.getElementById('drawer');
 const fondo = document.getElementById('overlay');
@@ -271,6 +273,26 @@ function buscarProducto(id) {
   });
 }
 
+function buscarCategoria(id) {
+  return categorias.find(function (c) {
+    return c.id === id;
+  });
+}
+
+// Lee datos de localStorage; si no hay nada (o están rotos) devuelve el valor por defecto
+function leerDatos(clave, porDefecto) {
+  try {
+    const datos = JSON.parse(localStorage.getItem(clave));
+    return datos === null ? porDefecto : datos;
+  } catch (error) {
+    return porDefecto;
+  }
+}
+
+function guardarDatos(clave, datos) {
+  localStorage.setItem(clave, JSON.stringify(datos));
+}
+
 // Formatea un número a 2 decimales con coma (estilo español): 1139.85 -> "1139,85"
 function formatearPrecio(numero) {
   return Number(numero).toFixed(2).replace('.', ',');
@@ -283,24 +305,17 @@ function limpiar(texto) {
 
 // Porcentaje de descuento que le toca a un producto (0 si no está en oferta)
 function porcentajeDescuento(p) {
-  if (!p.oferta) {
-    return 0;
-  }
-  return descuentos[p.cat] || 0;
+  return p.oferta ? (descuentos[p.cat] || 0) : 0;
 }
 
 // Precio real que se paga: con descuento si está en oferta, redondeado a 2 decimales
 function precioFinal(p) {
-  const porcentaje = porcentajeDescuento(p);
-  if (porcentaje == 0) {
-    return p.precio;
-  }
-  return Math.round(p.precio * (100 - porcentaje)) / 100;
+  return Math.round(p.precio * (100 - porcentajeDescuento(p))) / 100;
 }
 
 // HTML del precio: si hay oferta, precio original tachado + precio con descuento
 function htmlPrecio(p) {
-  if (porcentajeDescuento(p) == 0) {
+  if (porcentajeDescuento(p) === 0) {
     return '<p class="precio">' + formatearPrecio(p.precio) + ' €</p>';
   }
   return '<p class="precio">' +
@@ -311,18 +326,13 @@ function htmlPrecio(p) {
 
 // Imagen del producto: usa la ruta de la propiedad imagen (dentro de img/)
 function estiloImagen(p) {
-  if (p.imagen == undefined) {
-    return '';
-  }
-  return 'style="background-image:url(\'./img/' + p.imagen + '\')"';
+  return p.imagen ? 'style="background-image:url(\'./img/' + p.imagen + '\')"' : '';
 }
 
 // Pone primero los productos nuevos o en oferta; el resto mantiene su orden original
 function destacadosPrimero(lista) {
   return lista.slice().sort(function (a, b) {
-    const destacadoA = (a.nuevo || a.oferta) ? 1 : 0;
-    const destacadoB = (b.nuevo || b.oferta) ? 1 : 0;
-    return destacadoB - destacadoA;
+    return Boolean(b.nuevo || b.oferta) - Boolean(a.nuevo || a.oferta);
   });
 }
 
@@ -355,7 +365,7 @@ function crearTarjeta(p) {
 function pintarProductos(lista, contenedor) {
   contenedor.innerHTML = '';
 
-  if (lista.length == 0) {
+  if (lista.length === 0) {
     contenedor.innerHTML = '<p class="empty-msg">No hemos encontrado ningún producto.</p>';
     return;
   }
@@ -363,6 +373,12 @@ function pintarProductos(lista, contenedor) {
   lista.forEach(function (p) {
     contenedor.appendChild(crearTarjeta(p));
   });
+}
+
+// Pone un texto en un mensaje (verde, o rojo si es un error)
+function mostrarMensaje(elemento, texto, esError) {
+  elemento.textContent = texto;
+  elemento.classList.toggle('error', Boolean(esError));
 }
 
 // Descarga un texto como archivo (lo usan los recibos y las citas)
@@ -431,11 +447,10 @@ function inicializarTema() {
 // El carrito se guarda en el navegador (localStorage): [{ id, cantidad }]
 // =====================================================
 
-let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
-
-function guardarCarrito() {
-  localStorage.setItem('carrito', JSON.stringify(carrito));
-}
+// Se descartan los productos que ya no existen en el catálogo (evita errores con datos antiguos)
+let carrito = leerDatos('carrito', []).filter(function (linea) {
+  return buscarProducto(linea.id);
+});
 
 function abrirCarrito() {
   panel.inert = false;
@@ -456,10 +471,9 @@ function buscarEnCarrito(idProducto) {
 }
 
 function calcularTotal() {
-  let total = 0;
-  carrito.forEach(function (linea) {
-    total += precioFinal(buscarProducto(linea.id)) * linea.cantidad;
-  });
+  const total = carrito.reduce(function (suma, linea) {
+    return suma + precioFinal(buscarProducto(linea.id)) * linea.cantidad;
+  }, 0);
   // Redondeamos a 2 decimales para evitar errores de coma flotante
   return Math.round(total * 100) / 100;
 }
@@ -467,10 +481,11 @@ function calcularTotal() {
 // Muestra un mensaje, guarda y repinta: lo usan todas las funciones que cambian el carrito
 function actualizarCarrito(texto) {
   mensaje.textContent = texto;
-  guardarCarrito();
+  guardarDatos('carrito', carrito);
   dibujarCarrito();
 }
 
+// Se usa tanto en "Añadir" (tarjetas) como en el "+" del carrito
 function anadirAlCarrito(idProducto) {
   const linea = buscarEnCarrito(idProducto);
 
@@ -482,15 +497,9 @@ function anadirAlCarrito(idProducto) {
   actualizarCarrito('Producto añadido.');
 
   // Animación del contador del botón del carrito
-  const boton = document.querySelector('.cart-btn');
-  boton.classList.remove('bump');
-  void boton.offsetWidth;
-  boton.classList.add('bump');
-}
-
-function aumentarCarrito(idProducto) {
-  buscarEnCarrito(idProducto).cantidad++;
-  actualizarCarrito('Producto añadido.');
+  iconoCarrito.classList.remove('bump');
+  void iconoCarrito.offsetWidth;
+  iconoCarrito.classList.add('bump');
 }
 
 function quitarDelCarrito(idProducto) {
@@ -498,20 +507,22 @@ function quitarDelCarrito(idProducto) {
 
   if (linea.cantidad > 1) {
     linea.cantidad--;
+    actualizarCarrito('Producto quitado.');
   } else {
-    carrito.splice(carrito.indexOf(linea), 1);
+    eliminarLinea(idProducto);
   }
-  actualizarCarrito('Producto quitado.');
 }
 
 // Quita el artículo entero (todas sus unidades de golpe)
 function eliminarLinea(idProducto) {
-  carrito.splice(carrito.indexOf(buscarEnCarrito(idProducto)), 1);
+  carrito = carrito.filter(function (linea) {
+    return linea.id !== idProducto;
+  });
   actualizarCarrito('Producto eliminado del carrito.');
 }
 
 function vaciarCarrito() {
-  if (carrito.length == 0) {
+  if (carrito.length === 0) {
     mensaje.textContent = 'El carrito ya está vacío.';
     return;
   }
@@ -536,7 +547,7 @@ function dibujarCarrito() {
           <div class="cart-qty">
             <button type="button" class="minus" aria-label="Quitar una unidad de ${p.nombre}" onclick="quitarDelCarrito(${p.id})">−</button>
             <span>${linea.cantidad}</span>
-            <button type="button" class="plus" aria-label="Añadir otra unidad de ${p.nombre}" onclick="aumentarCarrito(${p.id})">+</button>
+            <button type="button" class="plus" aria-label="Añadir otra unidad de ${p.nombre}" onclick="anadirAlCarrito(${p.id})">+</button>
           </div>
         </div>
         <b>${formatearPrecio(precioFinal(p) * linea.cantidad)} €</b>
@@ -560,10 +571,11 @@ function dibujarCarrito() {
 // 7. HISTORIAL DE COMPRAS (también en localStorage)
 // =====================================================
 
-let historial = JSON.parse(localStorage.getItem('historial')) || [];
+let historial = leerDatos('historial', []);
 
-function guardarHistorial() {
-  localStorage.setItem('historial', JSON.stringify(historial));
+// 'Les Paul x2 - 759,90 €' (lo usan el historial y el recibo)
+function textoLineaCompra(producto) {
+  return producto.nombre + ' x' + producto.cantidad + ' - ' + formatearPrecio(producto.precio * producto.cantidad) + ' €';
 }
 
 function mostrarHistorial() {
@@ -577,7 +589,7 @@ function mostrarHistorial() {
     detalle.hidden = true;
     compra.productos.forEach(function (producto) {
       const lineaProducto = document.createElement('li');
-      lineaProducto.textContent = producto.nombre + ' x' + producto.cantidad + ' - ' + formatearPrecio(producto.precio * producto.cantidad) + ' €';
+      lineaProducto.textContent = textoLineaCompra(producto);
       detalle.appendChild(lineaProducto);
     });
 
@@ -620,12 +632,8 @@ function descargarRecibo(compra, numero) {
     texto += 'Pedido: ' + compra.pedido + '\n';
   }
   texto += 'Fecha: ' + compra.fecha + '\n\n';
-
-  compra.productos.forEach(function (producto) {
-    texto += producto.nombre + ' x' + producto.cantidad + ' - ' + formatearPrecio(producto.precio * producto.cantidad) + ' €\n';
-  });
-
-  texto += '\nTOTAL: ' + formatearPrecio(compra.total) + ' €\n';
+  texto += compra.productos.map(textoLineaCompra).join('\n');
+  texto += '\n\nTOTAL: ' + formatearPrecio(compra.total) + ' €\n';
   if (compra.tarjeta) {
     texto += 'Pagado con tarjeta terminada en ' + compra.tarjeta;
   }
@@ -652,13 +660,13 @@ let ultimaCompra = null;     // última compra pagada, para poder descargar su r
 
 // La ventana tiene 3 pasos: 'formulario', 'proceso' y 'resultado'. Solo se ve uno.
 function mostrarPasoPago(paso) {
-  pasoFormulario.hidden = paso != 'formulario';
-  pasoProceso.hidden = paso != 'proceso';
-  pasoResultado.hidden = paso != 'resultado';
+  pasoFormulario.hidden = paso !== 'formulario';
+  pasoProceso.hidden = paso !== 'proceso';
+  pasoResultado.hidden = paso !== 'resultado';
 }
 
 function abrirPago() {
-  if (carrito.length == 0) {
+  if (carrito.length === 0) {
     mensaje.textContent = 'Añade productos para realizar la compra.';
     return;
   }
@@ -695,10 +703,9 @@ function abrirPago() {
 
 function cerrarPago() {
   // Mientras se procesa el pago no se puede cerrar
-  if (procesandoPago) {
-    return;
+  if (!procesandoPago) {
+    pagoOverlay.hidden = true;
   }
-  pagoOverlay.hidden = true;
 }
 
 // --------- Formato de los campos mientras se escribe ---------
@@ -725,15 +732,15 @@ function tarjetaValida(numero) {
   for (let i = numero.length - 1; i >= 0; i--) {
     let digito = Number(numero[i]);
     if (doble) {
-      digito = digito * 2;
+      digito *= 2;
       if (digito > 9) {
-        digito = digito - 9;
+        digito -= 9;
       }
     }
     suma += digito;
     doble = !doble;
   }
-  return numero.length == 16 && suma % 10 == 0;
+  return numero.length === 16 && suma % 10 === 0;
 }
 
 // La tarjeta vale hasta el último día de su mes de caducidad
@@ -746,7 +753,7 @@ function caducidadValida(texto) {
   if (mes < 1 || mes > 12) {
     return false;
   }
-  return anio > hoy.getFullYear() || (anio == hoy.getFullYear() && mes >= hoy.getMonth() + 1);
+  return anio > hoy.getFullYear() || (anio === hoy.getFullYear() && mes >= hoy.getMonth() + 1);
 }
 
 // --------- Pago ---------
@@ -789,10 +796,9 @@ function pagar(evento) {
 // Guarda la compra en el historial y vacía el carrito
 function completarCompra(ultimosDigitos) {
   // Se guarda nombre y precio (no solo el id) para que el recibo sea siempre igual
-  const lineas = [];
-  carrito.forEach(function (linea) {
+  const lineas = carrito.map(function (linea) {
     const p = buscarProducto(linea.id);
-    lineas.push({ nombre: p.nombre, precio: precioFinal(p), cantidad: linea.cantidad });
+    return { nombre: p.nombre, precio: precioFinal(p), cantidad: linea.cantidad };
   });
 
   const compra = {
@@ -804,7 +810,7 @@ function completarCompra(ultimosDigitos) {
   };
 
   historial.push(compra);
-  guardarHistorial();
+  guardarDatos('historial', historial);
   ultimaCompra = compra;
 
   carrito = [];
@@ -813,33 +819,40 @@ function completarCompra(ultimosDigitos) {
   mostrarResultadoOk(compra);
 }
 
-function mostrarResultadoOk(compra) {
+// Pinta el paso "resultado": icono, título, texto y botones (los dos botones llevan su onclick)
+function mostrarResultado(icono, titulo, texto, botonPrincipal, botonSecundario) {
   pasoResultado.innerHTML =
     '<div class="pago-resultado">' +
-    '<i class="fa-solid fa-circle-check pago-icono ok"></i>' +
-    '<h2>¡Pago realizado!</h2>' +
-    '<p>Pedido <strong>' + compra.pedido + '</strong></p>' +
-    '<p>Has pagado <strong>' + formatearPrecio(compra.total) + ' €</strong> con la tarjeta terminada en ' + compra.tarjeta + '.</p>' +
+    '<i class="fa-solid ' + icono + '"></i>' +
+    '<h2>' + titulo + '</h2>' +
+    texto +
     '<div class="pago-botones">' +
-    '<button type="button" class="link-btn" onclick="descargarUltimoRecibo()">Descargar recibo</button>' +
-    '<button type="button" class="back-btn" onclick="cerrarPago()">Seguir comprando</button>' +
+    '<button type="button" class="link-btn" onclick="' + botonPrincipal.accion + '">' + botonPrincipal.texto + '</button>' +
+    '<button type="button" class="back-btn" onclick="' + botonSecundario.accion + '">' + botonSecundario.texto + '</button>' +
     '</div>' +
     '</div>';
   mostrarPasoPago('resultado');
 }
 
+function mostrarResultadoOk(compra) {
+  mostrarResultado(
+    'fa-circle-check pago-icono ok',
+    '¡Pago realizado!',
+    '<p>Pedido <strong>' + compra.pedido + '</strong></p>' +
+    '<p>Has pagado <strong>' + formatearPrecio(compra.total) + ' €</strong> con la tarjeta terminada en ' + compra.tarjeta + '.</p>',
+    { texto: 'Descargar recibo', accion: 'descargarUltimoRecibo()' },
+    { texto: 'Seguir comprando', accion: 'cerrarPago()' }
+  );
+}
+
 function mostrarResultadoError(texto) {
-  pasoResultado.innerHTML =
-    '<div class="pago-resultado">' +
-    '<i class="fa-solid fa-circle-xmark pago-icono error"></i>' +
-    '<h2>Pago rechazado</h2>' +
-    '<p>' + texto + '</p>' +
-    '<div class="pago-botones">' +
-    '<button type="button" class="link-btn" onclick="volverAlPago()">Probar con otra tarjeta</button>' +
-    '<button type="button" class="back-btn" onclick="cerrarPago()">Cancelar</button>' +
-    '</div>' +
-    '</div>';
-  mostrarPasoPago('resultado');
+  mostrarResultado(
+    'fa-circle-xmark pago-icono error',
+    'Pago rechazado',
+    '<p>' + texto + '</p>',
+    { texto: 'Probar con otra tarjeta', accion: 'volverAlPago()' },
+    { texto: 'Cancelar', accion: 'cerrarPago()' }
+  );
 }
 
 // Vuelve al formulario sin perder el nombre (el número y el CVV se borran)
@@ -870,10 +883,9 @@ function rellenarTarjetaPrueba() {
 // =====================================================
 
 function mostrarNuevos() {
-  const nuevos = productos.filter(function (p) {
+  pintarProductos(productos.filter(function (p) {
     return p.nuevo;
-  });
-  pintarProductos(nuevos, gridNuevos);
+  }), gridNuevos);
 }
 
 
@@ -902,24 +914,21 @@ function mostrarCategorias() {
 
 function mostrarZonaProductos(titulo, lista) {
   tituloResultados.textContent = titulo;
-  pintarProductos(lista, gridProductos);
+  // Los productos nuevos o en oferta salen los primeros
+  pintarProductos(destacadosPrimero(lista), gridProductos);
   contenedorCats.hidden = true;
   zonaProductos.hidden = false;
 }
 
 function abrirCategoria(idCategoria) {
-  const cat = categorias.find(function (c) {
-    return c.id === idCategoria;
-  });
-  if (cat == undefined) {
+  const cat = buscarCategoria(idCategoria);
+  if (!cat) {
     return;
   }
 
-  // Los productos nuevos o en oferta salen los primeros
-  const lista = destacadosPrimero(productos.filter(function (p) {
+  const lista = productos.filter(function (p) {
     return p.cat === idCategoria;
-  }));
-
+  });
   mostrarZonaProductos(cat.nombre + ' (' + lista.length + ')', lista);
 }
 
@@ -932,23 +941,21 @@ function volverACategorias() {
 function buscar(evento) {
   evento.preventDefault();
 
-  const texto = limpiar(campoBusqueda.value.trim());
-  if (texto == '') {
+  const escrito = campoBusqueda.value.trim();
+  const texto = limpiar(escrito);
+  if (texto === '') {
     volverACategorias();
     return;
   }
 
   // Busca en nombre, marca y nombre de la categoría
   const lista = productos.filter(function (p) {
-    const cat = categorias.find(function (c) {
-      return c.id === p.cat;
-    });
     return limpiar(p.nombre).includes(texto) ||
       limpiar(p.marca).includes(texto) ||
-      limpiar(cat.nombre).includes(texto);
+      limpiar(buscarCategoria(p.cat).nombre).includes(texto);
   });
 
-  mostrarZonaProductos('Resultados para "' + campoBusqueda.value.trim() + '" (' + lista.length + ')', destacadosPrimero(lista));
+  mostrarZonaProductos('Resultados para "' + escrito + '" (' + lista.length + ')', lista);
 }
 
 
@@ -963,20 +970,16 @@ const DIAS_SEMANA = ['domingo', 'lunes', 'martes', 'miércoles', 'jueves', 'vier
 // Horario: lunes a sábado de 10:00 a 20:00, citas de una hora (la última empieza a las 19:00)
 const HORAS_CITA = ['10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00', '17:00', '18:00', '19:00'];
 
-let citas = JSON.parse(localStorage.getItem('citas')) || [];
+let citas = leerDatos('citas', []);
 let mesVisible = new Date();
 mesVisible.setDate(1);
 let diaElegido = null;   // fecha elegida en formato 'AAAA-MM-DD'
 let horaElegida = null;  // por ejemplo '11:00'
 
-function guardarCitas() {
-  localStorage.setItem('citas', JSON.stringify(citas));
-}
-
 // --------- Ayudas con fechas ---------
 
 function dosDigitos(n) {
-  return n < 10 ? '0' + n : '' + n;
+  return String(n).padStart(2, '0');
 }
 
 // Date -> '2026-11-19'
@@ -1018,6 +1021,10 @@ function horaPasada(clave, hora) {
   return Number(hora.split(':')[0]) <= ahora.getHours();
 }
 
+function horaNoDisponible(clave, hora) {
+  return horaOcupada(clave, hora) || horaPasada(clave, hora);
+}
+
 // --------- Calendario ---------
 
 function dibujarCalendario() {
@@ -1035,21 +1042,18 @@ function dibujarCalendario() {
   // La semana empieza en lunes: getDay() da 0 para domingo, así que lo movemos al final
   const huecos = (new Date(anio, mes, 1).getDay() + 6) % 7;
 
-  let html = '';
-  for (let i = 0; i < huecos; i++) {
-    html += '<span class="cal-vacio"></span>';
-  }
+  let html = '<span class="cal-vacio"></span>'.repeat(huecos);
 
   for (let d = 1; d <= diasMes; d++) {
     const fecha = new Date(anio, mes, d);
     const clave = claveFecha(fecha);
-    const bloqueado = fecha < hoy || fecha > limite || fecha.getDay() == 0;
+    const bloqueado = fecha < hoy || fecha > limite || fecha.getDay() === 0;
 
     let clases = 'cal-dia';
-    if (fecha.getTime() == hoy.getTime()) {
+    if (fecha.getTime() === hoy.getTime()) {
       clases += ' hoy';
     }
-    if (clave == diaElegido) {
+    if (clave === diaElegido) {
       clases += ' elegido';
     }
     if (tieneCita(clave)) {
@@ -1074,7 +1078,7 @@ function elegirDia(clave) {
   diaElegido = clave;
   horaElegida = null;
   formCita.hidden = true;
-  mostrarMensajeCita('', false);
+  mostrarMensaje(mensajeCita, '');
   dibujarCalendario();
   dibujarHoras();
 }
@@ -1084,7 +1088,7 @@ function elegirDia(clave) {
 function dibujarHoras() {
   zonaHoras.innerHTML = '';
 
-  if (diaElegido == null) {
+  if (diaElegido === null) {
     horasTitulo.textContent = 'Elige un día en el calendario';
     return;
   }
@@ -1097,11 +1101,11 @@ function dibujarHoras() {
     boton.className = 'hora-btn';
     boton.textContent = hora;
 
-    if (horaOcupada(diaElegido, hora) || horaPasada(diaElegido, hora)) {
+    if (horaNoDisponible(diaElegido, hora)) {
       boton.disabled = true;
       boton.title = 'No disponible';
     }
-    if (hora == horaElegida) {
+    if (hora === horaElegida) {
       boton.classList.add('elegida');
     }
 
@@ -1114,7 +1118,7 @@ function dibujarHoras() {
 
 function elegirHora(hora) {
   horaElegida = hora;
-  mostrarMensajeCita('', false);
+  mostrarMensaje(mensajeCita, '');
   resumenCita.textContent = 'Tu cita: ' + textoFecha(diaElegido) + ' a las ' + hora;
   formCita.hidden = false;
   dibujarHoras();
@@ -1122,26 +1126,21 @@ function elegirHora(hora) {
 
 // --------- Reservar, ver y cancelar citas ---------
 
-function mostrarMensajeCita(texto, esError) {
-  mensajeCita.textContent = texto;
-  mensajeCita.classList.toggle('error', esError);
-}
-
 function confirmarCita(evento) {
   // Evita que la página se recargue al enviar el formulario
   evento.preventDefault();
 
-  if (diaElegido == null || horaElegida == null) {
-    mostrarMensajeCita('Elige un día y una hora.', true);
+  if (diaElegido === null || horaElegida === null) {
+    mostrarMensaje(mensajeCita, 'Elige un día y una hora.', true);
     return;
   }
 
   // Por si la hora se ha ocupado o ha pasado mientras rellenabas el formulario
-  if (horaOcupada(diaElegido, horaElegida) || horaPasada(diaElegido, horaElegida)) {
+  if (horaNoDisponible(diaElegido, horaElegida)) {
     horaElegida = null;
     formCita.hidden = true;
     dibujarHoras();
-    mostrarMensajeCita('Esa hora ya no está disponible. Elige otra.', true);
+    mostrarMensaje(mensajeCita, 'Esa hora ya no está disponible. Elige otra.', true);
     return;
   }
 
@@ -1155,7 +1154,7 @@ function confirmarCita(evento) {
   };
 
   citas.push(cita);
-  guardarCitas();
+  guardarDatos('citas', citas);
 
   const texto = 'Cita reservada para el ' + textoFecha(cita.fecha) + ' a las ' + cita.hora + '.';
 
@@ -1164,10 +1163,15 @@ function confirmarCita(evento) {
   diaElegido = null;
   horaElegida = null;
 
+  refrescarCitas();
+  mostrarMensaje(mensajeCita, texto);
+}
+
+// Repinta calendario, horas y lista (hace falta cada vez que cambian las citas)
+function refrescarCitas() {
   dibujarCalendario();
   dibujarHoras();
   mostrarCitas();
-  mostrarMensajeCita(texto, false);
 }
 
 function mostrarCitas() {
@@ -1181,7 +1185,7 @@ function mostrarCitas() {
     return (a.fecha + a.hora).localeCompare(b.fecha + b.hora);
   });
 
-  if (proximas.length == 0) {
+  if (proximas.length === 0) {
     listaCitas.innerHTML = '<li class="empty-msg">Todavía no tienes citas reservadas.</li>';
     return;
   }
@@ -1229,13 +1233,11 @@ function cancelarCita(idCita) {
   citas = citas.filter(function (c) {
     return c.id !== idCita;
   });
-  guardarCitas();
+  guardarDatos('citas', citas);
 
   // La hora vuelve a quedar libre, así que repintamos todo
-  dibujarCalendario();
-  dibujarHoras();
-  mostrarCitas();
-  mostrarMensajeCita('Cita cancelada.', false);
+  refrescarCitas();
+  mostrarMensaje(mensajeCita, 'Cita cancelada.');
 }
 
 // Descarga un archivo .ics que se puede abrir con Google Calendar, Outlook, el móvil...
@@ -1310,12 +1312,8 @@ const temasIniciales = [
   }
 ];
 
-let temas = JSON.parse(localStorage.getItem('foro')) || temasIniciales;
+let temas = leerDatos('foro', temasIniciales);
 let temaAbierto = null;  // id del tema que se está viendo (null = se ve la lista)
-
-function guardarForo() {
-  localStorage.setItem('foro', JSON.stringify(temas));
-}
 
 function buscarTema(idTema) {
   return temas.find(function (t) {
@@ -1324,9 +1322,7 @@ function buscarTema(idTema) {
 }
 
 function nombreCategoria(idCategoria) {
-  const cat = categorias.find(function (c) {
-    return c.id === idCategoria;
-  });
+  const cat = buscarCategoria(idCategoria);
   return cat ? cat.nombre : 'General';
 }
 
@@ -1335,16 +1331,9 @@ function fechaForo() {
   return new Date().toLocaleString('es-ES', { dateStyle: 'short', timeStyle: 'short' });
 }
 
-function mostrarMensajeForo(texto, esError) {
-  mensajeForo.textContent = texto;
-  mensajeForo.classList.toggle('error', esError);
-}
-
 // Rellena el desplegable de categorías del formulario de nuevo tema
 function rellenarCategoriasForo() {
-  const opciones = [{ id: 'general', nombre: 'General' }].concat(categorias);
-
-  opciones.forEach(function (cat) {
+  [{ id: 'general', nombre: 'General' }].concat(categorias).forEach(function (cat) {
     const opcion = document.createElement('option');
     opcion.value = cat.id;
     opcion.textContent = cat.nombre;
@@ -1364,7 +1353,7 @@ function prefijarNombreForo() {
 function mostrarTemas() {
   listaTemas.innerHTML = '';
 
-  if (temas.length == 0) {
+  if (temas.length === 0) {
     listaTemas.innerHTML = '<li class="empty-msg">Todavía no hay temas. ¡Crea el primero!</li>';
     return;
   }
@@ -1376,7 +1365,7 @@ function mostrarTemas() {
     titulo.textContent = t.titulo;
 
     const datos = document.createElement('small');
-    datos.textContent = t.autor + ' · ' + t.fecha + ' · ' + t.respuestas.length + (t.respuestas.length == 1 ? ' respuesta' : ' respuestas');
+    datos.textContent = t.autor + ' · ' + t.fecha + ' · ' + t.respuestas.length + (t.respuestas.length === 1 ? ' respuesta' : ' respuestas');
 
     const info = document.createElement('div');
     info.appendChild(titulo);
@@ -1443,7 +1432,7 @@ function dibujarTema(tema) {
 function abrirTema(idTema) {
   temaAbierto = idTema;
   dibujarTema(buscarTema(idTema));
-  mostrarMensajeForo('', false);
+  mostrarMensaje(mensajeForo, '');
   vistaLista.hidden = true;
   vistaTema.hidden = false;
   window.scrollTo(0, 0);
@@ -1453,7 +1442,7 @@ function volverAlForo() {
   temaAbierto = null;
   vistaTema.hidden = true;
   vistaLista.hidden = false;
-  mostrarMensajeForo('', false);
+  mostrarMensaje(mensajeForo, '');
   mostrarTemas();
 }
 
@@ -1468,8 +1457,8 @@ function crearTema(evento) {
   const texto = campoTextoTema.value.trim();
 
   // required deja pasar los campos con solo espacios, así que se comprueba aquí
-  if (titulo == '' || autor == '' || texto == '') {
-    mostrarMensajeForo('Rellena todos los campos.', true);
+  if (titulo === '' || autor === '' || texto === '') {
+    mostrarMensaje(mensajeForo, 'Rellena todos los campos.', true);
     return;
   }
 
@@ -1483,14 +1472,14 @@ function crearTema(evento) {
     respuestas: [],
     propio: true
   });
-  guardarForo();
+  guardarDatos('foro', temas);
   localStorage.setItem('foroNombre', autor);
 
   formTema.reset();
   prefijarNombreForo();
   formTema.hidden = true;
   mostrarTemas();
-  mostrarMensajeForo('Tema publicado.', false);
+  mostrarMensaje(mensajeForo, 'Tema publicado.');
 }
 
 function responderTema(evento) {
@@ -1499,20 +1488,20 @@ function responderTema(evento) {
   const autor = campoAutorRespuesta.value.trim();
   const texto = campoTextoRespuesta.value.trim();
 
-  if (autor == '' || texto == '') {
-    mostrarMensajeForo('Escribe tu nombre y un mensaje.', true);
+  if (autor === '' || texto === '') {
+    mostrarMensaje(mensajeForo, 'Escribe tu nombre y un mensaje.', true);
     return;
   }
 
   const tema = buscarTema(temaAbierto);
   tema.respuestas.push({ autor: autor, fecha: fechaForo(), mensaje: texto });
-  guardarForo();
+  guardarDatos('foro', temas);
   localStorage.setItem('foroNombre', autor);
 
   formRespuesta.reset();
   prefijarNombreForo();
   dibujarTema(tema);
-  mostrarMensajeForo('Respuesta publicada.', false);
+  mostrarMensaje(mensajeForo, 'Respuesta publicada.');
 }
 
 function eliminarTema() {
@@ -1523,10 +1512,10 @@ function eliminarTema() {
   temas = temas.filter(function (t) {
     return t.id !== temaAbierto;
   });
-  guardarForo();
+  guardarDatos('foro', temas);
 
   volverAlForo();
-  mostrarMensajeForo('Tema eliminado.', false);
+  mostrarMensaje(mensajeForo, 'Tema eliminado.');
 }
 
 
@@ -1552,29 +1541,29 @@ campoCvv.addEventListener('input', function () {
 });
 // Se cierra al pulsar fuera de la ventana o con Escape
 pagoOverlay.onclick = function (evento) {
-  if (evento.target == pagoOverlay) {
+  if (evento.target === pagoOverlay) {
     cerrarPago();
   }
 };
 document.addEventListener('keydown', function (evento) {
-  if (evento.key == 'Escape' && !pagoOverlay.hidden) {
+  if (evento.key === 'Escape' && !pagoOverlay.hidden) {
     cerrarPago();
   }
 });
 
-if (progressFill != null) {
+if (progressFill !== null) {
   window.addEventListener('scroll', updateProgress);
   window.addEventListener('resize', updateProgress);
   updateProgress();
 }
 
 // Solo en index.html
-if (gridNuevos != null) {
+if (gridNuevos !== null) {
   mostrarNuevos();
 }
 
 // Solo en catalogo.html
-if (contenedorCats != null) {
+if (contenedorCats !== null) {
   // La búsqueda se actualiza en cada letra que se escribe o se borra.
   // El submit (pulsar Enter) sigue controlado para que la página no se recargue.
   campoBusqueda.addEventListener('input', buscar);
@@ -1582,13 +1571,13 @@ if (contenedorCats != null) {
   mostrarCategorias();
 
   // Permite enlazar desde otras páginas: catalogo.html#guitarras
-  if (location.hash != '') {
+  if (location.hash !== '') {
     abrirCategoria(location.hash.slice(1));
   }
 }
 
 // Solo en contacto.html
-if (calDias != null) {
+if (calDias !== null) {
   calPrev.onclick = function () {
     mesVisible.setMonth(mesVisible.getMonth() - 1);
     dibujarCalendario();
@@ -1599,13 +1588,11 @@ if (calDias != null) {
   };
   formCita.onsubmit = confirmarCita;
 
-  dibujarCalendario();
-  dibujarHoras();
-  mostrarCitas();
+  refrescarCitas();
 }
 
 // Solo en foro.html
-if (listaTemas != null) {
+if (listaTemas !== null) {
   rellenarCategoriasForo();
   prefijarNombreForo();
 
