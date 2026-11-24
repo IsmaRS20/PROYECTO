@@ -1889,7 +1889,6 @@ body.home .site-header {
     }
 }
 
-/* Para quien tiene activado "reducir movimiento": sin carrusel ni elevaciones */
 @media (prefers-reduced-motion: reduce) {
     :root {
         --lift-btn: none;

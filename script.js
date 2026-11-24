@@ -144,8 +144,7 @@ document.body.insertAdjacentHTML('beforeend', `
 
       <div id="pago-paso-formulario">
         <h2 id="pago-titulo">Pago seguro</h2>
-        <p class="pago-aviso"><strong>Pasarela ficticia:</strong> no se hace ningún cobro. Prueba con la tarjeta
-          4242 4242 4242 4242 (pago correcto) o 4000 0000 0000 0002 (rechazada), una fecha futura y 3 cifras de CVV.</p>
+        <p class="pago-aviso">Prueba con la tarjeta 4242 4242 4242 4242 (pago correcto) o 4000 0000 0000 0002 (rechazada), 4000 0000 0000 9995 (saldo insuficiente) una fecha futura y 3 cifras de CVV.</p>
 
         <ul class="pago-resumen" id="pago-resumen"></ul>
         <p class="pago-total" id="pago-total"></p>
@@ -636,8 +635,6 @@ function descargarRecibo(compra, numero) {
 
 // =====================================================
 // 8. PASARELA DE PAGO FICTICIA
-// No se hace ningún cobro: solo se simula el proceso.
-// Los datos de la tarjeta no se guardan en ningún sitio (en el recibo solo quedan las 4 últimas cifras).
 //
 // Tarjetas de prueba (cualquier fecha futura y 3 cifras de CVV):
 //   4242 4242 4242 4242 -> pago correcto
