@@ -747,13 +747,13 @@ function tarjetaValida(numero) {
 function caducidadValida(texto) {
   const partes = texto.split('/');
   const mes = Number(partes[0]);
-  const anio = 2000 + Number(partes[1]);
+  const anyo = 2000 + Number(partes[1]);
   const hoy = new Date();
 
   if (mes < 1 || mes > 12) {
     return false;
   }
-  return anio > hoy.getFullYear() || (anio === hoy.getFullYear() && mes >= hoy.getMonth() + 1);
+  return anyo > hoy.getFullYear() || (anyo === hoy.getFullYear() && mes >= hoy.getMonth() + 1);
 }
 
 // --------- Pago ---------
@@ -870,10 +870,10 @@ function descargarUltimoRecibo() {
 
 // Rellena el formulario con la tarjeta de prueba que siempre funciona
 function rellenarTarjetaPrueba() {
-  const anio = String((new Date().getFullYear() + 2) % 100).padStart(2, '0');
+  const anyo = String((new Date().getFullYear() + 2) % 100).padStart(2, '0');
   campoNombrePago.value = 'Cliente de prueba';
   campoNumero.value = '4242 4242 4242 4242';
-  campoCaducidad.value = '12/' + anio;
+  campoCaducidad.value = '12/' + anyo;
   campoCvv.value = '123';
 }
 
@@ -1028,9 +1028,9 @@ function horaNoDisponible(clave, hora) {
 // --------- Calendario ---------
 
 function dibujarCalendario() {
-  const anio = mesVisible.getFullYear();
+  const anyo = mesVisible.getFullYear();
   const mes = mesVisible.getMonth();
-  calTitulo.textContent = MESES[mes] + ' ' + anio;
+  calTitulo.textContent = MESES[mes] + ' ' + anyo;
 
   const hoy = new Date();
   hoy.setHours(0, 0, 0, 0);
@@ -1038,14 +1038,14 @@ function dibujarCalendario() {
   // Se puede reservar hasta el final del segundo mes siguiente
   const limite = new Date(hoy.getFullYear(), hoy.getMonth() + 3, 0);
 
-  const diasMes = new Date(anio, mes + 1, 0).getDate();
+  const diasMes = new Date(anyo, mes + 1, 0).getDate();
   // La semana empieza en lunes: getDay() da 0 para domingo, así que lo movemos al final
-  const huecos = (new Date(anio, mes, 1).getDay() + 6) % 7;
+  const huecos = (new Date(anyo, mes, 1).getDay() + 6) % 7;
 
   let html = '<span class="cal-vacio"></span>'.repeat(huecos);
 
   for (let d = 1; d <= diasMes; d++) {
-    const fecha = new Date(anio, mes, d);
+    const fecha = new Date(anyo, mes, d);
     const clave = claveFecha(fecha);
     const bloqueado = fecha < hoy || fecha > limite || fecha.getDay() === 0;
 
@@ -1069,7 +1069,7 @@ function dibujarCalendario() {
   calDias.innerHTML = html;
 
   // Meses de diferencia entre el mes que se ve y el mes actual
-  const diferencia = (anio - hoy.getFullYear()) * 12 + mes - hoy.getMonth();
+  const diferencia = (anyo - hoy.getFullYear()) * 12 + mes - hoy.getMonth();
   calPrev.disabled = diferencia <= 0;
   calNext.disabled = diferencia >= 2;
 }
