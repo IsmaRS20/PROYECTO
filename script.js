@@ -9,11 +9,12 @@
 //   5. Modo día y noche
 //   6. Carrito
 //   7. Historial de compras
-//   8. Página de inicio
-//   9. Catálogo
-//  10. Calendario de citas
-//  11. Foro
-//  12. Arranque (al final, cuando todo está definido)
+//   8. Pasarela de pago (ficticia)
+//   9. Página de inicio
+//  10. Catálogo
+//  11. Calendario de citas
+//  12. Foro
+//  13. Arranque (al final, cuando todo está definido)
 // =====================================================
 
 
@@ -129,11 +130,65 @@ document.body.insertAdjacentHTML('beforeend', `
     <div class="cart-items" id="cart-items"></div>
     <p class="cart-total" id="cart-total"></p>
     <p class="cart-msg" id="cart-msg"></p>
-    <button type="button" class="btn-green" onclick="checkOut()">Finalizar compra</button>
+    <button type="button" class="btn-green" onclick="abrirPago()">Finalizar compra</button>
     <button type="button" class="btn-red" onclick="vaciarCarrito()">Vaciar carrito</button>
     <button type="button" class="history-toggle" id="history-toggle" onclick="historialCompra()">▶ Historial de compras</button>
     <ul class="history-list" id="history-list" hidden></ul>
   </aside>`);
+
+// Se mete la ventana de la pasarela de pago (también en todas las páginas)
+document.body.insertAdjacentHTML('beforeend', `
+  <div class="pago-overlay" id="pago-overlay" hidden>
+    <div class="pago-modal" role="dialog" aria-modal="true" aria-labelledby="pago-titulo">
+      <button type="button" class="pago-cerrar" aria-label="Cerrar" onclick="cerrarPago()">&times;</button>
+
+      <div id="pago-paso-formulario">
+        <h2 id="pago-titulo">Pago seguro</h2>
+        <p class="pago-aviso"><strong>Pasarela ficticia:</strong> no se hace ningún cobro. Prueba con la tarjeta
+          4242 4242 4242 4242 (pago correcto) o 4000 0000 0000 0002 (rechazada), una fecha futura y 3 cifras de CVV.</p>
+
+        <ul class="pago-resumen" id="pago-resumen"></ul>
+        <p class="pago-total" id="pago-total"></p>
+
+        <form class="cita-form pago-form" id="form-pago">
+          <label>Titular de la tarjeta
+            <input type="text" id="pago-nombre" required autocomplete="cc-name">
+          </label>
+
+          <label>Número de tarjeta
+            <input type="text" id="pago-numero" required inputmode="numeric" autocomplete="cc-number"
+              maxlength="19" pattern="[0-9 ]{19}" placeholder="1234 5678 9012 3456" title="16 cifras">
+          </label>
+
+          <div class="pago-fila">
+            <label>Caducidad
+              <input type="text" id="pago-caducidad" required inputmode="numeric" autocomplete="cc-exp"
+                maxlength="5" pattern="(0[1-9]|1[0-2])/[0-9]{2}" placeholder="MM/AA" title="Formato MM/AA">
+            </label>
+            <label>CVV
+              <input type="password" id="pago-cvv" required inputmode="numeric" autocomplete="cc-csc"
+                maxlength="3" pattern="[0-9]{3}" placeholder="123" title="3 cifras">
+            </label>
+          </div>
+
+          <p class="pago-msg" id="pago-msg" role="alert"></p>
+
+          <button type="submit" class="link-btn" id="pago-boton">Pagar</button>
+          <button type="button" class="back-btn" onclick="rellenarTarjetaPrueba()">Rellenar con tarjeta de prueba</button>
+        </form>
+      </div>
+
+      <div id="pago-paso-proceso" hidden>
+        <div class="pago-proceso">
+          <div class="pago-spinner"></div>
+          <h2>Procesando el pago…</h2>
+          <p>No cierres esta ventana.</p>
+        </div>
+      </div>
+
+      <div id="pago-paso-resultado" hidden></div>
+    </div>
+  </div>`);
 
 // En todas las páginas
 const progressFill = document.getElementById('progressFill');
@@ -146,6 +201,21 @@ const totalCarrito = document.getElementById('cart-total');
 const mensaje = document.getElementById('cart-msg');
 const desplegable = document.getElementById('history-toggle');
 const listaPrevias = document.getElementById('history-list');
+
+// Pasarela de pago (en todas las páginas)
+const pagoOverlay = document.getElementById('pago-overlay');
+const pasoFormulario = document.getElementById('pago-paso-formulario');
+const pasoProceso = document.getElementById('pago-paso-proceso');
+const pasoResultado = document.getElementById('pago-paso-resultado');
+const pagoResumen = document.getElementById('pago-resumen');
+const pagoTotal = document.getElementById('pago-total');
+const formPago = document.getElementById('form-pago');
+const campoNombrePago = document.getElementById('pago-nombre');
+const campoNumero = document.getElementById('pago-numero');
+const campoCaducidad = document.getElementById('pago-caducidad');
+const campoCvv = document.getElementById('pago-cvv');
+const mensajePago = document.getElementById('pago-msg');
+const botonPagar = document.getElementById('pago-boton');
 
 // Solo en index.html
 const gridNuevos = document.querySelector('.grid-new-items');
@@ -435,6 +505,12 @@ function quitarDelCarrito(idProducto) {
   actualizarCarrito('Producto quitado.');
 }
 
+// Quita el artículo entero (todas sus unidades de golpe)
+function eliminarLinea(idProducto) {
+  carrito.splice(carrito.indexOf(buscarEnCarrito(idProducto)), 1);
+  actualizarCarrito('Producto eliminado del carrito.');
+}
+
 function vaciarCarrito() {
   if (carrito.length == 0) {
     mensaje.textContent = 'El carrito ya está vacío.';
@@ -457,11 +533,15 @@ function dibujarCarrito() {
         <div class="thumb" ${estiloImagen(p)}></div>
         <div>
           <strong>${p.nombre}</strong>
-          <small>x${linea.cantidad}</small>
-          <button type="button" class="plus" aria-label="Añadir otro ${p.nombre}" onclick="aumentarCarrito(${p.id})">+</button>
+          <small>${formatearPrecio(precioFinal(p))} € / ud.</small>
+          <div class="cart-qty">
+            <button type="button" class="minus" aria-label="Quitar una unidad de ${p.nombre}" onclick="quitarDelCarrito(${p.id})">−</button>
+            <span>${linea.cantidad}</span>
+            <button type="button" class="plus" aria-label="Añadir otra unidad de ${p.nombre}" onclick="aumentarCarrito(${p.id})">+</button>
+          </div>
         </div>
         <b>${formatearPrecio(precioFinal(p) * linea.cantidad)} €</b>
-        <button type="button" class="rm" aria-label="Quitar ${p.nombre}" onclick="quitarDelCarrito(${p.id})">&times;</button>
+        <button type="button" class="rm" aria-label="Eliminar ${p.nombre} del carrito" title="Eliminar del carrito" onclick="eliminarLinea(${p.id})"><i class="fa-solid fa-trash"></i></button>
       </div>`;
   });
 
@@ -487,36 +567,11 @@ function guardarHistorial() {
   localStorage.setItem('historial', JSON.stringify(historial));
 }
 
-function checkOut() {
-  if (carrito.length == 0) {
-    mensaje.textContent = 'Añade productos para realizar la compra.';
-    return;
-  }
-
-  // Se guarda nombre y precio (no solo el id) para que el recibo sea siempre igual
-  const lineas = [];
-  carrito.forEach(function (linea) {
-    const p = buscarProducto(linea.id);
-    lineas.push({ nombre: p.nombre, precio: precioFinal(p), cantidad: linea.cantidad });
-  });
-
-  historial.push({
-    fecha: new Date().toLocaleString(),
-    productos: lineas,
-    total: calcularTotal()
-  });
-  guardarHistorial();
-
-  carrito = [];
-  actualizarCarrito('Compra realizada con éxito.');
-  mostrarHistorial();
-}
-
 function mostrarHistorial() {
   listaPrevias.innerHTML = '';
 
   historial.forEach(function (compra, indice) {
-    const textoCabecera = compra.fecha + ' - total ' + formatearPrecio(compra.total) + ' €';
+    const textoCabecera = (compra.pedido ? compra.pedido + ' · ' : '') + compra.fecha + ' - total ' + formatearPrecio(compra.total) + ' €';
 
     // Productos de la compra (ocultos hasta pulsar la cabecera)
     const detalle = document.createElement('ul');
@@ -562,6 +617,9 @@ function historialCompra() {
 
 function descargarRecibo(compra, numero) {
   let texto = 'RECIBO - Picanya Music\n';
+  if (compra.pedido) {
+    texto += 'Pedido: ' + compra.pedido + '\n';
+  }
   texto += 'Fecha: ' + compra.fecha + '\n\n';
 
   compra.productos.forEach(function (producto) {
@@ -569,12 +627,249 @@ function descargarRecibo(compra, numero) {
   });
 
   texto += '\nTOTAL: ' + formatearPrecio(compra.total) + ' €\n';
+  if (compra.tarjeta) {
+    texto += 'Pagado con tarjeta terminada en ' + compra.tarjeta;
+  }
   descargarArchivo(texto, 'text/plain', 'recibo-' + numero + '.txt');
 }
 
 
 // =====================================================
-// 8. PÁGINA DE INICIO (solo index.html)
+// 8. PASARELA DE PAGO FICTICIA
+// No se hace ningún cobro: solo se simula el proceso.
+// Los datos de la tarjeta no se guardan en ningún sitio (en el recibo solo quedan las 4 últimas cifras).
+//
+// Tarjetas de prueba (cualquier fecha futura y 3 cifras de CVV):
+//   4242 4242 4242 4242 -> pago correcto
+//   4000 0000 0000 0002 -> tarjeta rechazada
+//   4000 0000 0000 9995 -> fondos insuficientes
+// =====================================================
+
+const TARJETAS_RECHAZADAS = {
+  '4000000000000002': 'Tu banco ha rechazado la tarjeta.',
+  '4000000000009995': 'La tarjeta no tiene fondos suficientes.'
+};
+
+let procesandoPago = false;  // true mientras se "procesa" (no se puede cerrar ni pagar dos veces)
+let ultimaCompra = null;     // última compra pagada, para poder descargar su recibo
+
+// La ventana tiene 3 pasos: 'formulario', 'proceso' y 'resultado'. Solo se ve uno.
+function mostrarPasoPago(paso) {
+  pasoFormulario.hidden = paso != 'formulario';
+  pasoProceso.hidden = paso != 'proceso';
+  pasoResultado.hidden = paso != 'resultado';
+}
+
+function abrirPago() {
+  if (carrito.length == 0) {
+    mensaje.textContent = 'Añade productos para realizar la compra.';
+    return;
+  }
+
+  // Resumen del pedido
+  pagoResumen.innerHTML = '';
+  carrito.forEach(function (linea) {
+    const p = buscarProducto(linea.id);
+
+    const nombre = document.createElement('span');
+    nombre.textContent = p.nombre + ' x' + linea.cantidad;
+
+    const importe = document.createElement('span');
+    importe.textContent = formatearPrecio(precioFinal(p) * linea.cantidad) + ' €';
+
+    const fila = document.createElement('li');
+    fila.appendChild(nombre);
+    fila.appendChild(importe);
+    pagoResumen.appendChild(fila);
+  });
+
+  const total = formatearPrecio(calcularTotal()) + ' €';
+  pagoTotal.textContent = 'Total: ' + total;
+  botonPagar.textContent = 'Pagar ' + total;
+
+  formPago.reset();
+  mensajePago.textContent = '';
+  mostrarPasoPago('formulario');
+
+  cerrarCarrito();
+  pagoOverlay.hidden = false;
+  campoNombrePago.focus();
+}
+
+function cerrarPago() {
+  // Mientras se procesa el pago no se puede cerrar
+  if (procesandoPago) {
+    return;
+  }
+  pagoOverlay.hidden = true;
+}
+
+// --------- Formato de los campos mientras se escribe ---------
+
+// 4242424242424242 -> '4242 4242 4242 4242'
+function formatearNumeroTarjeta() {
+  const digitos = campoNumero.value.replace(/\D/g, '').slice(0, 16);
+  campoNumero.value = digitos.replace(/(.{4})/g, '$1 ').trim();
+}
+
+// 1228 -> '12/28'
+function formatearCaducidad() {
+  const digitos = campoCaducidad.value.replace(/\D/g, '').slice(0, 4);
+  campoCaducidad.value = digitos.length > 2 ? digitos.slice(0, 2) + '/' + digitos.slice(2) : digitos;
+}
+
+// --------- Validación ---------
+
+// Algoritmo de Luhn: el que usan las tarjetas reales para detectar números mal escritos
+function tarjetaValida(numero) {
+  let suma = 0;
+  let doble = false;
+
+  for (let i = numero.length - 1; i >= 0; i--) {
+    let digito = Number(numero[i]);
+    if (doble) {
+      digito = digito * 2;
+      if (digito > 9) {
+        digito = digito - 9;
+      }
+    }
+    suma += digito;
+    doble = !doble;
+  }
+  return numero.length == 16 && suma % 10 == 0;
+}
+
+// La tarjeta vale hasta el último día de su mes de caducidad
+function caducidadValida(texto) {
+  const partes = texto.split('/');
+  const mes = Number(partes[0]);
+  const anio = 2000 + Number(partes[1]);
+  const hoy = new Date();
+
+  if (mes < 1 || mes > 12) {
+    return false;
+  }
+  return anio > hoy.getFullYear() || (anio == hoy.getFullYear() && mes >= hoy.getMonth() + 1);
+}
+
+// --------- Pago ---------
+
+function pagar(evento) {
+  // Evita que la página se recargue al enviar el formulario
+  evento.preventDefault();
+
+  if (procesandoPago) {
+    return;
+  }
+
+  const numero = campoNumero.value.replace(/\s/g, '');
+
+  if (!tarjetaValida(numero)) {
+    mensajePago.textContent = 'El número de tarjeta no es válido.';
+    return;
+  }
+  if (!caducidadValida(campoCaducidad.value)) {
+    mensajePago.textContent = 'La fecha de caducidad no es válida o la tarjeta está caducada.';
+    return;
+  }
+
+  mensajePago.textContent = '';
+  procesandoPago = true;
+  mostrarPasoPago('proceso');
+
+  // Se simula la espera del banco (2 segundos)
+  setTimeout(function () {
+    procesandoPago = false;
+
+    if (TARJETAS_RECHAZADAS[numero]) {
+      mostrarResultadoError(TARJETAS_RECHAZADAS[numero]);
+    } else {
+      completarCompra(numero.slice(-4));
+    }
+  }, 2000);
+}
+
+// Guarda la compra en el historial y vacía el carrito
+function completarCompra(ultimosDigitos) {
+  // Se guarda nombre y precio (no solo el id) para que el recibo sea siempre igual
+  const lineas = [];
+  carrito.forEach(function (linea) {
+    const p = buscarProducto(linea.id);
+    lineas.push({ nombre: p.nombre, precio: precioFinal(p), cantidad: linea.cantidad });
+  });
+
+  const compra = {
+    pedido: 'PM-' + new Date().getFullYear() + '-' + String(historial.length + 1).padStart(4, '0'),
+    fecha: new Date().toLocaleString(),
+    productos: lineas,
+    total: calcularTotal(),
+    tarjeta: ultimosDigitos
+  };
+
+  historial.push(compra);
+  guardarHistorial();
+  ultimaCompra = compra;
+
+  carrito = [];
+  actualizarCarrito('Compra realizada con éxito.');
+  mostrarHistorial();
+  mostrarResultadoOk(compra);
+}
+
+function mostrarResultadoOk(compra) {
+  pasoResultado.innerHTML =
+    '<div class="pago-resultado">' +
+    '<i class="fa-solid fa-circle-check pago-icono ok"></i>' +
+    '<h2>¡Pago realizado!</h2>' +
+    '<p>Pedido <strong>' + compra.pedido + '</strong></p>' +
+    '<p>Has pagado <strong>' + formatearPrecio(compra.total) + ' €</strong> con la tarjeta terminada en ' + compra.tarjeta + '.</p>' +
+    '<div class="pago-botones">' +
+    '<button type="button" class="link-btn" onclick="descargarUltimoRecibo()">Descargar recibo</button>' +
+    '<button type="button" class="back-btn" onclick="cerrarPago()">Seguir comprando</button>' +
+    '</div>' +
+    '</div>';
+  mostrarPasoPago('resultado');
+}
+
+function mostrarResultadoError(texto) {
+  pasoResultado.innerHTML =
+    '<div class="pago-resultado">' +
+    '<i class="fa-solid fa-circle-xmark pago-icono error"></i>' +
+    '<h2>Pago rechazado</h2>' +
+    '<p>' + texto + '</p>' +
+    '<div class="pago-botones">' +
+    '<button type="button" class="link-btn" onclick="volverAlPago()">Probar con otra tarjeta</button>' +
+    '<button type="button" class="back-btn" onclick="cerrarPago()">Cancelar</button>' +
+    '</div>' +
+    '</div>';
+  mostrarPasoPago('resultado');
+}
+
+// Vuelve al formulario sin perder el nombre (el número y el CVV se borran)
+function volverAlPago() {
+  campoNumero.value = '';
+  campoCvv.value = '';
+  mensajePago.textContent = '';
+  mostrarPasoPago('formulario');
+  campoNumero.focus();
+}
+
+function descargarUltimoRecibo() {
+  descargarRecibo(ultimaCompra, historial.indexOf(ultimaCompra) + 1);
+}
+
+// Rellena el formulario con la tarjeta de prueba que siempre funciona
+function rellenarTarjetaPrueba() {
+  const anio = String((new Date().getFullYear() + 2) % 100).padStart(2, '0');
+  campoNombrePago.value = 'Cliente de prueba';
+  campoNumero.value = '4242 4242 4242 4242';
+  campoCaducidad.value = '12/' + anio;
+  campoCvv.value = '123';
+}
+
+
+// =====================================================
+// 9. PÁGINA DE INICIO (solo index.html)
 // =====================================================
 
 function mostrarNuevos() {
@@ -586,7 +881,7 @@ function mostrarNuevos() {
 
 
 // =====================================================
-// 9. CATÁLOGO (solo catalogo.html)
+// 10. CATÁLOGO (solo catalogo.html)
 // =====================================================
 
 function mostrarCategorias() {
@@ -661,7 +956,7 @@ function buscar(evento) {
 
 
 // =====================================================
-// 10. CALENDARIO DE CITAS (solo contacto.html)
+// 11. CALENDARIO DE CITAS (solo contacto.html)
 // Las citas se guardan en el navegador (localStorage), igual que el carrito
 // =====================================================
 
@@ -975,7 +1270,7 @@ function descargarCita(cita) {
 
 
 // =====================================================
-// 11. FORO (solo foro.html)
+// 12. FORO (solo foro.html)
 // Los temas se guardan en el navegador (localStorage), igual que el carrito.
 // Cada tema: { id, titulo, categoria, autor, fecha, mensaje, respuestas: [{ autor, fecha, mensaje }], propio }
 // =====================================================
@@ -1015,18 +1310,6 @@ const temasIniciales = [
     mensaje: 'Toco una hora al día y no sé cada cuánto debería cambiarlas. ¿Qué hacéis vosotros?',
     respuestas: [],
     propio: false
-  },
-  {
-    id: 4,
-    titulo: '¿Como elimino esta pregunta?',
-    categoria: 'general',
-    autor: 'Picanya Music',
-    fecha: '24/11/26, 09:20',
-    mensaje: 'Estaba mirando la web y he creado sin querer esta entrada, ¿Cómo la elimino?',
-    respuestas: [
-      {autor: 'Picanya Music', fecha: '24/11/26, 9:40', mensaje: 'Con el botón grande que pone Eliminar Tema. Pero para ello tienes que ser el creador del comentario'}
-    ],
-    propio: true
   }
 ];
 
@@ -1251,7 +1534,7 @@ function eliminarTema() {
 
 
 // =====================================================
-// 12. ARRANQUE
+// 13. ARRANQUE
 // =====================================================
 
 // En todas las páginas
@@ -1262,6 +1545,25 @@ botonCarrito.onclick = function (evento) {
 };
 dibujarCarrito();
 mostrarHistorial();
+
+// Pasarela de pago
+formPago.onsubmit = pagar;
+campoNumero.addEventListener('input', formatearNumeroTarjeta);
+campoCaducidad.addEventListener('input', formatearCaducidad);
+campoCvv.addEventListener('input', function () {
+  campoCvv.value = campoCvv.value.replace(/\D/g, '');
+});
+// Se cierra al pulsar fuera de la ventana o con Escape
+pagoOverlay.onclick = function (evento) {
+  if (evento.target == pagoOverlay) {
+    cerrarPago();
+  }
+};
+document.addEventListener('keydown', function (evento) {
+  if (evento.key == 'Escape' && !pagoOverlay.hidden) {
+    cerrarPago();
+  }
+});
 
 if (progressFill != null) {
   window.addEventListener('scroll', updateProgress);
