@@ -12,7 +12,8 @@
 //   8. Página de inicio
 //   9. Catálogo
 //  10. Calendario de citas
-//  11. Arranque (al final, cuando todo está definido)
+//  11. Foro
+//  12. Arranque (al final, cuando todo está definido)
 // =====================================================
 
 
@@ -168,6 +169,27 @@ const formCita = document.getElementById('form-cita');
 const resumenCita = document.getElementById('cita-resumen');
 const mensajeCita = document.getElementById('cita-msg');
 const listaCitas = document.getElementById('lista-citas');
+
+// Solo en foro.html
+const mensajeForo = document.getElementById('foro-msg');
+const vistaLista = document.getElementById('foro-vista-lista');
+const vistaTema = document.getElementById('foro-vista-tema');
+const listaTemas = document.getElementById('foro-lista');
+const btnNuevoTema = document.getElementById('foro-nuevo-btn');
+const formTema = document.getElementById('form-tema');
+const campoTituloTema = document.getElementById('tema-titulo');
+const campoCategoriaTema = document.getElementById('tema-categoria');
+const campoAutorTema = document.getElementById('tema-autor');
+const campoTextoTema = document.getElementById('tema-texto');
+const btnCancelarTema = document.getElementById('tema-cancelar');
+const btnVolverForo = document.getElementById('foro-volver');
+const tituloTema = document.getElementById('foro-tema-titulo');
+const etiquetaTema = document.getElementById('foro-tema-tag');
+const listaMensajes = document.getElementById('foro-mensajes');
+const btnBorrarTema = document.getElementById('foro-borrar');
+const formRespuesta = document.getElementById('form-respuesta');
+const campoAutorRespuesta = document.getElementById('respuesta-autor');
+const campoTextoRespuesta = document.getElementById('respuesta-texto');
 
 
 // =====================================================
@@ -688,12 +710,11 @@ function tieneCita(clave) {
   });
 }
 
-// Una hora está ocupada si ya la has reservado tú o si la damos por ocupada
+// Una hora está ocupada si ya has reservado una cita a esa hora
 function horaOcupada(clave, hora) {
-  const reservada = citas.some(function (c) {
+  return citas.some(function (c) {
     return c.fecha === clave && c.hora === hora;
   });
-  return reservada;
 }
 
 // Si el día elegido es hoy, las horas que ya han empezado no se pueden reservar
@@ -954,7 +975,283 @@ function descargarCita(cita) {
 
 
 // =====================================================
-// 11. ARRANQUE
+// 11. FORO (solo foro.html)
+// Los temas se guardan en el navegador (localStorage), igual que el carrito.
+// Cada tema: { id, titulo, categoria, autor, fecha, mensaje, respuestas: [{ autor, fecha, mensaje }], propio }
+// =====================================================
+
+// Temas de ejemplo para que el foro no empiece vacío (para empezar de cero, deja este array vacío)
+const temasIniciales = [
+  {
+    id: 1,
+    titulo: '¡Bienvenidos al foro de Picanya Music!',
+    categoria: 'general',
+    autor: 'Picanya Music',
+    fecha: '15/11/26, 10:00',
+    mensaje: 'Este es el espacio de nuestra comunidad: comparte dudas, consejos y tu experiencia con tus instrumentos. Respeta siempre al resto de músicos.',
+    respuestas: [
+      { autor: 'Marta', fecha: '16/11/26, 18:30', mensaje: '¡Genial idea! Ya tenía ganas de un sitio donde preguntar sin tener que ir a la tienda.' }
+    ],
+    propio: false
+  },
+  {
+    id: 2,
+    titulo: '¿Qué guitarra eléctrica me recomendáis para empezar?',
+    categoria: 'guitarras',
+    autor: 'Dani',
+    fecha: '17/11/26, 12:15',
+    mensaje: 'Quiero empezar con la eléctrica y no sé si irme a una Squier o a una Ibanez. Mi presupuesto es de unos 250 €.',
+    respuestas: [
+      { autor: 'Picanya Music', fecha: '17/11/26, 16:40', mensaje: 'Con ese presupuesto las Ibanez GRG de la tienda son una muy buena opción. Pásate y las pruebas en directo.' }
+    ],
+    propio: false
+  },
+  {
+    id: 3,
+    titulo: '¿Cada cuánto cambiáis las cuerdas?',
+    categoria: 'equipamiento',
+    autor: 'Laura',
+    fecha: '18/11/26, 09:20',
+    mensaje: 'Toco una hora al día y no sé cada cuánto debería cambiarlas. ¿Qué hacéis vosotros?',
+    respuestas: [],
+    propio: false
+  },
+  {
+    id: 4,
+    titulo: '¿Como elimino esta pregunta?',
+    categoria: 'general',
+    autor: 'Picanya Music',
+    fecha: '24/11/26, 09:20',
+    mensaje: 'Estaba mirando la web y he creado sin querer esta entrada, ¿Cómo la elimino?',
+    respuestas: [
+      {autor: 'Picanya Music', fecha: '24/11/26, 9:40', mensaje: 'Con el botón grande que pone Eliminar Tema. Pero para ello tienes que ser el creador del comentario'}
+    ],
+    propio: true
+  }
+];
+
+let temas = JSON.parse(localStorage.getItem('foro')) || temasIniciales;
+let temaAbierto = null;  // id del tema que se está viendo (null = se ve la lista)
+
+function guardarForo() {
+  localStorage.setItem('foro', JSON.stringify(temas));
+}
+
+function buscarTema(idTema) {
+  return temas.find(function (t) {
+    return t.id === idTema;
+  });
+}
+
+function nombreCategoria(idCategoria) {
+  const cat = categorias.find(function (c) {
+    return c.id === idCategoria;
+  });
+  return cat ? cat.nombre : 'General';
+}
+
+// Fecha y hora de ahora, por ejemplo '20/11/26, 18:05'
+function fechaForo() {
+  return new Date().toLocaleString('es-ES', { dateStyle: 'short', timeStyle: 'short' });
+}
+
+function mostrarMensajeForo(texto, esError) {
+  mensajeForo.textContent = texto;
+  mensajeForo.classList.toggle('error', esError);
+}
+
+// Rellena el desplegable de categorías del formulario de nuevo tema
+function rellenarCategoriasForo() {
+  const opciones = [{ id: 'general', nombre: 'General' }].concat(categorias);
+
+  opciones.forEach(function (cat) {
+    const opcion = document.createElement('option');
+    opcion.value = cat.id;
+    opcion.textContent = cat.nombre;
+    campoCategoriaTema.appendChild(opcion);
+  });
+}
+
+// Se recuerda el último nombre usado para no tener que escribirlo cada vez
+function prefijarNombreForo() {
+  const nombre = localStorage.getItem('foroNombre') || '';
+  campoAutorTema.value = nombre;
+  campoAutorRespuesta.value = nombre;
+}
+
+// --------- Lista de temas ---------
+
+function mostrarTemas() {
+  listaTemas.innerHTML = '';
+
+  if (temas.length == 0) {
+    listaTemas.innerHTML = '<li class="empty-msg">Todavía no hay temas. ¡Crea el primero!</li>';
+    return;
+  }
+
+  temas.forEach(function (t) {
+    const titulo = document.createElement('button');
+    titulo.type = 'button';
+    titulo.className = 'foro-item-titulo';
+    titulo.textContent = t.titulo;
+
+    const datos = document.createElement('small');
+    datos.textContent = t.autor + ' · ' + t.fecha + ' · ' + t.respuestas.length + (t.respuestas.length == 1 ? ' respuesta' : ' respuestas');
+
+    const info = document.createElement('div');
+    info.appendChild(titulo);
+    info.appendChild(datos);
+
+    const etiqueta = document.createElement('span');
+    etiqueta.className = 'foro-tag';
+    etiqueta.textContent = nombreCategoria(t.categoria);
+
+    // Toda la tarjeta es clicable (el botón del título sirve para el teclado)
+    const fila = document.createElement('li');
+    fila.className = 'foro-item';
+    fila.onclick = function () {
+      abrirTema(t.id);
+    };
+    fila.appendChild(info);
+    fila.appendChild(etiqueta);
+    listaTemas.appendChild(fila);
+  });
+}
+
+// --------- Un tema con sus respuestas ---------
+
+// Crea un mensaje (el del tema o una respuesta). Se usa textContent para que nadie pueda meter HTML
+function crearMensajeForo(autor, fecha, texto, esOriginal) {
+  const nombre = document.createElement('strong');
+  nombre.textContent = autor;
+
+  const cuando = document.createElement('small');
+  cuando.textContent = fecha;
+
+  const cabecera = document.createElement('div');
+  cabecera.className = 'foro-mensaje-cabecera';
+  cabecera.appendChild(nombre);
+  cabecera.appendChild(cuando);
+
+  const cuerpo = document.createElement('p');
+  cuerpo.textContent = texto;
+
+  const caja = document.createElement('li');
+  caja.className = 'foro-mensaje';
+  if (esOriginal) {
+    caja.classList.add('foro-mensaje-original');
+  }
+  caja.appendChild(cabecera);
+  caja.appendChild(cuerpo);
+  return caja;
+}
+
+function dibujarTema(tema) {
+  tituloTema.textContent = tema.titulo;
+  etiquetaTema.textContent = nombreCategoria(tema.categoria);
+
+  listaMensajes.innerHTML = '';
+  listaMensajes.appendChild(crearMensajeForo(tema.autor, tema.fecha, tema.mensaje, true));
+  tema.respuestas.forEach(function (r) {
+    listaMensajes.appendChild(crearMensajeForo(r.autor, r.fecha, r.mensaje, false));
+  });
+
+  // Solo se pueden eliminar los temas creados por ti
+  btnBorrarTema.hidden = !tema.propio;
+}
+
+function abrirTema(idTema) {
+  temaAbierto = idTema;
+  dibujarTema(buscarTema(idTema));
+  mostrarMensajeForo('', false);
+  vistaLista.hidden = true;
+  vistaTema.hidden = false;
+  window.scrollTo(0, 0);
+}
+
+function volverAlForo() {
+  temaAbierto = null;
+  vistaTema.hidden = true;
+  vistaLista.hidden = false;
+  mostrarMensajeForo('', false);
+  mostrarTemas();
+}
+
+// --------- Publicar, responder y eliminar ---------
+
+function crearTema(evento) {
+  // Evita que la página se recargue al enviar el formulario
+  evento.preventDefault();
+
+  const titulo = campoTituloTema.value.trim();
+  const autor = campoAutorTema.value.trim();
+  const texto = campoTextoTema.value.trim();
+
+  // required deja pasar los campos con solo espacios, así que se comprueba aquí
+  if (titulo == '' || autor == '' || texto == '') {
+    mostrarMensajeForo('Rellena todos los campos.', true);
+    return;
+  }
+
+  temas.unshift({
+    id: Date.now(),
+    titulo: titulo,
+    categoria: campoCategoriaTema.value,
+    autor: autor,
+    fecha: fechaForo(),
+    mensaje: texto,
+    respuestas: [],
+    propio: true
+  });
+  guardarForo();
+  localStorage.setItem('foroNombre', autor);
+
+  formTema.reset();
+  prefijarNombreForo();
+  formTema.hidden = true;
+  mostrarTemas();
+  mostrarMensajeForo('Tema publicado.', false);
+}
+
+function responderTema(evento) {
+  evento.preventDefault();
+
+  const autor = campoAutorRespuesta.value.trim();
+  const texto = campoTextoRespuesta.value.trim();
+
+  if (autor == '' || texto == '') {
+    mostrarMensajeForo('Escribe tu nombre y un mensaje.', true);
+    return;
+  }
+
+  const tema = buscarTema(temaAbierto);
+  tema.respuestas.push({ autor: autor, fecha: fechaForo(), mensaje: texto });
+  guardarForo();
+  localStorage.setItem('foroNombre', autor);
+
+  formRespuesta.reset();
+  prefijarNombreForo();
+  dibujarTema(tema);
+  mostrarMensajeForo('Respuesta publicada.', false);
+}
+
+function eliminarTema() {
+  if (!confirm('¿Seguro que quieres eliminar este tema?')) {
+    return;
+  }
+
+  temas = temas.filter(function (t) {
+    return t.id !== temaAbierto;
+  });
+  guardarForo();
+
+  volverAlForo();
+  mostrarMensajeForo('Tema eliminado.', false);
+}
+
+
+// =====================================================
+// 12. ARRANQUE
 // =====================================================
 
 // En todas las páginas
@@ -1006,4 +1303,28 @@ if (calDias != null) {
   dibujarCalendario();
   dibujarHoras();
   mostrarCitas();
+}
+
+// Solo en foro.html
+if (listaTemas != null) {
+  rellenarCategoriasForo();
+  prefijarNombreForo();
+
+  btnNuevoTema.onclick = function () {
+    formTema.hidden = !formTema.hidden;
+    if (!formTema.hidden) {
+      campoTituloTema.focus();
+    }
+  };
+  btnCancelarTema.onclick = function () {
+    formTema.reset();
+    prefijarNombreForo();
+    formTema.hidden = true;
+  };
+  btnVolverForo.onclick = volverAlForo;
+  btnBorrarTema.onclick = eliminarTema;
+  formTema.onsubmit = crearTema;
+  formRespuesta.onsubmit = responderTema;
+
+  mostrarTemas();
 }

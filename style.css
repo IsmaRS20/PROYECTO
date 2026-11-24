@@ -12,9 +12,10 @@
     8. Catálogo
     9. Servicios
    10. Contacto y calendario de citas
-   11. Carrito lateral e historial
-   12. Pie de página
-   13. Responsive y movimiento reducido
+   11. Foro
+   12. Carrito lateral e historial
+   13. Pie de página
+   14. Responsive y movimiento reducido
    ===================================================== */
 
 
@@ -122,7 +123,8 @@ body {
 
 button,
 input,
-select {
+select,
+textarea {
     font-family: inherit;
 }
 
@@ -135,7 +137,8 @@ select {
 a:focus-visible,
 button:focus-visible,
 input:focus-visible,
-select:focus-visible {
+select:focus-visible,
+textarea:focus-visible {
     outline: 3px solid var(--color-accent);
     outline-offset: 2px;
 }
@@ -310,7 +313,9 @@ button.link-btn {
 .feature-card,
 .contact-info li,
 .process-step,
-.cita-item {
+.cita-item,
+.foro-item,
+.foro-mensaje {
     background: var(--color-surface);
     border-left: 4px solid var(--color-secondary);
     border-radius: 0 8px 8px 0;
@@ -322,13 +327,16 @@ button.link-btn {
 .cat-card span,
 .cart-item small,
 .cita-item small,
+.foro-item small,
+.foro-mensaje small,
 .page .empty-msg {
     color: var(--color-text-muted);
     font-size: 1rem;
 }
 
 .cart-item small,
-.cita-item small {
+.cita-item small,
+.foro-item small {
     display: block;
 }
 
@@ -672,6 +680,11 @@ body.home .site-header {
     color: #fff;
 }
 
+/* En el inicio no se muestra la etiqueta "Nuevo" (ya están todos en "Lo nuevo") */
+.grid-new-items .badge-new {
+    display: none;
+}
+
 
 /* ===== 7. NUESTRA HISTORIA ===== */
 .about-section {
@@ -769,6 +782,18 @@ body.home .site-header {
     color: var(--color-accent);
 }
 
+/* El enlace al foro conserva el color amarillo y se subraya */
+.about-footer-text a {
+    color: inherit;
+    text-decoration: underline;
+    text-underline-offset: 4px;
+    transition: color .2s;
+}
+
+.about-footer-text a:hover {
+    color: #fff;
+}
+
 
 /* ===== 8. CATÁLOGO ===== */
 .catalog-search {
@@ -780,7 +805,8 @@ body.home .site-header {
 /* Campos de texto: fondo gris con la línea de abajo que se vuelve amarilla */
 .catalog-search input,
 .cita-form input,
-.cita-form select {
+.cita-form select,
+.cita-form textarea {
     padding: .7rem 1.1rem;
     background: var(--color-surface-alt);
     border: none;
@@ -796,7 +822,8 @@ body.home .site-header {
 
 .catalog-search input:focus,
 .cita-form input:focus,
-.cita-form select:focus {
+.cita-form select:focus,
+.cita-form textarea:focus {
     border-bottom-color: var(--color-accent);
     outline: none;
 }
@@ -1207,20 +1234,22 @@ body.home .site-header {
 }
 
 .cita-form input,
-.cita-form select {
+.cita-form select,
+.cita-form textarea {
     font-weight: 400;
 }
 
-#cita-nombre:user-invalid {
-  border-color: #e63946;
-  background-color: rgba(230, 57, 70, 0.08);
-  outline-color: #e63946;
+.cita-form textarea {
+    min-height: 6rem;
+    resize: vertical;
 }
 
-#cita-telefono:user-invalid {
-  border-color: #e63946;
-  background-color: rgba(230, 57, 70, 0.08);
-  outline-color: #e63946;
+/* Campo mal rellenado: borde y fondo rojizos (cuando el usuario ya ha interactuado con él) */
+.cita-form input:user-invalid,
+.cita-form textarea:user-invalid {
+    border-color: #e63946;
+    background-color: rgba(230, 57, 70, 0.08);
+    outline-color: #e63946;
 }
 
 .page .cal-msg {
@@ -1288,7 +1317,119 @@ body.home .site-header {
 }
 
 
-/* ===== 11. CARRITO LATERAL E HISTORIAL ===== */
+/* ===== 11. FORO ===== */
+.foro-barra {
+    margin: 1.5rem 0;
+}
+
+.foro-form {
+    margin-bottom: 1.5rem;
+}
+
+.foro-form-botones {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .8rem;
+}
+
+.foro-lista,
+.foro-mensajes {
+    display: flex;
+    flex-direction: column;
+    gap: .8rem;
+    list-style: none;
+}
+
+/* Cada tema de la lista (toda la tarjeta es clicable) */
+.foro-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+    cursor: pointer;
+    transition: var(--trans-card);
+}
+
+.foro-item:hover {
+    border-left-color: var(--color-accent);
+    transform: var(--lift-card);
+    box-shadow: var(--relieve-card-hover);
+}
+
+.foro-item-titulo {
+    background: none;
+    border: 0;
+    color: var(--color-heading);
+    font-size: 1.1rem;
+    font-weight: 700;
+    text-align: left;
+    cursor: pointer;
+}
+
+/* Etiqueta de categoría */
+.foro-tag {
+    flex-shrink: 0;
+    padding: .2rem .8rem;
+    background: var(--color-accent);
+    border-radius: 50px;
+    color: #111;
+    font-size: .9rem;
+    font-weight: 700;
+}
+
+/* Vista de un tema */
+.foro-tema-datos {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 1rem;
+    margin: 1.5rem 0 1rem;
+}
+
+.page .foro-titulo {
+    margin: 0;
+    font-size: 1.8rem;
+}
+
+.foro-mensaje {
+    padding: 1.2rem;
+}
+
+.foro-mensaje-original {
+    border-left-color: var(--color-accent);
+}
+
+.foro-mensaje-cabecera {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 1rem;
+    margin-bottom: .5rem;
+}
+
+.foro-mensaje-cabecera strong {
+    color: var(--color-heading);
+}
+
+/* pre-wrap respeta los saltos de línea que escribió el usuario */
+.page .foro-mensaje p {
+    margin: 0;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+}
+
+.foro-borrar {
+    margin: 1rem 0 0;
+}
+
+#form-respuesta {
+    margin-top: 1.5rem;
+}
+
+
+/* ===== 12. CARRITO LATERAL E HISTORIAL ===== */
 .overlay {
     position: fixed;
     inset: 0;
@@ -1479,7 +1620,7 @@ body.home .site-header {
 }
 
 
-/* ===== 12. PIE DE PÁGINA ===== */
+/* ===== 13. PIE DE PÁGINA ===== */
 .site-footer {
     margin-top: 3rem;
     padding: 2rem 1rem;
@@ -1499,7 +1640,7 @@ body.home .site-header {
 }
 
 
-/* ===== 13. RESPONSIVE (siempre al final para que gane a lo anterior) ===== */
+/* ===== 14. RESPONSIVE (siempre al final para que gane a lo anterior) ===== */
 @media (max-width: 768px) {
     .nav-container {
         flex-direction: column;
@@ -1570,8 +1711,4 @@ body.home .site-header {
     .carousel-track {
         animation: none;
     }
-}
-
-.grid-new-items .badge-new {
-  display: none;
 }

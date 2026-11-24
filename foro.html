@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Foro | Picanya Music</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://kit.fontawesome.com/27879825a4.js" crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <div class="wrapper">
+        <header class="site-header">
+            <nav class="site-nav">
+                <div class="nav-container">
+                    <a class="nav-brand" href="index.html">
+                        <img src="./img/Picanya Music.png" alt="Logo" class="brand-image">
+                    </a>
+                    <div class="nav-menu" id="navMenu">
+                        <ul class="nav-list">
+                            <li class="nav-item"><a class="nav-link" href="index.html">Inicio</a></li>
+                            <li class="nav-item"><a class="nav-link" href="catalogo.html">Catálogo</a></li>
+                            <li class="nav-item"><a class="nav-link" href="servicios.html">Servicios</a></li>
+                            <li class="nav-item">
+                                <a class="nav-link active" href="foro.html" aria-current="page">Comunidad</a>
+                            </li>
+                            <li class="nav-item"><a class="nav-link" href="contacto.html">Contacto</a></li>
+                            <li class="cart-btn"><a class="cart" href="#"><i class="fa-solid fa-cart-shopping"></i><span id="cart-count">0</span></a></li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+        </header>
+
+        <main>
+            <section class="page">
+                <h1>Foro de la comunidad</h1>
+                <p>Un espacio para compartir dudas, consejos y experiencias con tus instrumentos.
+                    Respeta siempre al resto de músicos: aquí todos estamos aprendiendo.</p>
+
+                <!-- Mensajes de aviso (tema publicado, errores...) -->
+                <p class="cal-msg" id="foro-msg" role="status"></p>
+
+                <!-- ===== VISTA 1: LISTA DE TEMAS ===== -->
+                <div id="foro-vista-lista">
+                    <div class="foro-barra">
+                        <button type="button" class="link-btn" id="foro-nuevo-btn">
+                            <i class="fa-solid fa-plus"></i> Nuevo tema
+                        </button>
+                    </div>
+
+                    <form class="cita-form foro-form" id="form-tema" hidden>
+                        <h3>Nuevo tema</h3>
+
+                        <label>Título
+                            <input type="text" id="tema-titulo" required maxlength="80">
+                        </label>
+
+                        <label>Categoría
+                            <select id="tema-categoria"></select>
+                        </label>
+
+                        <label>Tu nombre
+                            <input type="text" id="tema-autor" required maxlength="30" autocomplete="nickname">
+                        </label>
+
+                        <label>Mensaje
+                            <textarea id="tema-texto" required maxlength="1000" rows="5"></textarea>
+                        </label>
+
+                        <div class="foro-form-botones">
+                            <button type="submit" class="link-btn">Publicar tema</button>
+                            <button type="button" class="back-btn" id="tema-cancelar">Cancelar</button>
+                        </div>
+                    </form>
+
+                    <ul class="foro-lista" id="foro-lista"></ul>
+                </div>
+
+                <!-- ===== VISTA 2: UN TEMA CON SUS RESPUESTAS ===== -->
+                <div id="foro-vista-tema" hidden>
+                    <button type="button" class="back-btn" id="foro-volver">← Volver al foro</button>
+
+                    <div class="foro-tema-datos">
+                        <h2 class="foro-titulo" id="foro-tema-titulo"></h2>
+                        <span class="foro-tag" id="foro-tema-tag"></span>
+                    </div>
+
+                    <ul class="foro-mensajes" id="foro-mensajes"></ul>
+
+                    <button type="button" class="btn-red foro-borrar" id="foro-borrar" hidden>Eliminar tema</button>
+
+                    <form class="cita-form foro-form" id="form-respuesta">
+                        <h3>Responder</h3>
+
+                        <label>Tu nombre
+                            <input type="text" id="respuesta-autor" required maxlength="30" autocomplete="nickname">
+                        </label>
+
+                        <label>Mensaje
+                            <textarea id="respuesta-texto" required maxlength="1000" rows="4"></textarea>
+                        </label>
+
+                        <div class="foro-form-botones">
+                            <button type="submit" class="link-btn">Publicar respuesta</button>
+                        </div>
+                    </form>
+                </div>
+            </section>
+        </main>
+
+        <footer class="site-footer">
+            <p><strong>Picanya Music</strong> · soporte@picanyamusic.es · 960 000 000</p>
+            <p class="footer-links"><a href="https://instagram.com">Instagram</a> · <a href="https://youtube.com">YouTube</a> · <a href="https://tiktok.com">TikTok</a></p>
+            <p>© 2026 Picanya Music. Todos los derechos reservados.</p>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
