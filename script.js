@@ -45,7 +45,7 @@ const productos = [
   { id: 5, nombre: 'GRG140 WH', cat: 'guitarras', marca: 'Ibanez', precio: 239.95, imagen: 'guitarras/ibanez/ibanez_grg140.webp' },
   { id: 6, nombre: 'GIO GRG170 DX', cat: 'guitarras', marca: 'Ibanez', precio: 289.95, imagen: 'guitarras/ibanez/ibanez_grg170dx.webp' },
   { id: 7, nombre: 'GIO GRG70 QA', cat: 'guitarras', marca: 'Ibanez', precio: 229.95, imagen: 'guitarras/ibanez/ibanez_grx70qa.webp' },
-  { id: 8, nombre: 'RG5121RET Prestige', cat: 'guitarras', marca: 'Ibanez', precio: 2779.95, nuevo: true, imagen: 'guitarras/ibanez/ibanez_prestige_rg5121ret.webp' },
+  { id: 8, nombre: 'RG5121RET Prestige', cat: 'guitarras', marca: 'Ibanez', precio: 2779.95, imagen: 'guitarras/ibanez/ibanez_prestige_rg5121ret.webp' },
   { id: 9, nombre: 'RG450DBX WH', cat: 'guitarras', marca: 'Ibanez', precio: 499.95, imagen: 'guitarras/ibanez/ibanez_rg450dbx.webp' },
   { id: 10, nombre: 'RGMS8 BK Multiscale', cat: 'guitarras', marca: 'Ibanez', precio: 599.95, imagen: 'guitarras/ibanez/ibanez_rgms8.webp' },
   { id: 11, nombre: 'SA260FM-BRG', cat: 'guitarras', marca: 'Ibanez', precio: 389.95, imagen: 'guitarras/ibanez/ibanez_sa260fm.webp' },
